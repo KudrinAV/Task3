@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IAPS.cs" />
+    <Compile Include="Interfaces\IContract.cs" />
     <Compile Include="Interfaces\IPort.cs" />
     <Compile Include="Interfaces\ITariffPlan.cs" />
     <Compile Include="Interfaces\ITerminal.cs" />
