@@ -9,5 +9,6 @@ namespace Contracts.Interfaces
     public interface IPort
     {
         int Id { get; }
+        string Number { get; }
     }
 }

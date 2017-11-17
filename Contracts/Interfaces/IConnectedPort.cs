@@ -8,6 +8,6 @@ namespace Contracts.Interfaces
 {
     public interface IConnectedPort : IPort
     {
-        int NumberOfTerminal { get; }
+        int GetIdOfTerminal();
     }
 }
