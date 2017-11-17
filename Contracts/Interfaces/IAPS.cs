@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Contracts.Interfaces
     {
         List<IPort> Ports { get; }
 
-        public void ConnectCall(IPort reciver)
+        StatusOfConnect ConnectCall(IPort reciver);
     }
 }
