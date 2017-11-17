@@ -11,7 +11,7 @@ namespace Contracts.Interfaces
         int Id { get; }
         int IdOfPort { get; }
 
-
+        void ConnectToPort(int id);
         bool GetStatus();
         bool Call();
         void Abort();

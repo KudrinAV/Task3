@@ -13,6 +13,11 @@ namespace Classes
 
         public int IdOfPort { get; private set; }
 
+        public void GonnectToPort(int id)
+        {
+            IdOfPort = id;
+        }
+
         public bool GetStatus()
         {
             return true;
@@ -26,6 +31,11 @@ namespace Classes
         public bool Call()
         {
             throw new NotImplementedException();
+        }
+
+        public Terminal(int id)
+        {
+
         }
     }
 }
