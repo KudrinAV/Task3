@@ -18,9 +18,19 @@ namespace Classes.Ports
 
         public StatusOfCall CallStatus { get; private set; }
 
-        public void ChangeCallStatus()
+        public void ChangeCallStatusToAvaliable()
         {
-            CallStatus = StatusOfCall.Free
+            CallStatus = StatusOfCall.Avaliable;
+        }
+
+        public void ChangeCallStatusToOnCall()
+        {
+            CallStatus = StatusOfCall.OnCall;
+        }
+
+        public void ChangeCallStatusToNotAvaliable()
+        {
+            CallStatus = StatusOfCall.NotAvalibale;
         }
 
         public int GetIdOfTerminal()
@@ -30,15 +40,15 @@ namespace Classes.Ports
         
         public void ChangeStatus()
         {
-            PortStatus = StatusOfPort.Free == PortStatus ? StatusOfPort.Connected : StatusOfPort.Free;
+            PortStatus = StatusOfPort.NotConnected == PortStatus ? StatusOfPort.Connected : StatusOfPort.NotConnected;
         }
 
         public Port(string numberOfTerminal, int id)
         {
             Number = numberOfTerminal;
             Id = id;
-            PortStatus = StatusOfPort.Free;
-            CallStatus = StatusOfCall.NotConnected;
+            PortStatus = StatusOfPort.NotConnected;
+            CallStatus = StatusOfCall.NotAvalibale;
         }
     }
 }

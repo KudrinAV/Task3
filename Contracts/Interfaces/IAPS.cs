@@ -9,5 +9,7 @@ namespace Contracts.Interfaces
     public interface IAPS
     {
         List<IPort> Ports { get; }
+
+        public void ConnectCall(IPort reciver)
     }
 }

@@ -12,6 +12,7 @@ namespace Contracts.Interfaces
         int Id { get; }
         string Number { get; }
         StatusOfPort PortStatus { get;}
+        StatusOfCall CallStatus { get; }
 
         int GetIdOfTerminal();
         void ChangeStatus();
