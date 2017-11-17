@@ -19,5 +19,6 @@ namespace Contracts.Interfaces
         void ChangeCallStatus(StatusOfCall status);
         int GetIdOfTerminal();
         void ChangeStatus();
+        StatusOfConnect GetAnswer(string number);
     }
 }

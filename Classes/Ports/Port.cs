@@ -25,7 +25,11 @@ namespace Classes.Ports
 
         public StatusOfCall CallStatus { get; private set; }
 
-
+        public StatusOfConnect GetAnswer(string number)
+        {
+            Console.WriteLine("hell no");
+            return StatusOfConnect.Connect;
+        }
 
         public event Calling CallTheNubmer;
 

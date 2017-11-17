@@ -8,6 +8,6 @@ namespace Contracts.Enums
 {
     public enum StatusOfConnect
     {
-        Connect, Abort, NotAvaliable
+        Connect, Abort, NotAvaliable, OnCall
     }
 }

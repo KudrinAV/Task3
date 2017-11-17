@@ -12,22 +12,32 @@ namespace Classes
     {
         public List<IPort> Ports { get; private set; }
 
-        //public StatusOfConnect TryToConnect(string number)
-        //{
+        public StatusOfConnect TryToConnect(IPort port, string number)
+        {
+            if (port.CallStatus == StatusOfCall.Avaliable)
+            {
+                Console.WriteLine("hello");
+                
+                return port.GetAnswer(number) == StatusOfConnect.Connect ? StatusOfConnect.Connect : StatusOfConnect.Abort;
+            }
+            if (port.CallStatus == StatusOfCall.OnCall)
+                return StatusOfConnect.OnCall;
+            return StatusOfConnect.NotAvaliable;
 
-        //}
+               
+        }
 
         public StatusOfConnect ConnectCall(IPort port, string number)
         {
             var finding = from port1 in Ports
-                          where port1.CallStatus == StatusOfCall.Avaliable
-                          select port1.Number;
+                          where port1.PortStatus == StatusOfPort.Connected
+                          select port1;
             foreach (var item in finding)
             {
-                if (number == item)
+                if (number == item.Number)
                 {
-                    Console.WriteLine("WeCanConnect");
-                    return StatusOfConnect.Connect;
+                    Console.WriteLine("yes");
+                    return TryToConnect(item, port.Number);
                 }
             }
             Console.WriteLine("WeCannot");
