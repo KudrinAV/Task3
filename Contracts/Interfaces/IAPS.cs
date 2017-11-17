@@ -8,7 +8,6 @@ namespace Contracts.Interfaces
 {
     public interface IAPS
     {
-        List<IConnectedPort> ConnectedPorts { get; }
-        List<IFreePort> FreePorts { get; }
+        List<IPort> Ports { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,9 @@ namespace Contracts.Interfaces
     {
         int Id { get; }
         string Number { get; }
+        StatusOfPort PortStatus { get;}
+
+        int GetIdOfTerminal();
+        void ChangeStatus();
     }
 }

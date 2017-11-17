@@ -9,8 +9,7 @@ namespace Classes
 {
     public class APS : IAPS
     {
-        public List<IConnectedPort> ConnectedPorts { get; private set; }
-
-        public List<IFreePort> FreePorts { get; private set; }
+        public List<IPort> Ports { get; private set; }
+ 
     }
 }

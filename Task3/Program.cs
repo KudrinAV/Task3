@@ -16,8 +16,8 @@ namespace Task3
             Terminal id1 = new Terminal(1);
             Terminal id2 = new Terminal(2);
 
-            IPort port1 = new FreePort("123", 1);
-            IPort port2 = new FreePort("234" , 2);
+            IPort port1 = new Port("123", 1);
+            IPort port2 = new Port("234" , 2);
 
             id1.ConnectToPort(port1);
             id2.ConnectToPort(port2);
