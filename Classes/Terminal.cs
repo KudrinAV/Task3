@@ -38,11 +38,6 @@ namespace Classes
             Port.Call(number);
         }
 
-        public bool GetStatus()
-        {
-            return true;
-        }
-
         public void SeeTheNumber()
         {
             Console.WriteLine(Port.Number);
