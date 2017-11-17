@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Contracts.Enums
 {
-    public enum StatusOfCall
+    public enum StatusOfPort
     {
-        Free, OnCall, NotAvalibale, NotConnected
+        Free, Connected
     }
 }

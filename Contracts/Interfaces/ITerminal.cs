@@ -9,11 +9,13 @@ namespace Contracts.Interfaces
     public interface ITerminal
     {
         int Id { get; }
-        int IdOfPort { get; }
+        IPort Port { get; }
 
-        void ConnectToPort(int id);
+        void ConnectToPort(IPort port);
         bool GetStatus();
         bool Call();
         void Abort();
+        void SeeTheNumber();
+        void SeeBalance();
     }
 }

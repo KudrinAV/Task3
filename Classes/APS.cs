@@ -9,8 +9,8 @@ namespace Classes
 {
     public class APS : IAPS
     {
-        public List<IConnectedPort> ConnectedPorts => throw new NotImplementedException();
+        public List<IConnectedPort> ConnectedPorts { get; private set; }
 
-        public List<IFreePort> FreePorts => throw new NotImplementedException();
+        public List<IFreePort> FreePorts { get; private set; }
     }
 }

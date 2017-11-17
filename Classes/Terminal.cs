@@ -11,16 +11,26 @@ namespace Classes
     {
         public int Id { get; private set; }
 
-        public int IdOfPort { get; private set; }
+        public IPort Port { get; private set; }
 
-        public void ConnectToPort(int id)
+        public void ConnectToPort(IPort port)
         {
-            IdOfPort = id;
+            Port = port;
         }
 
         public bool GetStatus()
         {
             return true;
+        }
+
+        public void SeeTheNumber()
+        {
+            Console.WriteLine(Port.Number);
+        }
+
+        public void SeeBalance()
+        {
+
         }
 
         public void Abort()
