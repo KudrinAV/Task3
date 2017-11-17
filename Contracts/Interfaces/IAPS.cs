@@ -11,6 +11,6 @@ namespace Contracts.Interfaces
     {
         List<IPort> Ports { get; }
 
-        StatusOfConnect ConnectCall(IPort reciver);
+        StatusOfConnect ConnectCall(IPort port, string number);
     }
 }

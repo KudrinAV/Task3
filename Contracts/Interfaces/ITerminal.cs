@@ -15,7 +15,8 @@ namespace Contracts.Interfaces
         void DissconnectFromPort();
         void ChangePorts(IPort port);
         bool GetStatus();
-        bool Call();
+        void Call(string number);
+        void Answer();
         void Abort();
         void SeeTheNumber();
         void SeeBalance();

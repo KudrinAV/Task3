@@ -14,23 +14,32 @@ namespace Classes.Ports
 
         public int Id { get; private set; }
 
+        private IAPS _aps {get; set;}
+
+        public void GetAPS(IAPS aps)
+        {
+            _aps = aps;
+        }
+
         public StatusOfPort PortStatus { get; private set; }
 
         public StatusOfCall CallStatus { get; private set; }
 
-        public void ChangeCallStatusToAvaliable()
+
+
+        public event Calling CallTheNubmer;
+
+        public delegate StatusOfConnect Calling(IPort port, string number);
+
+        public void ChangeCallStatus(StatusOfCall status)
         {
-            CallStatus = StatusOfCall.Avaliable;
+            CallStatus = status;
         }
 
-        public void ChangeCallStatusToOnCall()
+        public void Call(string number)
         {
-            CallStatus = StatusOfCall.OnCall;
-        }
-
-        public void ChangeCallStatusToNotAvaliable()
-        {
-            CallStatus = StatusOfCall.NotAvalibale;
+            CallTheNubmer += _aps.ConnectCall;
+            CallTheNubmer(this, number);
         }
 
         public int GetIdOfTerminal()
@@ -47,6 +56,7 @@ namespace Classes.Ports
         {
             Number = numberOfTerminal;
             Id = id;
+            //CallTheNubmer += _aps.ConnectCall;
             PortStatus = StatusOfPort.NotConnected;
             CallStatus = StatusOfCall.NotAvalibale;
         }

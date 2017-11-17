@@ -1,4 +1,5 @@
-﻿using Contracts.Interfaces;
+﻿using Contracts.Enums;
+using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Classes
         {
             Port = port;
             Port.ChangeStatus();
+            Port.ChangeCallStatus(StatusOfCall.Avaliable);
         }
 
         public void DissconnectFromPort()
@@ -29,6 +31,11 @@ namespace Classes
         {
             DissconnectFromPort();
             ConnectToPort(port);
+        }
+
+        public void Call(string number)
+        {
+            Port.Call(number);
         }
 
         public bool GetStatus()
@@ -51,9 +58,9 @@ namespace Classes
             throw new NotImplementedException();
         }
 
-        public bool Call()
+        public void Answer()
         {
-            throw new NotImplementedException();
+
         }
 
         public Terminal(int id)
