@@ -16,6 +16,19 @@ namespace Classes
         public void ConnectToPort(IPort port)
         {
             Port = port;
+            Port.ChangeStatus();
+        }
+
+        public void DissconnectFromPort()
+        {
+            Port.ChangeStatus();
+            Port = null; 
+        }
+
+        public void ChangePorts(IPort port)
+        {
+            DissconnectFromPort();
+            ConnectToPort(port);
         }
 
         public bool GetStatus()

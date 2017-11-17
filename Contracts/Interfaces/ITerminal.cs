@@ -12,6 +12,8 @@ namespace Contracts.Interfaces
         IPort Port { get; }
 
         void ConnectToPort(IPort port);
+        void DissconnectFromPort();
+        void ChangePorts(IPort port);
         bool GetStatus();
         bool Call();
         void Abort();
