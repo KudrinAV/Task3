@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APS.cs" />
     <Compile Include="Ports\ConnectedPort.cs" />
     <Compile Include="Ports\FreePort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
