@@ -13,7 +13,7 @@ namespace Classes
 
         public int IdOfPort { get; private set; }
 
-        public void GonnectToPort(int id)
+        public void ConnectToPort(int id)
         {
             IdOfPort = id;
         }
@@ -35,7 +35,7 @@ namespace Classes
 
         public Terminal(int id)
         {
-
+            Id = id;
         }
     }
 }

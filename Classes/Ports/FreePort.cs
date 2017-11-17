@@ -11,5 +11,11 @@ namespace Classes.Ports
     {
         public string Number { get; private set; }
         public int Id { get; private set; }
+
+        public FreePort(string number, int id)
+        {
+            Number = number;
+            Id = id;
+        }
     }
 }
