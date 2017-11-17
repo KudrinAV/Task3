@@ -16,9 +16,16 @@ namespace Classes.Ports
 
         public StatusOfPort PortStatus { get; private set; }
 
+        public StatusOfCall CallStatus { get; private set; }
+
+        public void ChangeCallStatus()
+        {
+            CallStatus = StatusOfCall.Free
+        }
+
         public int GetIdOfTerminal()
         {
-            return 0;
+            return Id;
         }
         
         public void ChangeStatus()
@@ -31,6 +38,7 @@ namespace Classes.Ports
             Number = numberOfTerminal;
             Id = id;
             PortStatus = StatusOfPort.Free;
+            CallStatus = StatusOfCall.NotConnected;
         }
     }
 }

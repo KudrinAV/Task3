@@ -8,6 +8,6 @@ namespace Contracts.Enums
 {
     public enum StatusOfCall
     {
-        Free, OnCall, NotAvalibale, NotConnected
+        Avalibale, OnCall, NotAvalibale, NotConnected
     }
 }
