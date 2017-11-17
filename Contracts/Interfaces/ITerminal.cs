@@ -8,5 +8,14 @@ namespace Contracts.Interfaces
 {
     public interface ITerminal
     {
+        int IdOfPort { get; }
+        int Number { get; }
+        bool OnCall { get; }
+        bool NotAvalibale { get; }
+
+
+        bool Call();
+        void Abort();
+
     }
 }

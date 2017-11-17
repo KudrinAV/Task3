@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces
 {
-    public interface IAPS
+    public interface IFreePort : IPort
     {
-        List<IConnectedPort> ConnectedPorts { get; }
-        List<IFreePort> FreePorts { get; }
     }
 }
