@@ -11,9 +11,10 @@ namespace Contracts.Interfaces
     {
         int Id { get; }
         IPort Port { get; }
-        event EventHandler<CallArgs> CallEvent;
+        event EventHandler<CallEventArgs> CallEvent;
         //event EventHandler<>
 
+        string GetNumber();
         void Call(string number);
         void ConnectToPort(IPort port);
         //void DissconnectFromPort();

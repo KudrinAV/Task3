@@ -11,15 +11,16 @@ namespace Classes
 {
     public class Terminal : ITerminal
     {
-        event EventHandler<CallArgs> CallEvent;
+        public event EventHandler<CallEventArgs> CallEvent;
+        public event EventHandler<EndCallEventArgs> EndCallEvent;
 
         public int Id => throw new NotImplementedException();
 
         public IPort Port { get; private set; }
 
-        protected virtual void OnCall(CallArgs e)
+        protected virtual void OnCall(CallEventArgs e)
         {
-            EventHandler<CallArgs> handler = CallEvent;
+            EventHandler<CallEventArgs> handler = CallEvent;
             if (handler != null)
             {
                 Console.WriteLine(e.ReceivingNumber);
@@ -29,7 +30,7 @@ namespace Classes
 
         public void Call(string number)
         {
-            OnCall(new CallArgs(number));
+            OnCall(new CallEventArgs(GetNumber(), number));
         }
 
         public void ConnectToPort(IPort port)
@@ -38,18 +39,10 @@ namespace Classes
             CallEvent += Port.HandleCallEvent;
         }
         
-
-        event EventHandler<CallArgs> ITerminal.CallEvent
+        public string GetNumber()
         {
-            add
-            {
-                throw new NotImplementedException();
-            }
-
-            remove
-            {
-                throw new NotImplementedException();
-            }
+            if (Port == null) return null;
+            return Port.Number;
         }
     }
 }

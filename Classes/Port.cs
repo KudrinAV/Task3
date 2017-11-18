@@ -19,16 +19,16 @@ namespace Classes.Ports
 
         public StatusOfCall CallStatus => throw new NotImplementedException();
 
-        public event EventHandler<CallArgs> Calling;
+        public event EventHandler<CallEventArgs> Calling;
         
-        public void HandleCallEvent(object o,CallArgs e)
+        public void HandleCallEvent(object o,CallEventArgs e)
         {
             OnCalling(e);
         }
 
-        protected virtual void OnCalling(CallArgs e)
+        protected virtual void OnCalling(CallEventArgs e)
         {
-            EventHandler<CallArgs> handler = Calling;
+            EventHandler<CallEventArgs> handler = Calling;
             if (handler != null)
             {
                 Console.WriteLine("hello" + e.ReceivingNumber);

@@ -13,7 +13,7 @@ namespace Classes
     {
         public List<IPort> Ports { get; private set; }
 
-        public void HandleConnectCall(object sender, CallArgs e)
+        public void HandleConnectCall(object sender, CallEventArgs e)
         {
             var finding = from port1 in Ports
                           //where port1.PortStatus == StatusOfPort.Connected

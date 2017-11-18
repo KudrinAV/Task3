@@ -12,11 +12,11 @@ namespace Contracts.Interfaces
     {
         int Id { get; }
         string Number { get; }
-        //StatusOfPort PortStatus { get;}
-        //StatusOfCall CallStatus { get; }
+        StatusOfPort PortStatus { get; }
+        StatusOfCall CallStatus { get; }
 
-        void HandleCallEvent(object o, CallArgs e);
-        event EventHandler<CallArgs> Calling;
+        void HandleCallEvent(object o, CallEventArgs e);
+        event EventHandler<CallEventArgs> Calling;
             
         //void ChangeCallStatus(StatusOfCall status);
         //int GetIdOfTerminal();

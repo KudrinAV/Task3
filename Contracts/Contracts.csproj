@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomArgs\CallArgs.cs" />
+    <Compile Include="CustomArgs\CallEventArgs.cs" />
     <Compile Include="Enums\StatusOfCall.cs" />
     <Compile Include="Enums\StatusOfConnect.cs" />
     <Compile Include="Enums\StatusOfPort.cs" />

@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Contracts.CustomArgs
 {
-    public class CallArgs : EventArgs
+    public class CallEventArgs : EventArgs
     {
         public string ReceivingNumber { get; private set; }
         public string CallerNumber { get; private set; }
 
-        public CallArgs(string number)
+        public CallEventArgs(string caller, string reciver)
         {
-            ReceivingNumber = number;
+            CallerNumber = caller;
+            ReceivingNumber = reciver;
         }
     }
 }
