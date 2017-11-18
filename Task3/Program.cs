@@ -25,7 +25,7 @@ namespace Task3
             id1.ConnectToPort(port1);
             id2.ConnectToPort(port2);
 
-            id2.Call("123213134");
+            id2.Call("1234");
 
             // Keep the console window open
             Console.WriteLine("Press Enter to close this window.");

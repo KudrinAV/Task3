@@ -19,7 +19,24 @@ namespace Classes.Ports
 
         public StatusOfCall CallStatus => throw new NotImplementedException();
 
+        public event EventHandler<CallEventArgs> Answer;
+
         public event EventHandler<CallEventArgs> Calling;
+
+        public void GetAnswer(CallEventArgs e)
+        {
+            Console.WriteLine("Hello dear" + e.ReceivingNumber);
+            OnAnswer(e);
+        }
+
+        protected virtual void OnAnswer(CallEventArgs e)
+        {
+            EventHandler<CallEventArgs> handler = Answer;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
         
         public void HandleCallEvent(object o,CallEventArgs e)
         {

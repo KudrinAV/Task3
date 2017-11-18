@@ -17,7 +17,9 @@ namespace Contracts.Interfaces
 
         void HandleCallEvent(object o, CallEventArgs e);
         event EventHandler<CallEventArgs> Calling;
-            
+        event EventHandler<CallEventArgs> Answer;
+
+        void GetAnswer(CallEventArgs e);
         //void ChangeCallStatus(StatusOfCall status);
         //int GetIdOfTerminal();
         //void ChangeStatus();

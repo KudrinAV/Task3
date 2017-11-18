@@ -28,6 +28,12 @@ namespace Classes
             }
         }
 
+        public void HandleAnswerEvent(object sender, CallEventArgs e)
+        {
+            string answer = Console.ReadLine();
+            e.SetAnswerStatus(answer);
+        }
+
         public void Call(string number)
         {
             OnCall(new CallEventArgs(GetNumber(), number));
@@ -37,6 +43,7 @@ namespace Classes
         {
             Port = port;
             CallEvent += Port.HandleCallEvent;
+            Port.Answer += HandleAnswerEvent;
         }
         
         public string GetNumber()

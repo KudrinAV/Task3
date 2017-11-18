@@ -23,10 +23,15 @@ namespace Classes
                 //Console.WriteLine(item.Number);
                 if (e.ReceivingNumber == item.Number)
                 {
-                    
+                    item.GetAnswer(e);
+                    if (e.AnswerStatus == StatusOfAnswer.Answer)
+                    {
+                        Console.WriteLine("Hello to you");
+                    }
+                    else Console.WriteLine("he doesn't want to hear you anymore");
                 }
             }
-            Console.WriteLine("WeCannot");
+            //Console.WriteLine("WeCannot");
         }
 
 
