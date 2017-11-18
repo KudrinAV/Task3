@@ -1,4 +1,5 @@
-﻿using Contracts.Enums;
+﻿using Contracts.CustomArgs;
+using Contracts.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,15 @@ namespace Contracts.Interfaces
     {
         int Id { get; }
         string Number { get; }
-        StatusOfPort PortStatus { get;}
-        StatusOfCall CallStatus { get; }
+        //StatusOfPort PortStatus { get;}
+        //StatusOfCall CallStatus { get; }
 
-        event EventHandler<CallArgs> CallToPort;
-
-        void GetAPS(IAPS aps);
-        void ChangeCallStatus(StatusOfCall status);
-        int GetIdOfTerminal();
-        void ChangeStatus();
-        StatusOfConnect GetAnswer(string number);
+        void HandleCallEvent(object o, CallArgs e);
+        event EventHandler<CallArgs> Calling;
+            
+        //void ChangeCallStatus(StatusOfCall status);
+        //int GetIdOfTerminal();
+        //void ChangeStatus();
+        //StatusOfConnect GetAnswer(string number);
     }
 }

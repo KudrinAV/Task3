@@ -12,10 +12,9 @@ namespace Classes.Learning_Events
         public Subscriber(string ID, TestEvents test)
         {
             id = ID;
-            test.TestEvent += HandleCustomEvent;
         }
 
-        void HandleCustomEvent(object o, CustomEventArgs e)
+        public void HandleCustomEvent(object o, CustomEventArgs e)
         {
             Console.WriteLine(id + " recived this message: {0}", e.Message);
         }

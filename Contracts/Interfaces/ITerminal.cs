@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.CustomArgs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +11,14 @@ namespace Contracts.Interfaces
     {
         int Id { get; }
         IPort Port { get; }
-        event EventHandler<CallArgs> Call;
-        event EventHandler<AnswerArgs> Answer;
-        event EventHandler<EndCallArgs> EndCall;
+        event EventHandler<CallArgs> CallEvent;
         //event EventHandler<>
 
+        void Call(string number);
         void ConnectToPort(IPort port);
-        void DissconnectFromPort();
-        void ChangePorts(IPort port);
-        void SeeTheNumber();
-        void SeeBalance();
+        //void DissconnectFromPort();
+        //void ChangePorts(IPort port);
+        //string SeeTheNumber();
+        //void SeeBalance();
     }
 }

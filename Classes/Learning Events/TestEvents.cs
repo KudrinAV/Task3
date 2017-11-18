@@ -10,6 +10,8 @@ namespace Classes.Learning_Events
     {
         public event EventHandler<CustomEventArgs> TestEvent;
 
+        public Subscriber subscriber;
+
         public void ChangeS()
         {
             Console.Write("kek");
@@ -24,6 +26,11 @@ namespace Classes.Learning_Events
                 e.Message += String.Format("at {0}", DateTime.Now.ToString());
                 handler(this, e);
             }
+        }
+
+        public TestEvents()
+        {
+            TestEvent += subscriber.HandleCustomEvent;
         }
     }
 }

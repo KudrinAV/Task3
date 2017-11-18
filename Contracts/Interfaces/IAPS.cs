@@ -10,8 +10,5 @@ namespace Contracts.Interfaces
     public interface IAPS
     {
         List<IPort> Ports { get; }
-
-        StatusOfConnect TryToConnect(IPort port, string number);
-        StatusOfConnect ConnectCall(IPort port, string number);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Classes.CustomArgs;
+﻿using Contracts.CustomArgs;
 using Contracts.Enums;
 using Contracts.Interfaces;
 using System;
@@ -11,14 +11,44 @@ namespace Classes
 {
     public class Terminal : ITerminal
     {
-        event EventHandler<CallArgs> Call;
+        event EventHandler<CallArgs> CallEvent;
 
-        protected virtual void OnCall(CallArgs e, string number)
+        public int Id => throw new NotImplementedException();
+
+        public IPort Port { get; private set; }
+
+        protected virtual void OnCall(CallArgs e)
         {
-            EventHandler<CallArgs> handler = Call;
+            EventHandler<CallArgs> handler = CallEvent;
             if (handler != null)
             {
-                e = new CallArgs(number);
+                Console.WriteLine(e.ReceivingNumber);
+                handler(this, e);
+            }
+        }
+
+        public void Call(string number)
+        {
+            OnCall(new CallArgs(number));
+        }
+
+        public void ConnectToPort(IPort port)
+        {
+            Port = port;
+            CallEvent += Port.HandleCallEvent;
+        }
+        
+
+        event EventHandler<CallArgs> ITerminal.CallEvent
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+
+            remove
+            {
+                throw new NotImplementedException();
             }
         }
     }

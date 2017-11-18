@@ -1,4 +1,5 @@
-﻿using Contracts.Enums;
+﻿using Contracts.CustomArgs;
+using Contracts.Enums;
 using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,36 +13,20 @@ namespace Classes
     {
         public List<IPort> Ports { get; private set; }
 
-        public StatusOfConnect TryToConnect(IPort port, string number)
-        {
-            if (port.CallStatus == StatusOfCall.Avaliable)
-            {
-                Console.WriteLine("hello");
-                
-                return port.GetAnswer(number) == StatusOfConnect.Connect ? StatusOfConnect.Connect : StatusOfConnect.Abort;
-            }
-            if (port.CallStatus == StatusOfCall.OnCall)
-                return StatusOfConnect.OnCall;
-            return StatusOfConnect.NotAvaliable;
-
-               
-        }
-
-        public StatusOfConnect ConnectCall(IPort port, string number)
+        public void HandleConnectCall(object sender, CallArgs e)
         {
             var finding = from port1 in Ports
-                          where port1.PortStatus == StatusOfPort.Connected
+                          //where port1.PortStatus == StatusOfPort.Connected
                           select port1;
             foreach (var item in finding)
             {
-                if (number == item.Number)
+                //Console.WriteLine(item.Number);
+                if (e.ReceivingNumber == item.Number)
                 {
                     Console.WriteLine("yes");
-                    return TryToConnect(item, port.Number);
                 }
             }
             Console.WriteLine("WeCannot");
-            return StatusOfConnect.NotAvaliable;
         }
 
 
@@ -51,7 +36,7 @@ namespace Classes
             Ports = ports;
             foreach (var item in ports)
             {
-                item.GetAPS(this);
+                item.Calling += HandleConnectCall;
             }
         }
     }

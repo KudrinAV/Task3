@@ -14,12 +14,18 @@ namespace Task3
     {
         static void Main(string[] args)
         {
-            TestEvents pub = new TestEvents();
-            Subscriber sub1 = new Subscriber("sub1", pub);
-            Subscriber sub2 = new Subscriber("sub2", pub);
-
+            IPort port1 = new Port("1234");
+            IPort port2 = new Port("1253");
             // Call the method that raises the event.
-            pub.ChangeS();
+            ITerminal id1 = new Terminal();
+            ITerminal id2 = new Terminal();
+            List<IPort> list = new List<IPort> { port1, port2 };
+            IAPS test = new APS(list);
+
+            id1.ConnectToPort(port1);
+            id2.ConnectToPort(port2);
+
+            id2.Call("1234");
 
             // Keep the console window open
             Console.WriteLine("Press Enter to close this window.");
