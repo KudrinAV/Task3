@@ -18,20 +18,25 @@ namespace Classes
 
         public IPort Port { get; private set; }
 
+        protected virtual void OnEndCall(EndCallEventArgs e)
+        {
+            EndCallEvent?.Invoke(this, e);
+        }
+
         protected virtual void OnCall(CallEventArgs e)
         {
-            EventHandler<CallEventArgs> handler = CallEvent;
-            if (handler != null)
-            {
-                Console.WriteLine(e.ReceivingNumber);
-                handler(this, e);
-            }
+            CallEvent?.Invoke(this, e);
         }
 
         public void HandleAnswerEvent(object sender, CallEventArgs e)
         {
             string answer = Console.ReadLine();
             e.SetAnswerStatus(answer);
+        }
+
+        public void EndCall()
+        {
+            OnEndCall(new EndCallEventArgs(GetNumber(), "kek"));
         }
 
         public void Call(string number)
@@ -44,6 +49,7 @@ namespace Classes
             Port = port;
             CallEvent += Port.HandleCallEvent;
             Port.Answer += HandleAnswerEvent;
+            EndCallEvent += Port.HandleEndCallEvent;
         }
         
         public string GetNumber()

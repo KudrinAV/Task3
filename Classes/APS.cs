@@ -13,7 +13,13 @@ namespace Classes
     {
         public List<IPort> Ports { get; private set; }
 
-        public void HandleConnectCall(object sender, CallEventArgs e)
+
+        public void HandleEndCallEvent(object o, EndCallEventArgs e)
+        {
+            Console.WriteLine("I'm working, just implement me");
+        }
+
+        public void HandleCallEvent(object sender, CallEventArgs e)
         {
             var finding = from port1 in Ports
                           //where port1.PortStatus == StatusOfPort.Connected
@@ -41,7 +47,8 @@ namespace Classes
             Ports = ports;
             foreach (var item in ports)
             {
-                item.Calling += HandleConnectCall;
+                item.Calling += HandleCallEvent;
+                item.EndingCall += HandleEndCallEvent;
             }
         }
     }

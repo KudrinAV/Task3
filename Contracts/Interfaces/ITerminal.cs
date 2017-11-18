@@ -14,6 +14,7 @@ namespace Contracts.Interfaces
         event EventHandler<CallEventArgs> CallEvent;
         //event EventHandler<>
 
+        void EndCall();
         string GetNumber();
         void Call(string number);
         void ConnectToPort(IPort port);

@@ -20,8 +20,13 @@ namespace Classes.Ports
         public StatusOfCall CallStatus => throw new NotImplementedException();
 
         public event EventHandler<CallEventArgs> Answer;
-
         public event EventHandler<CallEventArgs> Calling;
+        public event EventHandler<EndCallEventArgs> EndingCall;
+
+        public void HandleEndCallEvent(object o, EndCallEventArgs e)
+        {
+            OnEndingCall(e);
+        }
 
         public void GetAnswer(CallEventArgs e)
         {
@@ -29,13 +34,14 @@ namespace Classes.Ports
             OnAnswer(e);
         }
 
+        protected virtual void OnEndingCall(EndCallEventArgs e)
+        {
+            EndingCall?.Invoke(this, e);
+        }
+
         protected virtual void OnAnswer(CallEventArgs e)
         {
-            EventHandler<CallEventArgs> handler = Answer;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            Answer?.Invoke(this, e);
         }
         
         public void HandleCallEvent(object o,CallEventArgs e)
@@ -45,12 +51,7 @@ namespace Classes.Ports
 
         protected virtual void OnCalling(CallEventArgs e)
         {
-            EventHandler<CallEventArgs> handler = Calling;
-            if (handler != null)
-            {
-                Console.WriteLine("hello" + e.ReceivingNumber);
-                handler(this, e);
-            }
+            Calling?.Invoke(this, e);
         }
 
         public void ChangeCallStatus(StatusOfCall status)
