@@ -23,7 +23,7 @@ namespace Classes
                 //Console.WriteLine(item.Number);
                 if (e.ReceivingNumber == item.Number)
                 {
-                    Console.WriteLine("yes");
+                    
                 }
             }
             Console.WriteLine("WeCannot");
