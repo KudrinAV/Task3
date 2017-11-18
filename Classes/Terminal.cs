@@ -1,4 +1,5 @@
-﻿using Contracts.Enums;
+﻿using Classes.CustomArgs;
+using Contracts.Enums;
 using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,57 +11,15 @@ namespace Classes
 {
     public class Terminal : ITerminal
     {
-        public int Id { get; private set; }
+        event EventHandler<CallArgs> Call;
 
-        public IPort Port { get; private set; }
-
-        public void ConnectToPort(IPort port)
+        protected virtual void OnCall(CallArgs e, string number)
         {
-            Port = port;
-            Port.ChangeStatus();
-            Port.ChangeCallStatus(StatusOfCall.Avaliable);
-        }
-
-        public void DissconnectFromPort()
-        {
-            Port.ChangeStatus();
-            Port = null; 
-        }
-
-        public void ChangePorts(IPort port)
-        {
-            DissconnectFromPort();
-            ConnectToPort(port);
-        }
-
-        public void Call(string number)
-        {
-            Port.Call(number);
-        }
-
-        public void SeeTheNumber()
-        {
-            Console.WriteLine(Port.Number);
-        }
-
-        public void SeeBalance()
-        {
-
-        }
-
-        public void Abort()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Answer()
-        {
-
-        }
-
-        public Terminal(int id)
-        {
-            Id = id;
+            EventHandler<CallArgs> handler = Call;
+            if (handler != null)
+            {
+                e = new CallArgs(number);
+            }
         }
     }
 }

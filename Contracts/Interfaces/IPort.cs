@@ -14,8 +14,9 @@ namespace Contracts.Interfaces
         StatusOfPort PortStatus { get;}
         StatusOfCall CallStatus { get; }
 
+        event EventHandler<CallArgs> CallToPort;
+
         void GetAPS(IAPS aps);
-        void Call(string number);
         void ChangeCallStatus(StatusOfCall status);
         int GetIdOfTerminal();
         void ChangeStatus();

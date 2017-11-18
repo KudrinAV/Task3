@@ -41,6 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APS.cs" />
+    <Compile Include="CustomArgs\CallArgs.cs" />
+    <Compile Include="CustomArgs\CallToArgs.cs" />
+    <Compile Include="Learning Events\CustomEventArgs.cs" />
+    <Compile Include="Learning Events\Subscriber.cs" />
+    <Compile Include="Learning Events\TestEvents.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Terminal.cs" />
