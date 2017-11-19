@@ -14,7 +14,7 @@ namespace Classes
         public event EventHandler<CallEventArgs> CallEvent;
         public event EventHandler<EndCallEventArgs> EndCallEvent;
 
-        public int Id => throw new NotImplementedException();
+        public int Id { get; private set; }
 
         public IPort Port { get; private set; }
 
@@ -51,7 +51,7 @@ namespace Classes
 
         public void Call(string number)
         {
-            OnCall(new CallEventArgs(Port, number));
+            if(Port != null) OnCall(new CallEventArgs(Port, number));
         }
 
         public void ConnectToPort(IPort port)
@@ -64,11 +64,31 @@ namespace Classes
             EndCallEvent += Port.HandleEndCallEvent;
             Port.MessageFromAPS += HandleMessageFromAPSEvent;
         }
+
+        public void DissconnectFromPort()
+        {
+            if (Port != null)
+            {
+                Port.ChangeCallStatus(StatusOfCall.NotAvalibale);
+                Port.ChangeStatusOfPort();
+                CallEvent -= Port.HandleCallEvent;
+                Port.AnswerEvent -= HandleAnswerEvent;
+                EndCallEvent -= Port.HandleEndCallEvent;
+                Port.MessageFromAPS -= HandleMessageFromAPSEvent;
+                Port = null;
+            }
+            else Console.WriteLine("Terminal " + Id + " has nothing to disconect from");
+        }
         
         public string GetNumber()
         {
             if (Port == null) return null;
             return Port.Number;
+        }
+
+        public Terminal(int id)
+        {
+            Id = id;
         }
     }
 }

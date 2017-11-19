@@ -12,14 +12,15 @@ namespace Contracts.Interfaces
         int Id { get; }
         IPort Port { get; }
         event EventHandler<CallEventArgs> CallEvent;
-        //event EventHandler<>
+        event EventHandler<EndCallEventArgs> EndCallEvent;
 
+        void HandleAnswerEvent(object o, CallEventArgs e);
+        void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e);
         void EndCall();
         string GetNumber();
         void Call(string number);
         void ConnectToPort(IPort port);
-        //void DissconnectFromPort();
-        //void ChangePorts(IPort port);
+        void DissconnectFromPort();
         //string SeeTheNumber();
         //void SeeBalance();
     }

@@ -76,11 +76,6 @@ namespace Classes.Ports
             PortStatus = PortStatus != StatusOfPort.NotConnected ? StatusOfPort.NotConnected : StatusOfPort.Connected;
         }
 
-        public StatusOfConnect GetAnswer(string number)
-        {
-            throw new NotImplementedException();
-        }
-
         public Port(string number)
         {
             Number = number;

@@ -1,5 +1,4 @@
 ﻿using Classes;
-using Classes.Learning_Events;
 using Classes.Ports;
 using Contracts.Interfaces;
 using System;
@@ -19,9 +18,9 @@ namespace Task3
             IPort port2 = new Port("1253");
             IPort port3 = new Port("1263");
             // Call the method that raises the event.
-            ITerminal id1 = new Terminal();
-            ITerminal id2 = new Terminal();
-            ITerminal id3 = new Terminal();
+            ITerminal id1 = new Terminal(1);
+            ITerminal id2 = new Terminal(2);
+            ITerminal id3 = new Terminal(3);
             List<IPort> list = new List<IPort> { port1, port2, port3 };
             IAPS test = new APS(list);
 
@@ -29,10 +28,11 @@ namespace Task3
             id2.ConnectToPort(port2);
             id3.ConnectToPort(port3);
 
+            id2.DissconnectFromPort();
             
-            //id2.Call("1234");
+            id2.Call("1234");
             //Thread.Sleep(5000);
-            id3.Call("1234asdas");
+            id3.Call("1234");
             //Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
             //Thread.Sleep(5000);
             id1.EndCall();
