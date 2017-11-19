@@ -41,7 +41,7 @@ namespace Classes
 
         public void Call(string number)
         {
-            OnCall(new CallEventArgs(GetNumber(), number));
+            OnCall(new CallEventArgs(Port, number));
         }
 
         public void ConnectToPort(IPort port)
