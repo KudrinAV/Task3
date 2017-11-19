@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces
 {
-    public interface IContract
+    interface IWeightOfTheWorldTarrifPlan : ITariffPlan
     {
     }
 }
