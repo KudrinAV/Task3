@@ -17,20 +17,26 @@ namespace Task3
         {
             IPort port1 = new Port("1234");
             IPort port2 = new Port("1253");
+            IPort port3 = new Port("1263");
             // Call the method that raises the event.
             ITerminal id1 = new Terminal();
             ITerminal id2 = new Terminal();
-            List<IPort> list = new List<IPort> { port1, port2 };
+            ITerminal id3 = new Terminal();
+            List<IPort> list = new List<IPort> { port1, port2, port3 };
             IAPS test = new APS(list);
 
             id1.ConnectToPort(port1);
             id2.ConnectToPort(port2);
+            id3.ConnectToPort(port3);
+
             
             id2.Call("1234");
-            Console.WriteLine(port1.CallStatus + " " + port2.CallStatus);
-            Thread.Sleep(10000);
+            //Thread.Sleep(5000);
+            id3.Call("1234");
+            Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
+            Thread.Sleep(5000);
             id1.EndCall();
-            Console.WriteLine(port1.CallStatus + " " + port2.CallStatus);
+            Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
 
             // Keep the console window open
             Console.WriteLine("Press Enter to close this window.");
