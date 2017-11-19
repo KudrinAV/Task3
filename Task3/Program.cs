@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Task3
@@ -24,12 +25,12 @@ namespace Task3
 
             id1.ConnectToPort(port1);
             id2.ConnectToPort(port2);
-
-            //port1.ChangeCallStatus(Contracts.Enums.StatusOfCall.NotAvalibale);
+            
             id2.Call("1234");
-
             Console.WriteLine(port1.CallStatus + " " + port2.CallStatus);
-            //id1.EndCall();
+            Thread.Sleep(10000);
+            id1.EndCall();
+            Console.WriteLine(port1.CallStatus + " " + port2.CallStatus);
 
             // Keep the console window open
             Console.WriteLine("Press Enter to close this window.");

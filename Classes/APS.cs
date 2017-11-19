@@ -14,11 +14,21 @@ namespace Classes
         public List<IPort> Ports { get; private set; }
 
         private List<ICallInformation> _onGoingCalls { get; set; }
+        private List<ICallInformation> _finishedCalls { get; set; }
 
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
-            Console.WriteLine("I'm working, just implement me");
+            var finding = from call in _onGoingCalls
+                          where e.InitiatorOfEnd == call.Caller || e.InitiatorOfEnd == call.Receiver
+                          select call;
+            foreach(var item in finding)
+            {
+                item.SetTimeOfEnding(e.TimeOfEndingOfCall);
+                item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
+                item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);
+                Console.WriteLine("Вызов закончился, время на звонок  " + item.GetDuretionOfCall());
+            }
         }
 
         public void HandleCallEvent(object sender, CallEventArgs e)
@@ -49,6 +59,7 @@ namespace Classes
         {
             Ports = ports;
             _onGoingCalls = new List<ICallInformation>();
+            _finishedCalls = new List<ICallInformation>();
             foreach (var item in ports)
             {
                 item.Calling += HandleCallEvent;

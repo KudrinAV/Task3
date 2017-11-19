@@ -16,7 +16,7 @@ namespace Classes
 
         public TimeSpan GetDuretionOfCall()
         {
-            TimeSpan res = TimeOfEndingOfCall.Subtract(TimeOfEndingOfCall);
+            TimeSpan res = TimeOfEndingOfCall.Subtract(TimeOfBeginningOfCall);
             return res;
         }
 
