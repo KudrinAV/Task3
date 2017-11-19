@@ -17,7 +17,7 @@ namespace Classes.Ports
 
         public StatusOfPort PortStatus => throw new NotImplementedException();
 
-        public StatusOfCall CallStatus => throw new NotImplementedException();
+        public StatusOfCall CallStatus { get; private set; }
 
         public event EventHandler<CallEventArgs> Answer;
         public event EventHandler<CallEventArgs> Calling;
@@ -56,7 +56,7 @@ namespace Classes.Ports
 
         public void ChangeCallStatus(StatusOfCall status)
         {
-            throw new NotImplementedException();
+            CallStatus = status;
         }
 
         public int GetIdOfTerminal()
