@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APS.cs" />
+    <Compile Include="CallInformation.cs" />
     <Compile Include="Learning Events\CustomEventArgs.cs" />
     <Compile Include="Learning Events\Subscriber.cs" />
     <Compile Include="Learning Events\TestEvents.cs" />

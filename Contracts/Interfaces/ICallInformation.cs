@@ -13,7 +13,7 @@ namespace Contracts.Interfaces
         DateTime TimeOfBeginningOfCall { get; }
         DateTime TimeOfEndingOfCall { get; }
 
-        DateTime SetTimeOfEnding();
+        void SetTimeOfEnding(DateTime time);
         TimeSpan GetDuretionOfCall();
 
     }
