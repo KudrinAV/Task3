@@ -22,7 +22,7 @@ namespace Classes
         public void HandleCallEvent(object sender, CallEventArgs e)
         {
             var finding = from port in Ports
-                          //where port1.PortStatus == StatusOfPort.Connected
+                          where port.PortStatus == StatusOfPort.Connected && port.CallStatus== StatusOfCall.Avaliable
                           select port;
             foreach (var item in finding)
             {

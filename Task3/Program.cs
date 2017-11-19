@@ -25,6 +25,7 @@ namespace Task3
             id1.ConnectToPort(port1);
             id2.ConnectToPort(port2);
 
+            //port1.ChangeCallStatus(Contracts.Enums.StatusOfCall.NotAvalibale);
             id2.Call("1234");
 
             Console.WriteLine(port1.CallStatus + " " + port2.CallStatus);

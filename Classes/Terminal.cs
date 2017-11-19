@@ -49,6 +49,8 @@ namespace Classes
         public void ConnectToPort(IPort port)
         {
             Port = port;
+            Port.ChangeCallStatus(StatusOfCall.Avaliable);
+            Port.ChangeStatusOfPort();
             CallEvent += Port.HandleCallEvent;
             Port.Answer += HandleAnswerEvent;
             EndCallEvent += Port.HandleEndCallEvent;

@@ -12,11 +12,8 @@ namespace Classes.Ports
     public class Port : IPort
     {
         public string Number { get; private set; }
-
         public int Id { get; private set; }
-
-        public StatusOfPort PortStatus => throw new NotImplementedException();
-
+        public StatusOfPort PortStatus { get; private set; }
         public StatusOfCall CallStatus { get; private set; }
 
         public event EventHandler<CallEventArgs> Answer;
@@ -30,7 +27,6 @@ namespace Classes.Ports
 
         public void GetAnswer(CallEventArgs e)
         {
-            Console.WriteLine("Hello dear" + e.ReceivingNumber);
             OnAnswer(e);
         }
 
@@ -64,9 +60,9 @@ namespace Classes.Ports
             throw new NotImplementedException();
         }
 
-        public void ChangeStatus()
+        public void ChangeStatusOfPort()
         {
-            throw new NotImplementedException();
+            PortStatus = PortStatus != StatusOfPort.NotConnected ? StatusOfPort.NotConnected : StatusOfPort.Connected;
         }
 
         public StatusOfConnect GetAnswer(string number)
@@ -77,6 +73,7 @@ namespace Classes.Ports
         public Port(string number)
         {
             Number = number;
+            PortStatus = StatusOfPort.NotConnected;
         }
         
     }

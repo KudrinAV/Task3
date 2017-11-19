@@ -24,7 +24,7 @@ namespace Contracts.Interfaces
         void GetAnswer(CallEventArgs e);
         void ChangeCallStatus(StatusOfCall status);
         //int GetIdOfTerminal();
-        //void ChangeStatus();
+        void ChangeStatusOfPort();
         //StatusOfConnect GetAnswer(string number);
     }
 }
