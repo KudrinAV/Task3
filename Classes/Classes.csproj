@@ -43,6 +43,7 @@
     <Compile Include="APSObjects\APS.cs" />
     <Compile Include="APSObjects\CallInformation.cs" />
     <Compile Include="APSObjects\Port.cs" />
+    <Compile Include="BillingSystemObjects\BillingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="APSObjects\Terminal.cs" />
   </ItemGroup>
