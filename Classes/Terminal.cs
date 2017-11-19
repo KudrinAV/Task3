@@ -38,7 +38,7 @@ namespace Classes
 
         public void EndCall()
         {
-            OnEndCall(new EndCallEventArgs(GetNumber(), "kek"));
+            OnEndCall(new EndCallEventArgs(Port));
         }
 
         public void Call(string number)
