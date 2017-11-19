@@ -12,49 +12,43 @@ namespace Classes
     public class APS : IAPS
     {
         public List<IPort> Ports { get; private set; }
-
         private List<ICallInformation> _onGoingCalls { get; set; }
         private List<ICallInformation> _finishedCalls { get; set; }
-
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
             var finding = from call in _onGoingCalls
                           where e.InitiatorOfEnd == call.Caller || e.InitiatorOfEnd == call.Receiver
                           select call;
-            foreach(var item in finding)
+            foreach (var item in finding)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
                 item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
                 item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);
-                Console.WriteLine("Вызов закончился, время на звонок  " + item.GetDuretionOfCall());
             }
         }
 
         public void HandleCallEvent(object sender, CallEventArgs e)
         {
+            int Match = 0;
             var finding = from port in Ports
-                          where port.PortStatus == StatusOfPort.Connected && port.CallStatus== StatusOfCall.Avaliable && e.PortOfCaller != port
+                          where port.PortStatus == StatusOfPort.Connected && port.CallStatus == StatusOfCall.Avaliable && port.Number == e.ReceivingNumber
                           select port;
             foreach (var item in finding)
             {
-                if (e.ReceivingNumber == item.Number)
+                Match++;
+                item.GetAnswer(e);
+                if (e.AnswerStatus == StatusOfAnswer.Answer)
                 {
-                    item.GetAnswer(e);
-                    if (e.AnswerStatus == StatusOfAnswer.Answer)
-                    {
-                        item.ChangeCallStatus(StatusOfCall.OnCall);
-                        e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
-                        _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
-                    }
-                    else Console.WriteLine("he doesn't want to hear you anymore");
+                    item.ChangeCallStatus(StatusOfCall.OnCall);
+                    e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
+                    _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
                 }
+                else e.PortOfCaller.HandleAPSMessageEvent(new MessageFromAPSEventArgs("Answer is NO"));
             }
-            //Console.WriteLine("WeCannot");
+            if(Match == 0) e.PortOfCaller.HandleAPSMessageEvent(new MessageFromAPSEventArgs("There is no such a number"));
         }
-
-
-
+        
         public APS(List<IPort> ports)
         {
             Ports = ports;

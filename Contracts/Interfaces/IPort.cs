@@ -15,11 +15,13 @@ namespace Contracts.Interfaces
         StatusOfPort PortStatus { get; }
         StatusOfCall CallStatus { get; }
 
+        void HandleAPSMessageEvent(MessageFromAPSEventArgs e);
         void HandleEndCallEvent(object o, EndCallEventArgs e);
         void HandleCallEvent(object o, CallEventArgs e);
         event EventHandler<CallEventArgs> Calling;
-        event EventHandler<CallEventArgs> Answer;
+        event EventHandler<CallEventArgs> AnswerEvent;
         event EventHandler<EndCallEventArgs> EndingCall;
+        event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
 
         void GetAnswer(CallEventArgs e);
         void ChangeCallStatus(StatusOfCall status);

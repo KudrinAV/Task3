@@ -16,9 +16,10 @@ namespace Classes.Ports
         public StatusOfPort PortStatus { get; private set; }
         public StatusOfCall CallStatus { get; private set; }
 
-        public event EventHandler<CallEventArgs> Answer;
+        public event EventHandler<CallEventArgs> AnswerEvent;
         public event EventHandler<CallEventArgs> Calling;
         public event EventHandler<EndCallEventArgs> EndingCall;
+        public event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
@@ -27,7 +28,12 @@ namespace Classes.Ports
 
         public void GetAnswer(CallEventArgs e)
         {
-            OnAnswer(e);
+            OnAnswerEvent(e);
+        }
+
+        protected virtual void OnMessageFromAPS(MessageFromAPSEventArgs e)
+        {
+            MessageFromAPS?.Invoke(this, e);
         }
 
         protected virtual void OnEndingCall(EndCallEventArgs e)
@@ -35,14 +41,19 @@ namespace Classes.Ports
             EndingCall?.Invoke(this, e);
         }
 
-        protected virtual void OnAnswer(CallEventArgs e)
+        protected virtual void OnAnswerEvent(CallEventArgs e)
         {
-            Answer?.Invoke(this, e);
+            AnswerEvent?.Invoke(this, e);
         }
         
         public void HandleCallEvent(object o,CallEventArgs e)
         {
             OnCalling(e);
+        }
+
+        public void HandleAPSMessageEvent(MessageFromAPSEventArgs e)
+        {
+            OnMessageFromAPS(e);
         }
 
         protected virtual void OnCalling(CallEventArgs e)

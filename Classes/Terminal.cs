@@ -28,12 +28,17 @@ namespace Classes
             CallEvent?.Invoke(this, e);
         }
 
-        public void HandleAnswerEvent(object sender, CallEventArgs e)
+        public void HandleAnswerEvent(object o, CallEventArgs e)
         {
             Console.WriteLine("You getting call from" + e.PortOfCaller.Number);
             Console.WriteLine("Y- accept || N- decline");
             string answer = Console.ReadLine();
             e.SetAnswerStatus(answer);
+        }
+
+        public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
+        {
+            Console.WriteLine(e.Message);
         }
 
         public void EndCall()
@@ -55,8 +60,9 @@ namespace Classes
             Port.ChangeCallStatus(StatusOfCall.Avaliable);
             Port.ChangeStatusOfPort();
             CallEvent += Port.HandleCallEvent;
-            Port.Answer += HandleAnswerEvent;
+            Port.AnswerEvent += HandleAnswerEvent;
             EndCallEvent += Port.HandleEndCallEvent;
+            Port.MessageFromAPS += HandleMessageFromAPSEvent;
         }
         
         public string GetNumber()

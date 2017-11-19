@@ -30,11 +30,11 @@ namespace Task3
             id3.ConnectToPort(port3);
 
             
-            id2.Call("1234");
+            //id2.Call("1234");
             //Thread.Sleep(5000);
-            id3.Call("1234");
-            Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
-            Thread.Sleep(5000);
+            id3.Call("1234asdas");
+            //Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
+            //Thread.Sleep(5000);
             id1.EndCall();
             Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
 
