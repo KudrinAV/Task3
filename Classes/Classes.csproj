@@ -45,6 +45,7 @@
     <Compile Include="APSObjects\Port.cs" />
     <Compile Include="BillingSystemObjects\BillingSystem.cs" />
     <Compile Include="BillingSystemObjects\Contract.cs" />
+    <Compile Include="BillingSystemObjects\LoneDiggerTariffPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="APSObjects\Terminal.cs" />
   </ItemGroup>

@@ -8,6 +8,6 @@ namespace Contracts.Interfaces
 {
     public interface IBillingSystem
     {
-        List<IContract> Contracts { get; }
+        List<ILoneDiggerTariffPlan> Contracts { get; }
     }
 }

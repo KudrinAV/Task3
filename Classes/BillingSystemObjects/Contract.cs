@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Classes.BillingSystemObjects
 {
-    public class Contract : IContract
+    public class Contract : ILoneDiggerTariffPlan
     {
         public int IdOfPort => throw new NotImplementedException();
 

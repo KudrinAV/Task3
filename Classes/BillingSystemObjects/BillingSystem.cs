@@ -9,6 +9,6 @@ namespace Classes.BillingSystemObjects
 {
     public class BillingSystem : IBillingSystem
     {
-        public List<IContract> Contracts => throw new NotImplementedException();
+        public List<ILoneDiggerTariffPlan> Contracts => throw new NotImplementedException();
     }
 }
