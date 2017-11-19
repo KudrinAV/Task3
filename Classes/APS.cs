@@ -21,9 +21,9 @@ namespace Classes
 
         public void HandleCallEvent(object sender, CallEventArgs e)
         {
-            var finding = from port1 in Ports
+            var finding = from port in Ports
                           //where port1.PortStatus == StatusOfPort.Connected
-                          select port1;
+                          select port;
             foreach (var item in finding)
             {
                 //Console.WriteLine(item.Number);
@@ -32,7 +32,8 @@ namespace Classes
                     item.GetAnswer(e);
                     if (e.AnswerStatus == StatusOfAnswer.Answer)
                     {
-                        item.Set
+                        item.ChangeCallStatus(StatusOfCall.OnCall);
+                        e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
                         Console.WriteLine("Hello to you");
                     }
                     else Console.WriteLine("he doesn't want to hear you anymore");

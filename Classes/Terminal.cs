@@ -30,6 +30,8 @@ namespace Classes
 
         public void HandleAnswerEvent(object sender, CallEventArgs e)
         {
+            Console.WriteLine("You getting call from" + e.PortOfCaller.Number);
+            Console.WriteLine("Y- accept || N- decline");
             string answer = Console.ReadLine();
             e.SetAnswerStatus(answer);
         }

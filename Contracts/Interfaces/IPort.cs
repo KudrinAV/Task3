@@ -22,7 +22,7 @@ namespace Contracts.Interfaces
         event EventHandler<EndCallEventArgs> EndingCall;
 
         void GetAnswer(CallEventArgs e);
-        //void ChangeCallStatus(StatusOfCall status);
+        void ChangeCallStatus(StatusOfCall status);
         //int GetIdOfTerminal();
         //void ChangeStatus();
         //StatusOfConnect GetAnswer(string number);
