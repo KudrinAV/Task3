@@ -10,11 +10,13 @@ namespace Contracts.CustomArgs
     {
         public string ReceivingNumber { get; private set; }
         public string CallerNumber { get; private set; }
+        public DateTime TimeOfEndingOfCall { get; private set; }
 
         public EndCallEventArgs(string caller, string reciver)
         {
             CallerNumber = caller;
             ReceivingNumber = reciver;
+            TimeOfEndingOfCall = DateTime.Now;
         }
     }
 }
