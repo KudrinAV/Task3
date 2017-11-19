@@ -10,11 +10,8 @@ namespace Classes
     public class CallInformation : ICallInformation
     {
         public IPort Caller { get; private set; }
-
         public IPort Receiver { get; private set; }
-
         public DateTime TimeOfBeginningOfCall { get; private set; }
-
         public DateTime TimeOfEndingOfCall { get; private set; }
 
         public TimeSpan GetDuretionOfCall()
@@ -26,6 +23,13 @@ namespace Classes
         public void SetTimeOfEnding(DateTime time)
         {
             TimeOfEndingOfCall = time;
+        }
+
+        public CallInformation(IPort caller, IPort receiver)
+        {
+            Caller = caller;
+            Receiver = receiver;
+            TimeOfBeginningOfCall = DateTime.Now;
         }
     }
 }

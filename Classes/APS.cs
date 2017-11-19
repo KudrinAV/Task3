@@ -13,6 +13,8 @@ namespace Classes
     {
         public List<IPort> Ports { get; private set; }
 
+        private List<ICallInformation> _onGoingCalls { get; set; }
+
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
@@ -22,11 +24,10 @@ namespace Classes
         public void HandleCallEvent(object sender, CallEventArgs e)
         {
             var finding = from port in Ports
-                          where port.PortStatus == StatusOfPort.Connected && port.CallStatus== StatusOfCall.Avaliable
+                          where port.PortStatus == StatusOfPort.Connected && port.CallStatus== StatusOfCall.Avaliable && e.PortOfCaller != port
                           select port;
             foreach (var item in finding)
             {
-                //Console.WriteLine(item.Number);
                 if (e.ReceivingNumber == item.Number)
                 {
                     item.GetAnswer(e);
@@ -34,7 +35,7 @@ namespace Classes
                     {
                         item.ChangeCallStatus(StatusOfCall.OnCall);
                         e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
-                        Console.WriteLine("Hello to you");
+                        _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
                     }
                     else Console.WriteLine("he doesn't want to hear you anymore");
                 }
@@ -47,6 +48,7 @@ namespace Classes
         public APS(List<IPort> ports)
         {
             Ports = ports;
+            _onGoingCalls = new List<ICallInformation>();
             foreach (var item in ports)
             {
                 item.Calling += HandleCallEvent;
