@@ -38,7 +38,10 @@ namespace Classes
 
         public void EndCall()
         {
-            OnEndCall(new EndCallEventArgs(Port));
+            if (Port.CallStatus == StatusOfCall.OnCall)
+            {
+                OnEndCall(new EndCallEventArgs(Port));
+            }
         }
 
         public void Call(string number)
