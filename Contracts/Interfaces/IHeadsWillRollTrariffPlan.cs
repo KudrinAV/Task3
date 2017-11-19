@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces
 {
-    interface IHeadsWillRollTrariffPlan : ITariffPlan
+    public interface IHeadsWillRollTrariffPlan : ITariffPlan
     {
     }
 }

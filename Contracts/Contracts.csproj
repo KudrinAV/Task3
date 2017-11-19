@@ -49,7 +49,9 @@
     <Compile Include="Enums\StatusOfPort.cs" />
     <Compile Include="Interfaces\DataTime.cs" />
     <Compile Include="Interfaces\IAPS.cs" />
+    <Compile Include="Interfaces\IBillingSystem.cs" />
     <Compile Include="Interfaces\ICallInformation.cs" />
+    <Compile Include="Interfaces\IContract.cs" />
     <Compile Include="Interfaces\IHeadsWillRollTrariffPlan.cs" />
     <Compile Include="Interfaces\ILoneDiggerTariffPlan.cs" />
     <Compile Include="Interfaces\IPort.cs" />

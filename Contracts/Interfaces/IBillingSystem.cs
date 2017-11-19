@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces
 {
-    public interface ILoneDiggerTariffPlan : ITariffPlan
+    public interface IBillingSystem
     {
+        List<IContract> Contracts { get; }
     }
 }
