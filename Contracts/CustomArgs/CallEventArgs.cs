@@ -1,4 +1,5 @@
 ﻿using Contracts.Enums;
+using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ namespace Contracts.CustomArgs
     public class CallEventArgs : EventArgs
     {
         public string ReceivingNumber { get; private set; }
-        public string CallerNumber { get; private set; }
+        public IPort PortOfCaller { get; private set; }
         public StatusOfAnswer AnswerStatus { get; private set; }
 
-        public CallEventArgs(string caller, string reciver)
+        public CallEventArgs(IPort port, string reciver)
         {
-            CallerNumber = caller;
+            PortOfCaller = port;
             ReceivingNumber = reciver;
         }
 
