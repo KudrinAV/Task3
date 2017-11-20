@@ -9,8 +9,8 @@ namespace Classes.BillingSystemObjects
 {
     public class Contract : IContract
     {
-        public int IdOfPort => throw new NotImplementedException();
+        public int IdOfPort { get; private set; }
 
-        public ITariffPlan Tariff => throw new NotImplementedException();
+        public ITariffPlan Tariff { get; private set; }
     }
 }

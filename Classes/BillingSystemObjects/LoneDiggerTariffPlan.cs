@@ -9,17 +9,17 @@ namespace Classes.BillingSystemObjects
 {
     public class LoneDiggerTariffPlan : ILoneDiggerTariffPlan
     {
-        public int IdOfPort => throw new NotImplementedException();
+        public int IdOfPort { get; private set; }
 
-        public ITariffPlan Tariff => throw new NotImplementedException();
+        public ITariffPlan Tariff { get; private set; }
 
-        public string Name => throw new NotImplementedException();
+        public string Name { get; private set; }
 
-        public double Balance => throw new NotImplementedException();
+        public double Balance { get; private set; }
 
-        public DataTime TimeOfSubscribing => throw new NotImplementedException();
+        public DataTime TimeOfSubscribing { get; private set; }
 
-        public DataTime TimeOfChanging => throw new NotImplementedException();
+        public DataTime TimeOfChanging { get; private set; }
 
         public double CostOfCall()
         {
