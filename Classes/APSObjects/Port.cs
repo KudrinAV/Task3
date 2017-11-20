@@ -67,21 +67,17 @@ namespace Classes.Ports
             CallStatus = status;
         }
 
-        public int GetIdOfTerminal()
-        {
-            throw new NotImplementedException();
-        }
-
         public void ChangeStatusOfPort()
         {
             PortStatus = PortStatus != StatusOfPort.NotConnected ? StatusOfPort.NotConnected : StatusOfPort.Connected;
         }
 
-        public Port(string number, int id)
+        public Port(int id, string number)
         {
             Number = number;
             Id = id;
             PortStatus = StatusOfPort.NotConnected;
+            ContractStatus = StatusOfContract.NotContracted;
         }
         
     }

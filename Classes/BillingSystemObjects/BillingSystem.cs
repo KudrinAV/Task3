@@ -9,6 +9,6 @@ namespace Classes.BillingSystemObjects
 {
     public class BillingSystem : IBillingSystem
     {
-        public List<ILoneDiggerTariffPlan> Contracts { get; private set; }
+        public List<IContract> Contracts { get; private set; }
     }
 }

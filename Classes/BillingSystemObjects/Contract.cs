@@ -12,5 +12,12 @@ namespace Classes.BillingSystemObjects
         public int IdOfPort { get; private set; }
 
         public ITariffPlan Tariff { get; private set; }
+
+        public Contract(int id , ITariffPlan tariffPlan)
+        {
+            IdOfPort = id;
+            Tariff = tariffPlan;
+
+        }
     }
 }

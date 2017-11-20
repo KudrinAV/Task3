@@ -1,4 +1,6 @@
-﻿using Contracts.CustomArgs;
+﻿using Classes.BillingSystemObjects;
+using Classes.Ports;
+using Contracts.CustomArgs;
 using Contracts.Enums;
 using Contracts.Interfaces;
 using System;
@@ -12,13 +14,65 @@ namespace Classes
     public class APS : IAPS
     {
         public List<IPort> Ports { get; private set; }
-        public BilingSystem Abonents { get; private set; }
+        public BillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
         private List<ICallInformation> _finishedCalls { get; set; }
 
         public void SignAContract(ITariffPlan tariffPlan)
         {
-            IPort freePort = Ports.Where(x=>x.PortStatus == )
+            int match = 0;
+            var finding = from port in Ports
+                          where port.ContractStatus == StatusOfContract.NotContracted
+                          select port;
+            foreach(var item in finding)
+            {
+                match++;
+                Abonents.Contracts.Add(new Contract(item.Id , tariffPlan));
+                break;
+            }
+            if(match == 0)
+            {
+                Ports.Add(new Port(Abonents.Contracts.Count, _generateNumber()));
+                Abonents.Contracts.Add(new Contract(Ports.Last().Id, tariffPlan));
+            }
+        }
+
+        private bool _checkNumber(string number)
+        {
+            var finding = from port in Ports
+                          select port.Number;
+            foreach(var item in finding)
+            {
+                if (item == number)
+                    return false;
+            }
+            return true;
+        }
+
+        private string _randomGenerator()
+        {
+            string number = null;
+            Random rnd = new Random();
+            for(int i=0; i<7; i++)
+            {
+                if (i == 0)
+                {
+                    number += rnd.Next(1, 9).ToString();
+                }
+                else number += rnd.Next(0, 9).ToString();
+            }
+            return number;
+        }
+
+        private string _generateNumber()
+        {
+            string number;
+            do
+            {
+                number = _randomGenerator();
+            } while (!_checkNumber(number));
+
+            return number;
         }
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
