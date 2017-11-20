@@ -15,6 +15,7 @@ namespace Classes.Ports
         public int Id { get; private set; }
         public StatusOfPort PortStatus { get; private set; }
         public StatusOfCall CallStatus { get; private set; }
+        public StatusOfContract ContractStatus { get; private set; }
 
         public event EventHandler<CallEventArgs> AnswerEvent;
         public event EventHandler<CallEventArgs> Calling;

@@ -14,6 +14,7 @@ namespace Contracts.Interfaces
         string Number { get; }
         StatusOfPort PortStatus { get; }
         StatusOfCall CallStatus { get; }
+        StatusOfContract ContractStatus { get; }
         
         void HandleEndCallEvent(object o, EndCallEventArgs e);
         void HandleCallEvent(object o, CallEventArgs e);
