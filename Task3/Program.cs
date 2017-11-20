@@ -34,19 +34,22 @@ namespace Task3
             Console.WriteLine(id3.GetNumber());
             id1.PutMoney(123.1);
 
-            foreach(var item in test.Ports)
-            {
-                Console.WriteLine(item.Id + " " + item.PortStatus);
-            }
+            Thread.Sleep(3000);
+            id1.ChangeTariff(tariffPlan);
 
-            //id2.Call(id3.GetNumber());
-            //Thread.Sleep(3000);
-            id1.Call(id3.GetNumber());
-            //Console.WriteLine("\n");
-            //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
-            Thread.Sleep(5000);
+            //foreach(var item in test.Ports)
+            //{
+            //    Console.WriteLine(item.Id + " " + item.PortStatus);
+            //}
 
-            id3.EndCall();
+            ////id2.Call(id3.GetNumber());
+            ////Thread.Sleep(3000);
+            //id1.Call(id3.GetNumber());
+            ////Console.WriteLine("\n");
+            ////Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+            //Thread.Sleep(5000);
+
+            //id3.EndCall();
             //Console.WriteLine("\n");
             //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
             //id3.Call("dasdasdas");

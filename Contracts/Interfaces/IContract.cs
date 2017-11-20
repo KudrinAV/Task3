@@ -13,7 +13,9 @@ namespace Contracts.Interfaces
         ITariffPlan Tariff { get; }
         double Balance { get; }
 
+        event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
         void HandleMoney(object o, BalanceEventArgs e);
         void HandleCostOfCall(object o, EndCallEventArgs e);
+        void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e);
     }
 }

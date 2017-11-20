@@ -22,6 +22,9 @@ namespace Classes.Ports
         public event EventHandler<EndCallEventArgs> EndingCall;
         public event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
         public event EventHandler<BalanceEventArgs> PuttingOnBalance;
+        public event EventHandler<ChangeTariffEventArgs> ChangingTariff;
+
+        
 
         public void HandlePutOnBalanceEvent(object o, BalanceEventArgs e)
         {
@@ -43,6 +46,11 @@ namespace Classes.Ports
             PuttingOnBalance?.Invoke(this, e);
         }
 
+        protected virtual void OnChangingTariff(ChangeTariffEventArgs e)
+        {
+            ChangingTariff?.Invoke(this, e);
+        }
+
         protected virtual void OnMessageFromAPS(MessageFromAPSEventArgs e)
         {
             MessageFromAPS?.Invoke(this, e);
@@ -57,7 +65,12 @@ namespace Classes.Ports
         {
             AnswerEvent?.Invoke(this, e);
         }
-        
+
+        public void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e)
+        {
+            OnChangingTariff(e);
+        }
+
         public void HandleCallEvent(object o,CallEventArgs e)
         {
             OnCalling(e);

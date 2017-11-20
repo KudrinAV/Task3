@@ -14,10 +14,16 @@ namespace Classes
         public event EventHandler<CallEventArgs> CallEvent;
         public event EventHandler<EndCallEventArgs> EndCallEvent;
         public event EventHandler<BalanceEventArgs> PutOnBalanceEvent;
+        public event EventHandler<ChangeTariffEventArgs> ChangeTariffEvent;
 
         public int Id { get; private set; }
 
         public IPort Port { get; private set; }
+
+        protected virtual void OnChangeTariffEvent(ChangeTariffEventArgs e)
+        {
+            ChangeTariffEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnPutOnBalanceEvent(BalanceEventArgs e)
         {
@@ -45,6 +51,11 @@ namespace Classes
         public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
         {
             Console.WriteLine(e.Message + " " + Port.Number);
+        }
+
+        public void ChangeTariff(ITariffPlan tariffPlan)
+        {
+            OnChangeTariffEvent(new ChangeTariffEventArgs(Port, tariffPlan));
         }
 
         public void PutMoney(double money)
@@ -77,6 +88,7 @@ namespace Classes
                 EndCallEvent += Port.HandleEndCallEvent;
                 Port.MessageFromAPS += HandleMessageFromAPSEvent;
                 PutOnBalanceEvent += Port.HandlePutOnBalanceEvent;
+                ChangeTariffEvent += Port.HandleChangeTariffEvent;
             }
             else Console.WriteLine("Terminal " + Id + " already has a port");
         }

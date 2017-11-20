@@ -16,10 +16,23 @@ namespace Classes.BillingSystemObjects
 
         public double Balance { get; private set; }
 
+        public DateTime TimeOfSigningContract { get; private set; }
+
+        public DateTime TimeOfChangingTariff { get; private set; }
+
+        public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
+
+        protected virtual void OnCantChangeTariffEvent(ChangeTariffEventArgs e)
+        {
+            CantChangeTariffEvent?.Invoke(this, e);
+        }
+
         public Contract(int id , ITariffPlan tariffPlan)
         {
             IdOfPort = id;
             Tariff = tariffPlan;
+            TimeOfSigningContract = DateTime.Now;
+            TimeOfChangingTariff = TimeOfSigningContract;
             Balance = 0.0;
 
         }
@@ -34,6 +47,25 @@ namespace Classes.BillingSystemObjects
         {
             Console.WriteLine("Money" + e.Money);
             Balance += e.Money;
+        }
+
+        public void CantChangeTariffPlan(ChangeTariffEventArgs e)
+        {
+            OnCantChangeTariffEvent(e);
+        }
+
+        public void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e)
+        {
+            if(e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalDays <= 30)
+            {
+                e.SetNewTime(TimeOfChangingTariff);
+                CantChangeTariffPlan(e);
+            }
+            else
+            {
+                Tariff = e.NewTariffPlan;
+                TimeOfChangingTariff = e.TimeOfChanging;
+            }
         }
     }
 }

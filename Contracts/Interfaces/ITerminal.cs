@@ -16,6 +16,7 @@ namespace Contracts.Interfaces
 
         void HandleAnswerEvent(object o, CallEventArgs e);
         void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e);
+        void ChangeTariff(ITariffPlan tariffPlan);
         void EndCall();
         string GetNumber();
         void PutMoney(double money);

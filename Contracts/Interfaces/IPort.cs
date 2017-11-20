@@ -15,16 +15,18 @@ namespace Contracts.Interfaces
         StatusOfPort PortStatus { get; }
         StatusOfCall CallStatus { get; }
         StatusOfContract ContractStatus { get; }
-        
+
+        void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e);
         void HandleEndCallEvent(object o, EndCallEventArgs e);
         void HandleCallEvent(object o, CallEventArgs e);
+        event EventHandler<ChangeTariffEventArgs> ChangingTariff;
         event EventHandler<CallEventArgs> Calling;
         event EventHandler<CallEventArgs> AnswerEvent;
         event EventHandler<EndCallEventArgs> EndingCall;
         event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
         event EventHandler<BalanceEventArgs> PuttingOnBalance;
 
-       void HandlePutOnBalanceEvent(object o, BalanceEventArgs e);
+        void HandlePutOnBalanceEvent(object o, BalanceEventArgs e);
 
         void APSMessageShow(MessageFromAPSEventArgs e);
         void GetAnswer(CallEventArgs e);

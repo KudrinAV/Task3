@@ -33,6 +33,8 @@ namespace Classes
                 Abonents.Contracts.Add(new Contract(item.Id, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
+                item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
+                Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 item.ChangeStatusOfContract();
                 Console.WriteLine("Контракт подписан");
                 return item;
@@ -43,9 +45,16 @@ namespace Classes
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
                 Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
+                Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
+                Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 Console.WriteLine("Контракт подписан");
                 return Ports.Last();
             }
+        }
+
+        public void HandleCantChangeEvent(object o , ChangeTariffEventArgs e)
+        {
+            e.Port.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
         }
 
         private bool _checkNumber(string number)
