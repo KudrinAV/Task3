@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Contracts.Enums
 {
-    public enum StatusOfPort
+    public enum StatusOfContract
     {
-        Connected, NotConnected
+        Contracted , NotContracted
     }
 }
