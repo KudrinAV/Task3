@@ -10,5 +10,6 @@ namespace Contracts.Interfaces
     {
         int IdOfPort { get; }
         ITariffPlan Tariff { get; }
+        double Balance { get; }
     }
 }

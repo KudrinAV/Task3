@@ -10,5 +10,7 @@ namespace Contracts.Interfaces
     public interface IAPS
     {
         List<IPort> Ports { get; }
+
+        void SignAContract(ITariffPlan tariffPlan);
     }
 }

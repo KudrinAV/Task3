@@ -13,6 +13,8 @@ namespace Classes.BillingSystemObjects
 
         public ITariffPlan Tariff { get; private set; }
 
+        public double Balance => throw new NotImplementedException();
+
         public Contract(int id , ITariffPlan tariffPlan)
         {
             IdOfPort = id;
