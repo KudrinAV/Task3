@@ -44,9 +44,9 @@ namespace Classes
                     e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
                     _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
                 }
-                else e.PortOfCaller.HandleAPSMessageEvent(new MessageFromAPSEventArgs("Answer is NO"));
+                else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
             }
-            if(Match == 0) e.PortOfCaller.HandleAPSMessageEvent(new MessageFromAPSEventArgs("There is no such a number"));
+            if(Match == 0) e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
         }
         
 

@@ -51,7 +51,7 @@ namespace Classes.Ports
             OnCalling(e);
         }
 
-        public void HandleAPSMessageEvent(MessageFromAPSEventArgs e)
+        public void APSMessageShow(MessageFromAPSEventArgs e)
         {
             OnMessageFromAPS(e);
         }

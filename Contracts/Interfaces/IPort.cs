@@ -14,8 +14,7 @@ namespace Contracts.Interfaces
         string Number { get; }
         StatusOfPort PortStatus { get; }
         StatusOfCall CallStatus { get; }
-
-        void HandleAPSMessageEvent(MessageFromAPSEventArgs e);
+        
         void HandleEndCallEvent(object o, EndCallEventArgs e);
         void HandleCallEvent(object o, CallEventArgs e);
         event EventHandler<CallEventArgs> Calling;
@@ -23,6 +22,8 @@ namespace Contracts.Interfaces
         event EventHandler<EndCallEventArgs> EndingCall;
         event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
 
+
+        void APSMessageShow(MessageFromAPSEventArgs e);
         void GetAnswer(CallEventArgs e);
         void ChangeCallStatus(StatusOfCall status);
         //int GetIdOfTerminal();
