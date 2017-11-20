@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.CustomArgs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Contracts.Interfaces
         int IdOfPort { get; }
         ITariffPlan Tariff { get; }
         double Balance { get; }
+
+        void HandleMoney(object o, BalanceEventArgs e);
     }
 }

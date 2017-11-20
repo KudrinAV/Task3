@@ -21,6 +21,12 @@ namespace Classes.Ports
         public event EventHandler<CallEventArgs> Calling;
         public event EventHandler<EndCallEventArgs> EndingCall;
         public event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
+        public event EventHandler<BalanceEventArgs> PuttingOnBalance;
+
+        public void HandlePutOnBalanceEvent(object o, BalanceEventArgs e)
+        {
+            OnPuttingOnBalance(e);
+        }
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
@@ -30,6 +36,11 @@ namespace Classes.Ports
         public void GetAnswer(CallEventArgs e)
         {
             OnAnswerEvent(e);
+        }
+
+        public virtual void OnPuttingOnBalance(BalanceEventArgs e)
+        {
+            PuttingOnBalance?.Invoke(this, e);
         }
 
         protected virtual void OnMessageFromAPS(MessageFromAPSEventArgs e)

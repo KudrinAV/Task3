@@ -1,4 +1,5 @@
-﻿using Contracts.Interfaces;
+﻿using Contracts.CustomArgs;
+using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,19 @@ namespace Classes.BillingSystemObjects
 
         public ITariffPlan Tariff { get; private set; }
 
-        public double Balance => throw new NotImplementedException();
+        public double Balance { get; private set; }
 
         public Contract(int id , ITariffPlan tariffPlan)
         {
             IdOfPort = id;
             Tariff = tariffPlan;
 
+        }
+
+        public void HandleMoney(object o, BalanceEventArgs e)
+        {
+            Console.WriteLine("Money" + e.Money);
+            Balance += e.Money;
         }
     }
 }

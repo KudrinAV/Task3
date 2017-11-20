@@ -13,10 +13,16 @@ namespace Classes
     {
         public event EventHandler<CallEventArgs> CallEvent;
         public event EventHandler<EndCallEventArgs> EndCallEvent;
+        public event EventHandler<BalanceEventArgs> PutOnBalanceEvent;
 
         public int Id { get; private set; }
 
         public IPort Port { get; private set; }
+
+        protected virtual void OnPutOnBalanceEvent(BalanceEventArgs e)
+        {
+            PutOnBalanceEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnEndCall(EndCallEventArgs e)
         {
@@ -41,6 +47,11 @@ namespace Classes
             Console.WriteLine(e.Message + " " + Port.Number);
         }
 
+        public void PutMoney(double money)
+        {
+            OnPutOnBalanceEvent(new BalanceEventArgs(Port, money));
+        }
+
         public void EndCall()
         {
             if (Port.CallStatus == StatusOfCall.OnCall)
@@ -56,18 +67,23 @@ namespace Classes
 
         public void ConnectToPort(IPort port)
         {
-            Port = port;
-            Port.ChangeCallStatus(StatusOfCall.Avaliable);
-            Port.ChangeStatusOfPort();
-            CallEvent += Port.HandleCallEvent;
-            Port.AnswerEvent += HandleAnswerEvent;
-            EndCallEvent += Port.HandleEndCallEvent;
-            Port.MessageFromAPS += HandleMessageFromAPSEvent;
+            if (Port==null)
+            {
+                Port = port;
+                Port.ChangeCallStatus(StatusOfCall.Avaliable);
+                Port.ChangeStatusOfPort();
+                CallEvent += Port.HandleCallEvent;
+                Port.AnswerEvent += HandleAnswerEvent;
+                EndCallEvent += Port.HandleEndCallEvent;
+                Port.MessageFromAPS += HandleMessageFromAPSEvent;
+                PutOnBalanceEvent += Port.HandlePutOnBalanceEvent;
+            }
+            else Console.WriteLine("Terminal " + Id + " already has a port");
         }
 
         public void DissconnectFromPort()
         {
-            if (Port != null)
+            if (Port!=null)
             {
                 Port.ChangeCallStatus(StatusOfCall.NotAvalibale);
                 Port.ChangeStatusOfPort();

@@ -11,6 +11,16 @@ namespace Classes.BillingSystemObjects
     {
         public List<IContract> Contracts { get; private set; }
 
+        public IContract FindContract(int id)
+        {
+            foreach(var item in Contracts)
+            {
+                if(item.IdOfPort == id)
+                return item;
+            }
+            return null;
+        }
+
         public BillingSystem()
         {
             Contracts = new List<IContract>();

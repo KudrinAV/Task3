@@ -18,6 +18,7 @@ namespace Contracts.Interfaces
         void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e);
         void EndCall();
         string GetNumber();
+        void PutMoney(double money);
         void Call(string number);
         void ConnectToPort(IPort port);
         void DissconnectFromPort();

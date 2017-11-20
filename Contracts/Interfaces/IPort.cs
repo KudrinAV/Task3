@@ -22,7 +22,9 @@ namespace Contracts.Interfaces
         event EventHandler<CallEventArgs> AnswerEvent;
         event EventHandler<EndCallEventArgs> EndingCall;
         event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
+        event EventHandler<BalanceEventArgs> PuttingOnBalance;
 
+       void HandlePutOnBalanceEvent(object o, BalanceEventArgs e);
 
         void APSMessageShow(MessageFromAPSEventArgs e);
         void GetAnswer(CallEventArgs e);

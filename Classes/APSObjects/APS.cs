@@ -18,6 +18,7 @@ namespace Classes
         private List<ICallInformation> _onGoingCalls { get; set; }
         private List<ICallInformation> _finishedCalls { get; set; }
 
+
         public void AddPort()
         {
             Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
@@ -46,12 +47,14 @@ namespace Classes
             foreach(var item in finding)
             {
                 Abonents.Contracts.Add(new Contract(item.Id , tariffPlan));
+                item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.ChangeStatusOfContract();
                 Console.WriteLine("Контракт подписан");
                 return item;
             }
             Abonents.Contracts.Add(new Contract(_giveANotConnectedPort().Id, tariffPlan));
             Ports.Last().ChangeStatusOfContract();
+            Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
             Console.WriteLine("Контракт подписан");
             return Ports.Last();
         }

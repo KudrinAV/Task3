@@ -27,30 +27,36 @@ namespace Task3
             id1.ConnectToPort(test.SignAContract(tariffPlan));
             id2.ConnectToPort(test.SignAContract(tariffPlan));
             id3.ConnectToPort(test.SignAContract(tariffPlan));
-
-
+            Console.WriteLine(id1.GetNumber());
+            id1.ConnectToPort(test.SignAContract(tariffPlan));
             Console.WriteLine(id1.GetNumber());
             Console.WriteLine(id2.GetNumber());
             Console.WriteLine(id3.GetNumber());
+            id1.PutMoney(123.1);
 
-            id2.Call(id3.GetNumber());
-            Thread.Sleep(3000);
-            id1.Call(id3.GetNumber());
-            Console.WriteLine("\n");
-            Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
-            Thread.Sleep(3000);
+            foreach(var item in test.Ports)
+            {
+                Console.WriteLine(item.Id + " " + item.PortStatus);
+            }
 
-            id3.EndCall();
-            Console.WriteLine("\n");
-            Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
-            id3.Call("dasdasdas");
-            id3.Call(id1.GetNumber());
+            //id2.Call(id3.GetNumber());
+            //Thread.Sleep(3000);
+            //id1.Call(id3.GetNumber());
+            //Console.WriteLine("\n");
+            //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+            //Thread.Sleep(3000);
 
-            Console.WriteLine("\n");
-            Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+            //id3.EndCall();
+            //Console.WriteLine("\n");
+            //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+            //id3.Call("dasdasdas");
+            //id3.Call(id1.GetNumber());
 
-            id1.EndCall();
-            Console.WriteLine("\n");
+            //Console.WriteLine("\n");
+            //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+
+            //id1.EndCall();
+            //Console.WriteLine("\n");
             Console.WriteLine(id1.Port.CallStatus + " " + id1.Port.CallStatus + " " + id1.Port.CallStatus);
 
 
