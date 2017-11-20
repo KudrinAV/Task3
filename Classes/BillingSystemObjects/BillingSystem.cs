@@ -1,4 +1,5 @@
-﻿using Contracts.Interfaces;
+﻿using Contracts.CustomArgs;
+using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,19 @@ namespace Classes.BillingSystemObjects
 
         public List<ICallInformation> FinishedCalls { get; private set; }
 
+        private List<string> _findHistory(int id)
+        {
+            List<string> resultList = new List<string>();
+            var finding = from item in FinishedCalls
+                          where item.Caller.Id == id || item.Receiver.Id == id
+                          select item;
+            foreach(var item in finding)
+            {
+                resultList.Add(item.Caller.Number + " " + item.Receiver.Number + " " + item.GetDuretionOfCall().Minutes);
+            }
+            return resultList;
+        }
+
         public IContract FindContract(int id)
         {
             foreach(var item in Contracts)
@@ -21,6 +35,11 @@ namespace Classes.BillingSystemObjects
                 return item;
             }
             return null;
+        }
+
+        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
+        {
+            e.SetHistory(_findHistory(e.IdOfPort));
         }
 
         public BillingSystem()

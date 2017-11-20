@@ -23,6 +23,7 @@ namespace Classes.Ports
         public event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
         public event EventHandler<BalanceEventArgs> PuttingOnBalance;
         public event EventHandler<ChangeTariffEventArgs> ChangingTariff;
+        public event EventHandler<GetHistoryEventArgs> GettingHistory;
 
         
 
@@ -41,7 +42,12 @@ namespace Classes.Ports
             OnAnswerEvent(e);
         }
 
-        public virtual void OnPuttingOnBalance(BalanceEventArgs e)
+        protected virtual void OnGettingHistory(GetHistoryEventArgs e)
+        {
+            GettingHistory?.Invoke(this, e);
+        }
+
+        protected virtual void OnPuttingOnBalance(BalanceEventArgs e)
         {
             PuttingOnBalance?.Invoke(this, e);
         }
@@ -64,6 +70,11 @@ namespace Classes.Ports
         protected virtual void OnAnswerEvent(CallEventArgs e)
         {
             AnswerEvent?.Invoke(this, e);
+        }
+
+        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
+        {
+            OnGettingHistory(e);
         }
 
         public void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e)

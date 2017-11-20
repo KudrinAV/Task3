@@ -34,6 +34,8 @@ namespace Classes
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
+                item.GettingHistory += Abonents.HandleGetHistoryEvent;
+                item.GettingHistory += HandleGetHistoryEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 item.ChangeStatusOfContract();
                 Console.WriteLine("Контракт подписан");
@@ -45,6 +47,8 @@ namespace Classes
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
                 Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
+                Ports.Last().GettingHistory += Abonents.HandleGetHistoryEvent;
+                Ports.Last().GettingHistory += HandleGetHistoryEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 Console.WriteLine("Контракт подписан");
@@ -55,6 +59,12 @@ namespace Classes
         public void HandleCantChangeEvent(object o , ChangeTariffEventArgs e)
         {
             e.Port.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
+        }
+
+        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
+        {
+            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            item.APSMessageShow(new MessageFromAPSEventArgs(e.History));
         }
 
         private bool _checkNumber(string number)
@@ -138,19 +148,6 @@ namespace Classes
                 else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
             }
             else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
-        }
-
-
-
-        public APS(List<IPort> ports)
-        {
-            Ports = ports;
-            _onGoingCalls = new List<ICallInformation>();
-            foreach (var item in ports)
-            {
-                item.Calling += HandleCallEvent;
-                item.EndingCall += HandleEndCallEvent;
-            }
         }
 
         public APS()

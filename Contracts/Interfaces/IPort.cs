@@ -25,9 +25,10 @@ namespace Contracts.Interfaces
         event EventHandler<EndCallEventArgs> EndingCall;
         event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
         event EventHandler<BalanceEventArgs> PuttingOnBalance;
+        event EventHandler<GetHistoryEventArgs> GettingHistory;
 
         void HandlePutOnBalanceEvent(object o, BalanceEventArgs e);
-
+        void HandleGetHistoryEvent(object o, GetHistoryEventArgs e);
         void APSMessageShow(MessageFromAPSEventArgs e);
         void GetAnswer(CallEventArgs e);
         void ChangeCallStatus(StatusOfCall status);

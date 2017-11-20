@@ -44,6 +44,7 @@
     <Compile Include="CustomArgs\CallEventArgs.cs" />
     <Compile Include="CustomArgs\ChangeTariffEventArgs.cs" />
     <Compile Include="CustomArgs\EndCallEventArgs.cs" />
+    <Compile Include="CustomArgs\GetHistoryEventArgs.cs" />
     <Compile Include="CustomArgs\MessageFromAPSEventArgs.cs" />
     <Compile Include="Enums\StatusOfAnswer.cs" />
     <Compile Include="Enums\StatusOfCall.cs" />

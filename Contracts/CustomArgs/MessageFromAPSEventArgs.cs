@@ -10,9 +10,16 @@ namespace Contracts.CustomArgs
     {
         public string Message { get; private set; }
 
+        public List<String> History { get; private set; }
+
         public MessageFromAPSEventArgs(string message)
         {
             Message = message;
+        }
+
+        public MessageFromAPSEventArgs(List<string> history)
+        {
+            History = history;
         }
     }
 }
