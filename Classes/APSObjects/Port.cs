@@ -72,6 +72,11 @@ namespace Classes.Ports
             PortStatus = PortStatus != StatusOfPort.NotConnected ? StatusOfPort.NotConnected : StatusOfPort.Connected;
         }
 
+        public void ChangeStatusOfContract()
+        {
+            ContractStatus = ContractStatus != StatusOfContract.NotContracted ? StatusOfContract.NotContracted : StatusOfContract.Contracted;
+        }
+
         public Port(int id, string number)
         {
             Number = number;

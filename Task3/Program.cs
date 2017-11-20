@@ -14,6 +14,39 @@ namespace Task3
     {
         static void Main(string[] args)
         {
+            IAPS test = new APS();
+            test.AddPort();
+            test.AddPort();
+
+            foreach(var item in test.Ports)
+            {
+                Console.WriteLine(item.Number);
+            }
+
+            ITerminal id1 = new Terminal(1);
+            ITerminal id2 = new Terminal(2);
+            ITerminal id3 = new Terminal(3);
+
+            id1.ConnectToPort(test.GiveANotConnectedPort());
+            id2.ConnectToPort(test.GiveANotConnectedPort());
+            id3.ConnectToPort(test.GiveANotConnectedPort());
+
+            foreach(var item in test.Ports)
+            {
+                Console.WriteLine(item.Id + " " + item.Number);
+            }
+
+            Thread.Sleep(5000);
+            id1.Call(id2.GetNumber());
+            //Console.WriteLine(id1.Port.)
+            Thread.Sleep(5000);
+            id1.EndCall();
+            id2.Call("sadasd");
+            
+
+
+
+
             //IPort port1 = new Port("1234");
             //IPort port2 = new Port("1253");
             //IPort port3 = new Port("1263");
@@ -29,7 +62,7 @@ namespace Task3
             //id3.ConnectToPort(port3);
 
             //id2.DissconnectFromPort();
-            
+
             //id2.Call("1234");
             ////Thread.Sleep(5000);
             //id3.Call("1234");

@@ -27,7 +27,7 @@ namespace Contracts.Interfaces
         void APSMessageShow(MessageFromAPSEventArgs e);
         void GetAnswer(CallEventArgs e);
         void ChangeCallStatus(StatusOfCall status);
-        //int GetIdOfTerminal();
+        void ChangeStatusOfContract();
         void ChangeStatusOfPort();
         //StatusOfConnect GetAnswer(string number);
     }

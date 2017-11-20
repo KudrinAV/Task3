@@ -38,7 +38,7 @@ namespace Classes
 
         public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + " " + Port.Number);
         }
 
         public void EndCall()

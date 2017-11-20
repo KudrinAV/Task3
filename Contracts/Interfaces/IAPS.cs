@@ -11,6 +11,7 @@ namespace Contracts.Interfaces
     {
         List<IPort> Ports { get; }
 
+        IPort GiveANotConnectedPort();
         void AddPort();
         void SignAContract(ITariffPlan tariffPlan);
     }

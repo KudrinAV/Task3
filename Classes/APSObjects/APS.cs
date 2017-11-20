@@ -21,6 +21,25 @@ namespace Classes
         public void AddPort()
         {
             Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
+            Ports.Last().Calling += HandleCallEvent;
+            Ports.Last().EndingCall += HandleEndCallEvent;
+        }
+
+        public IPort GiveANotConnectedPort()
+        {
+            int i = 0;
+            foreach(var item in Ports)
+            {
+                i++;
+                if (item.ContractStatus == StatusOfContract.NotContracted)
+                {
+                    item.ChangeStatusOfContract();
+                    return item;
+                }
+            }
+            AddPort();
+            return Ports.Last();
+
         }
 
         public void SignAContract(ITariffPlan tariffPlan)
@@ -38,6 +57,8 @@ namespace Classes
             if(match == 0)
             {
                 Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
+                Ports.Last().Calling += HandleCallEvent;
+                Ports.Last().EndingCall += HandleEndCallEvent;
                 Abonents.Contracts.Add(new Contract(Ports.Last().Id, tariffPlan));
             }
         }
@@ -126,6 +147,13 @@ namespace Classes
                 item.Calling += HandleCallEvent;
                 item.EndingCall += HandleEndCallEvent;
             }
+        }
+
+        public APS()
+        {
+            Ports = new List<IPort>();
+            _onGoingCalls = new List<ICallInformation>();
+            _finishedCalls = new List<ICallInformation>();
         }
     }
 }
