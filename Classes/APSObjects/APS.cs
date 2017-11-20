@@ -25,42 +25,33 @@ namespace Classes
             Ports.Last().EndingCall += HandleEndCallEvent;
         }
 
-        public IPort GiveANotConnectedPort()
+        private IPort _giveANotConnectedPort()
         {
-            int i = 0;
             foreach(var item in Ports)
             {
-                i++;
                 if (item.ContractStatus == StatusOfContract.NotContracted)
                 {
-                    item.ChangeStatusOfContract();
                     return item;
                 }
             }
             AddPort();
             return Ports.Last();
-
         }
 
-        public void SignAContract(ITariffPlan tariffPlan)
+        public IPort SignAContract(ITariffPlan tariffPlan)
         {
-            int match = 0;
             var finding = from port in Ports
                           where port.ContractStatus == StatusOfContract.NotContracted
                           select port;
             foreach(var item in finding)
             {
-                match++;
-                Abonents.Contracts.Add(new Contract(item.Id , tariffPlan));
-                break;
+                Abonents.Contracts.Add(new Contract(item , tariffPlan));
+                Console.WriteLine("Контракт подписан");
+                return item;
             }
-            if(match == 0)
-            {
-                Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
-                Ports.Last().Calling += HandleCallEvent;
-                Ports.Last().EndingCall += HandleEndCallEvent;
-                Abonents.Contracts.Add(new Contract(Ports.Last().Id, tariffPlan));
-            }
+            Abonents.Contracts.Add(new Contract(_giveANotConnectedPort(), tariffPlan));
+            Console.WriteLine("Контракт подписан");
+            return Ports.Last();
         }
 
         private bool _checkNumber(string number)
@@ -114,25 +105,40 @@ namespace Classes
             }
         }
 
+        private bool _isNumberExist(string number)
+        {
+            foreach(var item in Ports)
+            {
+                if (item.Number == number) return true;
+            }
+            return false;
+        }
+
         public void HandleCallEvent(object o, CallEventArgs e)
         {
-            int Match = 0;
-            var finding = from port in Ports
-                          where port.PortStatus == StatusOfPort.Connected && port.CallStatus == StatusOfCall.Avaliable && port.Number == e.ReceivingNumber
-                          select port;
-            foreach (var item in finding)
+            int match = 0;
+            if (_isNumberExist(e.ReceivingNumber))
             {
-                Match++;
-                item.GetAnswer(e);
-                if (e.AnswerStatus == StatusOfAnswer.Answer)
+                match++;
+                var finding = from port in Ports
+                              where port.PortStatus == StatusOfPort.Connected && port.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == port.Number
+                              select port;
+                foreach (var item in finding)
                 {
-                    item.ChangeCallStatus(StatusOfCall.OnCall);
-                    e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
-                    _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
+                    match++;
+                    item.GetAnswer(e);
+                    if (e.AnswerStatus == StatusOfAnswer.Answer)
+                    {
+                        Console.WriteLine("Hello");
+                        item.ChangeCallStatus(StatusOfCall.OnCall);
+                        e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
+                        _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
+                    }
+                    else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
                 }
-                else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
+                if (match == 1) e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
             }
-            if(Match == 0) e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
+            if(match==0) e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
         }
         
 
@@ -152,6 +158,7 @@ namespace Classes
         public APS()
         {
             Ports = new List<IPort>();
+            Abonents = new BillingSystem();
             _onGoingCalls = new List<ICallInformation>();
             _finishedCalls = new List<ICallInformation>();
         }

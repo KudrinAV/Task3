@@ -10,5 +10,10 @@ namespace Classes.BillingSystemObjects
     public class BillingSystem : IBillingSystem
     {
         public List<IContract> Contracts { get; private set; }
+
+        public BillingSystem()
+        {
+            Contracts = new List<IContract>();
+        }
     }
 }

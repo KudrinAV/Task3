@@ -8,7 +8,7 @@ namespace Contracts.Interfaces
 {
     public interface IContract
     {
-        int IdOfPort { get; }
+        IPort Port { get; }
         ITariffPlan Tariff { get; }
         double Balance { get; }
     }

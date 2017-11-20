@@ -1,4 +1,5 @@
 ﻿using Classes;
+using Classes.BillingSystemObjects;
 using Classes.Ports;
 using Contracts.Interfaces;
 using System;
@@ -15,61 +16,89 @@ namespace Task3
         static void Main(string[] args)
         {
             IAPS test = new APS();
-            test.AddPort();
-            test.AddPort();
 
-            foreach(var item in test.Ports)
-            {
-                Console.WriteLine(item.Number);
-            }
+            ITariffPlan tariffPlan = new LoneDiggerTariffPlan();
+
 
             ITerminal id1 = new Terminal(1);
             ITerminal id2 = new Terminal(2);
             ITerminal id3 = new Terminal(3);
 
-            id1.ConnectToPort(test.GiveANotConnectedPort());
-            id2.ConnectToPort(test.GiveANotConnectedPort());
-            id3.ConnectToPort(test.GiveANotConnectedPort());
+            id1.ConnectToPort(test.SignAContract(tariffPlan));
+            id2.ConnectToPort(test.SignAContract(tariffPlan));
+            id3.ConnectToPort(test.SignAContract(tariffPlan));
 
-            foreach(var item in test.Ports)
-            {
-                Console.WriteLine(item.Id + " " + item.Number);
-            }
 
-            Thread.Sleep(5000);
-            id1.Call(id2.GetNumber());
-            //Console.WriteLine(id1.Port.)
-            Thread.Sleep(5000);
+            Console.WriteLine(id1.GetNumber());
+            Console.WriteLine(id2.GetNumber());
+            Console.WriteLine(id3.GetNumber());
+
+            id2.Call(id3.GetNumber());
+            Thread.Sleep(3000);
+            id1.Call(id3.GetNumber());
+            Console.WriteLine("\n");
+            Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+            Thread.Sleep(3000);
+
+            id3.EndCall();
+            Console.WriteLine("\n");
+            Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+            id3.Call("dasdasdas");
+            id3.Call(id1.GetNumber());
+
+            Console.WriteLine("\n");
+            Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
+
             id1.EndCall();
-            id2.Call("sadasd");
-            
+            Console.WriteLine("\n");
+            Console.WriteLine(id1.Port.CallStatus + " " + id1.Port.CallStatus + " " + id1.Port.CallStatus);
 
 
 
 
-            //IPort port1 = new Port("1234");
-            //IPort port2 = new Port("1253");
-            //IPort port3 = new Port("1263");
-            //Call the method that raises the event.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //IAPS test = new APS();
+            //test.AddPort();
+            //test.AddPort();
+
+            //foreach(var item in test.Ports)
+            //{
+            //    Console.WriteLine(item.Number);
+            //}
+
             //ITerminal id1 = new Terminal(1);
             //ITerminal id2 = new Terminal(2);
             //ITerminal id3 = new Terminal(3);
-            //List<IPort> list = new List<IPort> { port1, port2, port3 };
-            //IAPS test = new APS(list);
 
-            //id1.ConnectToPort(port1);
-            //id2.ConnectToPort(port2);
-            //id3.ConnectToPort(port3);
+            //id1.ConnectToPort(test.GiveANotConnectedPort());
+            //id2.ConnectToPort(test.GiveANotConnectedPort());
+            //id3.ConnectToPort(test.GiveANotConnectedPort());
 
-            //id2.DissconnectFromPort();
+            //foreach(var item in test.Ports)
+            //{
+            //    Console.WriteLine(item.Id + " " + item.Number);
+            //}
 
-            //id2.Call("1234");
-            ////Thread.Sleep(5000);
-            //id3.Call("1234");
-            ////Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
-            ////Thread.Sleep(5000);
+            //Thread.Sleep(5000);
+            //id1.Call(id2.GetNumber());
+            ////Console.WriteLine(id1.Port.)
+            //Thread.Sleep(5000);
             //id1.EndCall();
-            //Console.WriteLine(port1.CallStatus + " " + port2.CallStatus + " " + port3.CallStatus);
+            //id2.Call("sadasd");
+
 
             // Keep the console window open
             Console.WriteLine("Press Enter to close this window.");
