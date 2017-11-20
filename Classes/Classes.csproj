@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APSObjects\APS.cs" />
+    <Compile Include="APSObjects\BilingSystem.cs" />
     <Compile Include="APSObjects\CallInformation.cs" />
     <Compile Include="APSObjects\Port.cs" />
     <Compile Include="BillingSystemObjects\BillingSystem.cs" />

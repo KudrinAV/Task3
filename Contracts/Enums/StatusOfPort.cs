@@ -8,6 +8,6 @@ namespace Contracts.Enums
 {
     public enum StatusOfPort
     {
-        Connected, NotConnected
+        Connected, NotConnected, Contracted , NotContracted
     }
 }

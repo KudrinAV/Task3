@@ -45,7 +45,6 @@
     <Compile Include="CustomArgs\MessageFromAPSEventArgs.cs" />
     <Compile Include="Enums\StatusOfAnswer.cs" />
     <Compile Include="Enums\StatusOfCall.cs" />
-    <Compile Include="Enums\StatusOfConnect.cs" />
     <Compile Include="Enums\StatusOfPort.cs" />
     <Compile Include="Interfaces\DataTime.cs" />
     <Compile Include="Interfaces\IAPS.cs" />

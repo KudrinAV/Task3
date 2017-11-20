@@ -12,8 +12,14 @@ namespace Classes
     public class APS : IAPS
     {
         public List<IPort> Ports { get; private set; }
+        public BilingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
         private List<ICallInformation> _finishedCalls { get; set; }
+
+        public void SignAContract(ITariffPlan tariffPlan)
+        {
+            IPort freePort = Ports.Where(x=>x.PortStatus == )
+        }
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
@@ -28,7 +34,7 @@ namespace Classes
             }
         }
 
-        public void HandleCallEvent(object sender, CallEventArgs e)
+        public void HandleCallEvent(object o, CallEventArgs e)
         {
             int Match = 0;
             var finding = from port in Ports
