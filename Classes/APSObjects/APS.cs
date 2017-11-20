@@ -18,6 +18,11 @@ namespace Classes
         private List<ICallInformation> _onGoingCalls { get; set; }
         private List<ICallInformation> _finishedCalls { get; set; }
 
+        public void AddPort()
+        {
+            Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
+        }
+
         public void SignAContract(ITariffPlan tariffPlan)
         {
             int match = 0;
@@ -32,7 +37,7 @@ namespace Classes
             }
             if(match == 0)
             {
-                Ports.Add(new Port(Abonents.Contracts.Count, _generateNumber()));
+                Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
                 Abonents.Contracts.Add(new Contract(Ports.Last().Id, tariffPlan));
             }
         }
