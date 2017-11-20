@@ -45,11 +45,13 @@ namespace Classes
                           select port;
             foreach(var item in finding)
             {
-                Abonents.Contracts.Add(new Contract(item , tariffPlan));
+                Abonents.Contracts.Add(new Contract(item.Id , tariffPlan));
+                item.ChangeStatusOfContract();
                 Console.WriteLine("Контракт подписан");
                 return item;
             }
-            Abonents.Contracts.Add(new Contract(_giveANotConnectedPort(), tariffPlan));
+            Abonents.Contracts.Add(new Contract(_giveANotConnectedPort().Id, tariffPlan));
+            Ports.Last().ChangeStatusOfContract();
             Console.WriteLine("Контракт подписан");
             return Ports.Last();
         }

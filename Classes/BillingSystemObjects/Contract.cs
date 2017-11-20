@@ -9,17 +9,16 @@ namespace Classes.BillingSystemObjects
 {
     public class Contract : IContract
     {
-        public IPort Port { get; private set; }
+        public int IdOfPort { get; private set; }
 
         public ITariffPlan Tariff { get; private set; }
 
         public double Balance => throw new NotImplementedException();
 
-        public Contract(IPort port , ITariffPlan tariffPlan)
+        public Contract(int id , ITariffPlan tariffPlan)
         {
-            Port = port;
+            IdOfPort = id;
             Tariff = tariffPlan;
-            port.ChangeStatusOfContract();
 
         }
     }
