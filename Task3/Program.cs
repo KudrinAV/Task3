@@ -41,12 +41,12 @@ namespace Task3
 
             //id2.Call(id3.GetNumber());
             //Thread.Sleep(3000);
-            //id1.Call(id3.GetNumber());
+            id1.Call(id3.GetNumber());
             //Console.WriteLine("\n");
             //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
             //Thread.Sleep(3000);
 
-            //id3.EndCall();
+            id3.EndCall();
             //Console.WriteLine("\n");
             //Console.WriteLine(id1.Port.CallStatus + " " + id2.Port.CallStatus + " " + id3.Port.CallStatus);
             //id3.Call("dasdasdas");

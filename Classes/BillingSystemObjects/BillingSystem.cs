@@ -11,6 +11,8 @@ namespace Classes.BillingSystemObjects
     {
         public List<IContract> Contracts { get; private set; }
 
+        public List<ICallInformation> FinishedCalls { get; private set; }
+
         public IContract FindContract(int id)
         {
             foreach(var item in Contracts)
@@ -24,6 +26,7 @@ namespace Classes.BillingSystemObjects
         public BillingSystem()
         {
             Contracts = new List<IContract>();
+            FinishedCalls = new List<ICallInformation>();
         }
     }
 }

@@ -23,6 +23,11 @@ namespace Classes.BillingSystemObjects
 
         }
 
+        public void HandleCostOfCall(object o, EndCallEventArgs e)
+        {
+
+        }
+
         public void HandleMoney(object o, BalanceEventArgs e)
         {
             Console.WriteLine("Money" + e.Money);

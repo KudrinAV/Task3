@@ -16,7 +16,6 @@ namespace Classes
         public List<IPort> Ports { get; private set; }
         public BillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
-        private List<ICallInformation> _finishedCalls { get; set; }
 
 
         public void AddPort()
@@ -28,7 +27,7 @@ namespace Classes
 
         private IPort _giveANotConnectedPort()
         {
-            foreach(var item in Ports)
+            foreach (var item in Ports)
             {
                 if (item.ContractStatus == StatusOfContract.NotContracted)
                 {
@@ -44,9 +43,9 @@ namespace Classes
             var finding = from port in Ports
                           where port.ContractStatus == StatusOfContract.NotContracted
                           select port;
-            foreach(var item in finding)
+            foreach (var item in finding)
             {
-                Abonents.Contracts.Add(new Contract(item.Id , tariffPlan));
+                Abonents.Contracts.Add(new Contract(item.Id, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.ChangeStatusOfContract();
                 Console.WriteLine("Контракт подписан");
@@ -63,7 +62,7 @@ namespace Classes
         {
             var finding = from port in Ports
                           select port.Number;
-            foreach(var item in finding)
+            foreach (var item in finding)
             {
                 if (item == number)
                     return false;
@@ -75,7 +74,7 @@ namespace Classes
         {
             string number = null;
             Random rnd = new Random();
-            for(int i=0; i<7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 if (i == 0)
                 {
@@ -99,20 +98,29 @@ namespace Classes
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
-            var finding = from call in _onGoingCalls
-                          where e.InitiatorOfEnd == call.Caller || e.InitiatorOfEnd == call.Receiver
-                          select call;
-            foreach (var item in finding)
+            var item = _findOngoingCall(e.InitiatorOfEnd);
+            if (item != null)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
+                Abonents.FinishedCalls.Add(item);
+                _onGoingCalls.Remove(item);
                 item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
                 item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);
             }
         }
 
+        private ICallInformation _findOngoingCall(IPort port)
+        {
+            foreach (var item in _onGoingCalls)
+            {
+                if (port == item.Caller || port == item.Receiver) return item;
+            }
+            return null;
+        }
+
         private bool _isNumberExist(string number)
         {
-            foreach(var item in Ports)
+            foreach (var item in Ports)
             {
                 if (item.Number == number) return true;
             }
@@ -143,16 +151,15 @@ namespace Classes
                 }
                 if (match == 1) e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
             }
-            if(match==0) e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
+            else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
         }
-        
+
 
 
         public APS(List<IPort> ports)
         {
             Ports = ports;
             _onGoingCalls = new List<ICallInformation>();
-            _finishedCalls = new List<ICallInformation>();
             foreach (var item in ports)
             {
                 item.Calling += HandleCallEvent;
@@ -165,7 +172,6 @@ namespace Classes
             Ports = new List<IPort>();
             Abonents = new BillingSystem();
             _onGoingCalls = new List<ICallInformation>();
-            _finishedCalls = new List<ICallInformation>();
         }
     }
 }
