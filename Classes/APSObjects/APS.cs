@@ -32,6 +32,7 @@ namespace Classes
             {
                 Abonents.Contracts.Add(new Contract(item.Id, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
+                item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
                 item.ChangeStatusOfContract();
                 Console.WriteLine("Контракт подписан");
                 return item;
@@ -41,6 +42,7 @@ namespace Classes
                 Abonents.Contracts.Add(new Contract(Ports.Last().Id, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
+                Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
                 Console.WriteLine("Контракт подписан");
                 return Ports.Last();
             }
@@ -91,6 +93,7 @@ namespace Classes
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
                 Abonents.FinishedCalls.Add(item);
+                e.SetEndedCall(item);
                 _onGoingCalls.Remove(item);
                 item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
                 item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);

@@ -48,7 +48,6 @@
     <Compile Include="Enums\StatusOfCall.cs" />
     <Compile Include="Enums\StatusOfContract.cs" />
     <Compile Include="Enums\StatusOfPort.cs" />
-    <Compile Include="Interfaces\DataTime.cs" />
     <Compile Include="Interfaces\IAPS.cs" />
     <Compile Include="Interfaces\IBillingSystem.cs" />
     <Compile Include="Interfaces\ICallInformation.cs" />

@@ -20,12 +20,14 @@ namespace Classes.BillingSystemObjects
         {
             IdOfPort = id;
             Tariff = tariffPlan;
+            Balance = 0.0;
 
         }
 
         public void HandleCostOfCall(object o, EndCallEventArgs e)
         {
-
+            Balance -= e.EndedCall.GetDuretionOfCall().TotalSeconds * Tariff.CostOfCall();
+            Console.WriteLine(Balance);
         }
 
         public void HandleMoney(object o, BalanceEventArgs e)

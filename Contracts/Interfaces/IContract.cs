@@ -14,5 +14,6 @@ namespace Contracts.Interfaces
         double Balance { get; }
 
         void HandleMoney(object o, BalanceEventArgs e);
+        void HandleCostOfCall(object o, EndCallEventArgs e);
     }
 }

@@ -11,11 +11,17 @@ namespace Contracts.CustomArgs
     {
         public IPort InitiatorOfEnd { get; private set; }
         public DateTime TimeOfEndingOfCall { get; private set; }
+        public ICallInformation EndedCall { get; private set; }
 
         public EndCallEventArgs(IPort port)
         {
             InitiatorOfEnd = port;
             TimeOfEndingOfCall = DateTime.Now;
+        }
+
+        public void SetEndedCall(ICallInformation call)
+        {
+            EndedCall = call;
         }
     }
 }
