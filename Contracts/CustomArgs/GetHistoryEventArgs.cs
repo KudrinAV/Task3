@@ -9,12 +9,14 @@ namespace Contracts.CustomArgs
     public class GetHistoryEventArgs : EventArgs
     {
         public int IdOfPort { get; private set; }
+        public string Number { get; private set; }
         public DateTime Time { get; private set; }
         public List<string> History { get; private set; }
 
-        public GetHistoryEventArgs(int id)
+        public GetHistoryEventArgs(int id, string number)
         {
             IdOfPort = id;
+            Number = number;
             Time = DateTime.Now;
         }
 

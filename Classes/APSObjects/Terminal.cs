@@ -81,9 +81,9 @@ namespace Classes
             else return StatusOfAnswer.Decline;
         }
 
-        public void GetHistory(int id)
+        public void GetHistory()
         {
-            OnGetHistoryEvent(new GetHistoryEventArgs(id));
+            OnGetHistoryEvent(new GetHistoryEventArgs(_port.Id, _port.Number));
         }
 
         public void ChangeTariff(ITariffPlan tariffPlan)

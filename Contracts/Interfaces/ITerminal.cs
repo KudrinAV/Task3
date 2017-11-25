@@ -13,7 +13,7 @@ namespace Contracts.Interfaces
         event EventHandler<CallEventArgs> CallEvent;
         event EventHandler<EndCallEventArgs> EndCallEvent;
 
-        void GetHistory(int id);
+        void GetHistory();
         void HandleAnswerEvent(object o, CallEventArgs e);
         void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e);
         void ChangeTariff(ITariffPlan tariffPlan);

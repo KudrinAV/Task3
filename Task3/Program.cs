@@ -41,7 +41,7 @@ namespace Task3
             Thread.Sleep(3000);
             id2.EndCall();
 
-            id1.GetHistory(id1.Id);
+            id1.GetHistory();
             //foreach(var item in test.Ports)
             //{
             //    Console.WriteLine(item.Id + " " + item.PortStatus);
