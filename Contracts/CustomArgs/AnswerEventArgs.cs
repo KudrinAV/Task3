@@ -11,13 +11,13 @@ namespace Contracts.CustomArgs
     public class AnswerEventArgs : EventArgs
     {
         public string CallingNumber { get; private set; }
-        public IPort Reciever { get; private set; }
+        public string RecieverNumber { get; private set; }
         public StatusOfAnswer Answer { get; private set; }
 
-        public AnswerEventArgs(string number, IPort port, StatusOfAnswer answer)
+        public AnswerEventArgs(string callingNumber, string number, StatusOfAnswer answer)
         {
-            CallingNumber = number;
-            Reciever = port;
+            CallingNumber = callingNumber;
+            RecieverNumber = number;
             Answer = answer;
         }
 

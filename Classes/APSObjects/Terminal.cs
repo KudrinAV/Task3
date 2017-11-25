@@ -65,7 +65,7 @@ namespace Classes
 
         public void HandleAnswerEvent(object o, CallEventArgs e)
         {
-            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, _port, _getAbonentAnser(e.PortOfCaller.Number)));
+            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, _port.Number, _getAbonentAnser(e.PortOfCaller.Number)));
         }
 
         private StatusOfAnswer _getAbonentAnser(string number)

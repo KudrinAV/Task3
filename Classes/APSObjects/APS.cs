@@ -46,15 +46,16 @@ namespace Classes
 
         public void HandleConnectingEvent(object o, AnswerEventArgs e)
         {
-            var item = Ports.Find(x => x.Number == e.CallingNumber);
+            var caller = Ports.Find(x => x.Number == e.CallingNumber);
+            var reciver = Ports.Find(x => x.Number == e.RecieverNumber);
             if (e.Answer == StatusOfAnswer.Answer)
             {
                 Console.WriteLine("Hello");
-                e.Reciever.ChangeCallStatus(StatusOfCall.OnCall);
-                item.ChangeCallStatus(StatusOfCall.OnCall);
-                _onGoingCalls.Add(new CallInformation(item.Number, e.Reciever.Number));
+                reciver.ChangeCallStatus(StatusOfCall.OnCall);
+                caller.ChangeCallStatus(StatusOfCall.OnCall);
+                _onGoingCalls.Add(new CallInformation(caller.Number, e.RecieverNumber));
             }
-            else item.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
+            else caller.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
 
         }
 
