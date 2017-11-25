@@ -11,6 +11,7 @@ namespace Classes.BillingSystemObjects
     public class Contract : IContract
     {
         public int IdOfPort { get; private set; }
+        public string Number { get; private set; }
         public ITariffPlan Tariff { get; private set; }
         public double Balance { get; private set; }
         public DateTime TimeOfSigningContract { get; private set; }
