@@ -29,6 +29,9 @@ namespace Task3
             id1.ConnectToPort(test.SignAContract(tariffPlan));
             id2.ConnectToPort(test.SignAContract(tariffPlan));
             id3.ConnectToPort(test.SignAContract(tariffPlan));
+            id1.GetBalance();
+            id2.GetBalance();
+            id3.GetBalance();
             Console.WriteLine(id1.GetNumber());
 
 
@@ -40,6 +43,11 @@ namespace Task3
             id1.EndCall();
             Console.WriteLine();
             id1.GetHistory();
+
+            id1.GetBalance();
+            id2.GetBalance();
+            id3.GetBalance();
+
             id1.DissconnectFromPort();
 
             test.TerminateContract(test.Ports.First());

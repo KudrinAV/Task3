@@ -66,7 +66,7 @@ namespace Classes
                     Console.WriteLine(item);
                 }
             }
-            else Console.WriteLine(e.Message + " " + _port.Number);
+            else Console.WriteLine(e.Message );
         }
 
         public void HandleAnswerEvent(object o, CallEventArgs e)
@@ -153,6 +153,11 @@ namespace Classes
                 _port = null;
             }
             else Console.WriteLine("Terminal " + Id + " has nothing to disconect from");
+        }
+
+        public void GetBalance()
+        {
+            OnGetBalanceEvent(new BalanceEventArgs(_port.Id));
         }
         
         public string GetNumber()

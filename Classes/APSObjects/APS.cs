@@ -20,7 +20,7 @@ namespace Classes
         public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
         {
             var item = Ports.Find(x => x.Id == e.IdOfPort);
-            item.APSMessageShow(new MessageFromAPSEventArgs(e.Money.ToString()));
+            item.APSMessageShow(new MessageFromAPSEventArgs("Balance is " + e.Money.ToString()));
         }
 
         public void HandleCantChangeEvent(object o, ChangeTariffEventArgs e)
