@@ -40,8 +40,8 @@ namespace Classes.BillingSystemObjects
             var caller = Contracts.Find(x => x.Number == call.Caller);
             call.SetCostOfCall(caller.Tariff.CostOfCall * call.GetDuretionOfCall().TotalSeconds);
             caller.SetBalnceAfterCall(call.CostOfCall);
-            var finding = Contracts.Where(c=>c.Number == call.Caller || c.Number == call.Receiver).Select(x => x);
-            foreach(var item in finding)
+            var finding = Contracts.Where(c => c.Number == call.Caller || c.Number == call.Receiver).Select(x => x);
+            foreach (var item in finding)
             {
                 item.AllCalls.Add(call);
             }
@@ -53,7 +53,7 @@ namespace Classes.BillingSystemObjects
             var finding = Contracts.Find(x => x.Number == number);
             foreach (var item in finding.AllCalls)
             {
-                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall );
+                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall);
             }
             return resultList;
         }
@@ -64,6 +64,6 @@ namespace Classes.BillingSystemObjects
             _terminatedContracts = new List<IContract>();
         }
 
-   
+
     }
 }
