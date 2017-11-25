@@ -17,12 +17,8 @@ namespace Classes.BillingSystemObjects
 
         public IContract FindContract(int id)
         {
-            foreach(var item in Contracts)
-            {
-                if(item.IdOfPort == id)
-                return item;
-            }
-            return null;
+            var item = Contracts.Find(x => x.IdOfPort == id);
+            return item;
         }
 
         public void TerminateContract(IContract contract)
@@ -60,6 +56,7 @@ namespace Classes.BillingSystemObjects
         {
             Contracts = new List<IContract>();
             _finishedCalls = new List<ICallInformation>();
+            _terminatedContracts = new List<IContract>();
         }
 
    

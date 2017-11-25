@@ -24,21 +24,30 @@ namespace Task3
             ITerminal id1 = new Terminal(1);
             ITerminal id2 = new Terminal(2);
             ITerminal id3 = new Terminal(3);
+            ITerminal id4 = new Terminal(4);
 
             id1.ConnectToPort(test.SignAContract(tariffPlan));
             id2.ConnectToPort(test.SignAContract(tariffPlan));
             id3.ConnectToPort(test.SignAContract(tariffPlan));
             Console.WriteLine(id1.GetNumber());
+            id1.DissconnectFromPort();
+
+            test.TerminateContract(test.Ports.First());
+            
+
+            id4.ConnectToPort(test.SignAContract(tariffPlan));
+            Console.WriteLine(id1.GetNumber());
             Console.WriteLine(id2.GetNumber());
             Console.WriteLine(id3.GetNumber());
-            
-            id1.ChangeTariff(tariffPlan);
-            id1.Call(id2.GetNumber());
+            Console.WriteLine(id4.GetNumber());
+
+            //id1.ChangeTariff(tariffPlan);
+            id4.Call(id2.GetNumber());
             id3.Call(id1.GetNumber());
             Thread.Sleep(3000);
             id2.EndCall();
-            id1.EndCall();
-            id1.GetHistory();
+            id4.EndCall();
+            id4.GetHistory();
             //foreach(var item in test.Ports)
             //{
             //    Console.WriteLine(item.Id + " " + item.PortStatus);

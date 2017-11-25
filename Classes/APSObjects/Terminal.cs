@@ -98,7 +98,7 @@ namespace Classes
 
         public void EndCall()
         {
-            if (_port.CallStatus == StatusOfCall.OnCall)
+            if (_port.CallStatus == StatusOfCall.OnCall && _port.PortStatus == StatusOfPort.Connected)
             {
                 OnEndCall(new EndCallEventArgs(_port));
             }
@@ -106,7 +106,7 @@ namespace Classes
 
         public void Call(string number)
         {
-            if(_port != null) OnCall(new CallEventArgs(_port, number));
+            if(_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus==StatusOfCall.Avaliable) OnCall(new CallEventArgs(_port, number));
         }
 
         public void ConnectToPort(IPort port)

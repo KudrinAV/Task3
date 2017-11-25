@@ -112,7 +112,7 @@ namespace Classes
         public void TerminateContract(IPort port)
         {
             var item = Abonents.FindContract(port.Id);
-            if (item != null)
+            if (item != null && port.PortStatus == StatusOfPort.NotConnected)
             {
                 port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoney;
                 port.EndingCall -= Abonents.FindContract(port.Id).HandleCostOfCall;
