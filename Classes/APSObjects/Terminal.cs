@@ -11,7 +11,6 @@ namespace Classes
 {
     public class Terminal : ITerminal
     {
-
         public int Id { get; private set; }
         private IPort _port { get; set; }
 

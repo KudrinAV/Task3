@@ -9,12 +9,11 @@ namespace Classes
 {
     public class CallInformation : ICallInformation
     {
-        public IPort Caller { get; private set; }
-        public IPort Receiver { get; private set; }
+        public string Caller { get; private set; }
+        public string Receiver { get; private set; }
         public DateTime TimeOfBeginningOfCall { get; private set; }
         public DateTime TimeOfEndingOfCall { get; private set; }
         public double CostOfCall { get; private set; }
-        public ITariffPlan TariffPlan { get; private set; }
 
         public TimeSpan GetDuretionOfCall()
         {
@@ -27,17 +26,12 @@ namespace Classes
             CostOfCall = cost;
         }
 
-        public void SetTarrifPlan(ITariffPlan plan)
-        {
-            TariffPlan = plan;
-        }
-
         public void SetTimeOfEnding(DateTime time)
         {
             TimeOfEndingOfCall = time;
         }
 
-        public CallInformation(IPort caller, IPort receiver)
+        public CallInformation(string caller, string receiver)
         {
             Caller = caller;
             Receiver = receiver;

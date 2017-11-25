@@ -37,6 +37,7 @@ namespace Task3
             
             id1.ChangeTariff(tariffPlan);
             id1.Call(id2.GetNumber());
+            id3.Call(id1.GetNumber());
             Thread.Sleep(3000);
             id2.EndCall();
 

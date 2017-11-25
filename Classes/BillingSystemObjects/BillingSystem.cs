@@ -26,25 +26,24 @@ namespace Classes.BillingSystemObjects
 
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
         {
-            e.SetHistory(_findHistory(e.IdOfPort));
+            e.SetHistory(_findHistory(e.IdOfPort.ToString()));
         }
 
         public void AddContractDataToCallInformation()
         {
-            var item = Contracts.Find(x => x.IdOfPort == FinishedCalls.Last().Caller.Id);
+            var item = Contracts.Find(x => x.IdOfPort.ToString() == FinishedCalls.Last().Caller);
             FinishedCalls.Last().SetCostOfCall(FinishedCalls.Last().GetDuretionOfCall().TotalSeconds * item.Tariff.CostOfCall());
-            FinishedCalls.Last().SetTarrifPlan(item.Tariff);
         }
 
-        private List<string> _findHistory(int id)
+        private List<string> _findHistory(string number)
         {
             List<string> resultList = new List<string>();
             var finding = from item in FinishedCalls
-                          where item.Caller.Id == id || item.Receiver.Id == id
+                          where item.Caller == number || item.Receiver == number
                           select item;
             foreach (var item in finding)
             {
-                resultList.Add(item.Caller.Number + " " + item.Receiver.Number + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TariffPlan.Name);
+                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall );
             }
             return resultList;
         }

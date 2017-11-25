@@ -8,15 +8,12 @@ namespace Contracts.Interfaces
 {
     public interface ICallInformation
     {
-        IPort Caller { get; }
-        IPort Receiver { get; }
+        string Caller { get; }
+        string Receiver { get; }
         DateTime TimeOfBeginningOfCall { get; }
         DateTime TimeOfEndingOfCall { get; }
-
-         double CostOfCall { get;  }
-        ITariffPlan TariffPlan { get; }
-
-        void SetTarrifPlan(ITariffPlan plan);
+        double CostOfCall { get;  }
+        
         void SetCostOfCall(double cost);
         void SetTimeOfEnding(DateTime time);
         TimeSpan GetDuretionOfCall();

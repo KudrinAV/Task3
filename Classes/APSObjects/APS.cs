@@ -31,7 +31,7 @@ namespace Classes
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
-            var item = _onGoingCalls.Find(x => e.InitiatorOfEnd == x.Caller || e.InitiatorOfEnd == x.Receiver);
+            var item = _onGoingCalls.Find(x => e.InitiatorOfEnd.Number == x.Caller || e.InitiatorOfEnd.Number== x.Receiver);
             if (item != null)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
@@ -39,8 +39,8 @@ namespace Classes
                 Abonents.FinishedCalls.Add(item);
                 Abonents.AddContractDataToCallInformation();
                 _onGoingCalls.Remove(item);
-                item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
-                item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);
+                Ports.Find(x=>x.Number==item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);
+                Ports.Find(x=>x.Number ==item.Receiver).ChangeCallStatus(StatusOfCall.Avaliable);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Classes
                 Console.WriteLine("Hello");
                 e.Reciever.ChangeCallStatus(StatusOfCall.OnCall);
                 item.ChangeCallStatus(StatusOfCall.OnCall);
-                _onGoingCalls.Add(new CallInformation(e.Reciever, item));
+                _onGoingCalls.Add(new CallInformation(item.Number, e.Reciever.Number));
             }
             else item.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
 
