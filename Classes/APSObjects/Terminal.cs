@@ -153,6 +153,11 @@ namespace Classes
             return _port.Number;
         }
 
+        public IPort GetPort()
+        {
+            return _port;
+        }
+
         public Terminal(int id)
         {
             Id = id;

@@ -37,7 +37,7 @@ namespace Task3
             id3.Call(id1.GetNumber());
             Thread.Sleep(3000);
             id2.EndCall();
-
+            id1.EndCall();
             id1.GetHistory();
             //foreach(var item in test.Ports)
             //{

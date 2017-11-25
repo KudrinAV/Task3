@@ -13,6 +13,7 @@ namespace Classes.BillingSystemObjects
         public List<IContract> Contracts { get; private set; }
 
         private List<ICallInformation> _finishedCalls { get; set; }
+        private List<IContract> _terminatedContracts { get; set; }
 
         public IContract FindContract(int id)
         {
@@ -22,6 +23,12 @@ namespace Classes.BillingSystemObjects
                 return item;
             }
             return null;
+        }
+
+        public void TerminateContract(IContract contract)
+        {
+            _terminatedContracts.Add(contract);
+            Contracts.Remove(contract);
         }
 
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)

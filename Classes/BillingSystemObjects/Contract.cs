@@ -10,6 +10,7 @@ namespace Classes.BillingSystemObjects
 {
     public class Contract : IContract
     {
+        public int IdOfContract { get; private set; }
         public int IdOfPort { get; private set; }
         public string Number { get; private set; }
         public ITariffPlan Tariff { get; private set; }
@@ -53,9 +54,10 @@ namespace Classes.BillingSystemObjects
             Balance -= e.DurationOfCall.TotalSeconds * Tariff.CostOfCall;
         }
 
-        public Contract(int id , string number, ITariffPlan tariffPlan)
+        public Contract(int id, int idOfPort , string number, ITariffPlan tariffPlan)
         {
-            IdOfPort = id;
+            IdOfContract = id;
+            IdOfPort = idOfPort;
             Number = number;
             Tariff = tariffPlan;
             TimeOfSigningContract = DateTime.Now;

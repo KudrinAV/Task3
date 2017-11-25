@@ -77,6 +77,7 @@ namespace Classes
             Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
             Ports.Last().Calling += HandleCallEvent;
             Ports.Last().EndingCall += HandleEndCallEvent;
+            Ports.Last().Connecting += HandleConnectingEvent;
         }
 
         public IPort SignAContract(ITariffPlan tariffPlan)
@@ -84,46 +85,43 @@ namespace Classes
             var item = Ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
             if (item != null)
             {
-                Abonents.Contracts.Add(new Contract(item.Id, item.Number, tariffPlan));
+                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
                 item.GettingHistory += Abonents.HandleGetHistoryEvent;
                 item.GettingHistory += HandleGetHistoryEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
-                item.Connecting += HandleConnectingEvent;
                 item.ChangeStatusOfContract();
                 return item;
             }
             else {
                 AddPort();
-                Abonents.Contracts.Add(new Contract(Ports.Last().Id, Ports.Last().Number, tariffPlan));
+                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
                 Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryEvent;
                 Ports.Last().GettingHistory += HandleGetHistoryEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
-                Ports.Last().Connecting += HandleConnectingEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 return Ports.Last();
             }
         }
 
-        public void BreakAContract(IPort port)
+        public void TerminateContract(IPort port)
         {
+            var item = Abonents.FindContract(port.Id);
             if (item != null)
             {
-                Abonents.Contracts.Add(new Contract(item.Id, item.Number, tariffPlan));
-                item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
-                item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
-                item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
-                item.GettingHistory += Abonents.HandleGetHistoryEvent;
-                item.GettingHistory += HandleGetHistoryEvent;
-                Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
-                item.Connecting += HandleConnectingEvent;
-                item.ChangeStatusOfContract();
-
+                port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoney;
+                port.EndingCall -= Abonents.FindContract(port.Id).HandleCostOfCall;
+                port.ChangingTariff -= Abonents.FindContract(port.Id).HandleChangeTariffEvent;
+                port.GettingHistory -= Abonents.HandleGetHistoryEvent;
+                port.GettingHistory -= HandleGetHistoryEvent;
+                Abonents.FindContract(port.Id).CantChangeTariffEvent -= HandleCantChangeEvent;
+                Abonents.TerminateContract(item);
+                port.ChangeStatusOfContract();
             }
         }
 
