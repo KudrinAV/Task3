@@ -14,6 +14,7 @@ namespace Contracts.Interfaces
         
         void HandleGetBalanceEvent(object o, BalanceEventArgs e);
         void TerminateContract(IContract contract);
+        void HandleGetHistoryForMonthEvent(object o, GetHistoryEventArgs e);
         void HandleGetHistoryEvent(object o, GetHistoryEventArgs e);
         void AddToHistory(ICallInformation call);
     }

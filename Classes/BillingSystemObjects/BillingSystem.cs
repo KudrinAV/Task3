@@ -12,6 +12,7 @@ namespace Classes.BillingSystemObjects
     {
         public List<IContract> Contracts { get; private set; }
         private List<IContract> _terminatedContracts { get; set; }
+        public object DataTime { get; private set; }
 
         public IContract FindContract(int id)
         {
@@ -35,6 +36,11 @@ namespace Classes.BillingSystemObjects
             e.SetHistory(_findHistory(e.Number));
         }
 
+        public void HandleGetHistoryForMonthEvent(object o, GetHistoryEventArgs e)
+        {
+            e.SetHistory(_findMonthHistory(e.Number));
+        }
+
         public void AddToHistory(ICallInformation call)
         {
             var caller = Contracts.Find(x => x.Number == call.Caller);
@@ -52,6 +58,18 @@ namespace Classes.BillingSystemObjects
             List<string> resultList = new List<string>();
             var finding = Contracts.Find(x => x.Number == number);
             foreach (var item in finding.AllCalls)
+            {
+                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall);
+            }
+            return resultList;
+        }
+
+        private List<string> _findMonthHistory(string number)
+        {
+            List<string> resultList = new List<string>();
+            var contract = Contracts.Find(x => x.Number == number);
+            var finding = contract.AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= 30).Select(i => i);
+            foreach (var item in finding)
             {
                 resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall);
             }
