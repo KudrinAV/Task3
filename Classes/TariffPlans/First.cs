@@ -17,6 +17,5 @@ namespace Classes.TariffPlans
             Name = "First";
             CostOfCall = 0.3;
         }
-
     }
 }

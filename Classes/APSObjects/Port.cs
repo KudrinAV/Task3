@@ -102,7 +102,7 @@ namespace Classes.Ports
             OnChangingTariff(e);
         }
 
-        public void HandleCallEvent(object o,CallEventArgs e)
+        public void HandleCallEvent(object o, CallEventArgs e)
         {
             OnCalling(e);
         }
@@ -139,6 +139,6 @@ namespace Classes.Ports
             PortStatus = StatusOfPort.NotConnected;
             ContractStatus = StatusOfContract.NotContracted;
         }
-        
+
     }
 }

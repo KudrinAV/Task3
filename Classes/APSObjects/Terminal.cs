@@ -112,12 +112,12 @@ namespace Classes
 
         public void Call(string number)
         {
-            if(_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus==StatusOfCall.Avaliable) OnCall(new CallEventArgs(_port, number));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnCall(new CallEventArgs(_port, number));
         }
 
         public void ConnectToPort(IPort port)
         {
-            if (_port==null)
+            if (_port == null)
             {
                 _port = port;
                 _port.ChangeCallStatus(StatusOfCall.Avaliable);
@@ -137,7 +137,7 @@ namespace Classes
 
         public void DissconnectFromPort()
         {
-            if (_port!=null)
+            if (_port != null)
             {
                 _port.ChangeCallStatus(StatusOfCall.NotAvalibale);
                 _port.ChangeStatusOfPort();
@@ -157,9 +157,9 @@ namespace Classes
 
         public void GetBalance()
         {
-            if(_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnGetBalanceEvent(new BalanceEventArgs(_port.Id));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnGetBalanceEvent(new BalanceEventArgs(_port.Id));
         }
-        
+
         public string GetNumber()
         {
             if (_port == null) return null;

@@ -20,7 +20,5 @@ namespace Contracts.CustomArgs
             RecieverNumber = number;
             Answer = answer;
         }
-
-
     }
 }

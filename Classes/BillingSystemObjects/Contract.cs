@@ -55,7 +55,7 @@ namespace Classes.BillingSystemObjects
             Balance -= money;
         }
 
-        public Contract(int id, int idOfPort , string number, ITariffPlan tariffPlan)
+        public Contract(int id, int idOfPort, string number, ITariffPlan tariffPlan)
         {
             IdOfContract = id;
             IdOfPort = idOfPort;
@@ -66,6 +66,6 @@ namespace Classes.BillingSystemObjects
             AllCalls = new List<ICallInformation>();
             Balance = 0.0;
         }
-  
+
     }
 }

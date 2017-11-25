@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.CustomArgs
 {
-    public class EndCallEventArgs: EventArgs
+    public class EndCallEventArgs : EventArgs
     {
         public IPort InitiatorOfEnd { get; private set; }
         public DateTime TimeOfEndingOfCall { get; private set; }
@@ -18,7 +18,7 @@ namespace Contracts.CustomArgs
             InitiatorOfEnd = port;
             TimeOfEndingOfCall = DateTime.Now;
         }
-        
+
         public void SetDurationOfCall(TimeSpan time)
         {
             DurationOfCall = time;
