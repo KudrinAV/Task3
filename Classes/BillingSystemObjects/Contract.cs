@@ -49,7 +49,7 @@ namespace Classes.BillingSystemObjects
 
         public void HandleCostOfCall(object o, EndCallEventArgs e)
         {
-            Balance -= e.DurationOfCall.TotalSeconds * Tariff.CostOfCall();
+            Balance -= e.DurationOfCall.TotalSeconds * Tariff.CostOfCall;
         }
 
         public Contract(int id , ITariffPlan tariffPlan)

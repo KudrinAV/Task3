@@ -32,7 +32,7 @@ namespace Classes.BillingSystemObjects
         public void AddContractDataToCallInformation()
         {
             var item = Contracts.Find(x => x.IdOfPort.ToString() == FinishedCalls.Last().Caller);
-            FinishedCalls.Last().SetCostOfCall(FinishedCalls.Last().GetDuretionOfCall().TotalSeconds * item.Tariff.CostOfCall());
+            FinishedCalls.Last().SetCostOfCall(FinishedCalls.Last().GetDuretionOfCall().TotalSeconds * item.Tariff.CostOfCall);
         }
 
         private List<string> _findHistory(string number)

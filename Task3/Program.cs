@@ -17,7 +17,7 @@ namespace Task3
         {
             IAPS test = new APS();
 
-            ITariffPlan tariffPlan = new LoneDiggerTariffPlan();
+            ITariffPlan tariffPlan = new TariffPlan();
 
 
             ITerminal id1 = new Terminal(1);
