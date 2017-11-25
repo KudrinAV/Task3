@@ -14,7 +14,7 @@ namespace Classes
     public class APS : IAPS
     {
         public List<IPort> Ports { get; private set; }
-        public BillingSystem Abonents { get; private set; }
+        public IBillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
 
         public void HandleCantChangeEvent(object o, ChangeTariffEventArgs e)
@@ -36,8 +36,7 @@ namespace Classes
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
                 e.SetDurationOfCall(item.GetDuretionOfCall());
-                Abonents.FinishedCalls.Add(item);
-                Abonents.AddContractDataToCallInformation();
+                Abonents.AddToHistory(item);
                 _onGoingCalls.Remove(item);
                 Ports.Find(x=>x.Number==item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);
                 Ports.Find(x=>x.Number ==item.Receiver).ChangeCallStatus(StatusOfCall.Avaliable);
@@ -73,7 +72,6 @@ namespace Classes
             else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
         }
 
-
         public void AddPort()
         {
             Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
@@ -86,7 +84,7 @@ namespace Classes
             var item = Ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
             if (item != null)
             {
-                Abonents.Contracts.Add(new Contract(item.Id, tariffPlan));
+                Abonents.Contracts.Add(new Contract(item.Id, item.Number, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
@@ -99,7 +97,7 @@ namespace Classes
             }
             else {
                 AddPort();
-                Abonents.Contracts.Add(new Contract(Ports.Last().Id, tariffPlan));
+                Abonents.Contracts.Add(new Contract(Ports.Last().Id, Ports.Last().Number, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
                 Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
@@ -109,6 +107,23 @@ namespace Classes
                 Ports.Last().Connecting += HandleConnectingEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 return Ports.Last();
+            }
+        }
+
+        public void BreakAContract(IPort port)
+        {
+            if (item != null)
+            {
+                Abonents.Contracts.Add(new Contract(item.Id, item.Number, tariffPlan));
+                item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
+                item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
+                item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
+                item.GettingHistory += Abonents.HandleGetHistoryEvent;
+                item.GettingHistory += HandleGetHistoryEvent;
+                Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
+                item.Connecting += HandleConnectingEvent;
+                item.ChangeStatusOfContract();
+
             }
         }
 

@@ -23,7 +23,6 @@ namespace Contracts.Interfaces
         void Call(string number);
         void ConnectToPort(IPort port);
         void DissconnectFromPort();
-        //string SeeTheNumber();
-        //void SeeBalance();
+        IPort GetAPort();
     }
 }

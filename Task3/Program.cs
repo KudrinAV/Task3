@@ -1,6 +1,7 @@
 ﻿using Classes;
 using Classes.BillingSystemObjects;
 using Classes.Ports;
+using Classes.TariffPlans;
 using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Task3
         {
             IAPS test = new APS();
 
-            ITariffPlan tariffPlan = new TariffPlan();
+            ITariffPlan tariffPlan = new First();
 
 
             ITerminal id1 = new Terminal(1);
@@ -28,12 +29,8 @@ namespace Task3
             id2.ConnectToPort(test.SignAContract(tariffPlan));
             id3.ConnectToPort(test.SignAContract(tariffPlan));
             Console.WriteLine(id1.GetNumber());
-            id1.ConnectToPort(test.SignAContract(tariffPlan));
-            Console.WriteLine(id1.GetNumber());
             Console.WriteLine(id2.GetNumber());
             Console.WriteLine(id3.GetNumber());
-            id1.PutMoney(123.1);
-            
             
             id1.ChangeTariff(tariffPlan);
             id1.Call(id2.GetNumber());

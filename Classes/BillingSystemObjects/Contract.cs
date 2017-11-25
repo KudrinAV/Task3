@@ -53,9 +53,10 @@ namespace Classes.BillingSystemObjects
             Balance -= e.DurationOfCall.TotalSeconds * Tariff.CostOfCall;
         }
 
-        public Contract(int id , ITariffPlan tariffPlan)
+        public Contract(int id , string number, ITariffPlan tariffPlan)
         {
             IdOfPort = id;
+            Number = number;
             Tariff = tariffPlan;
             TimeOfSigningContract = DateTime.Now;
             TimeOfChangingTariff = TimeOfSigningContract;

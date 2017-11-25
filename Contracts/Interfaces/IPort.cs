@@ -36,6 +36,5 @@ namespace Contracts.Interfaces
         void ChangeCallStatus(StatusOfCall status);
         void ChangeStatusOfContract();
         void ChangeStatusOfPort();
-        //StatusOfConnect GetAnswer(string number);
     }
 }

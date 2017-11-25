@@ -12,7 +12,7 @@ namespace Classes.BillingSystemObjects
     {
         public List<IContract> Contracts { get; private set; }
 
-        public List<ICallInformation> FinishedCalls { get; private set; }
+        private List<ICallInformation> _finishedCalls { get; set; }
 
         public IContract FindContract(int id)
         {
@@ -26,24 +26,25 @@ namespace Classes.BillingSystemObjects
 
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
         {
-            e.SetHistory(_findHistory(e.IdOfPort.ToString()));
+            e.SetHistory(_findHistory(e.Number));
         }
 
-        public void AddContractDataToCallInformation()
+        public void AddToHistory(ICallInformation call)
         {
-            var item = Contracts.Find(x => x.IdOfPort.ToString() == FinishedCalls.Last().Caller);
-            FinishedCalls.Last().SetCostOfCall(FinishedCalls.Last().GetDuretionOfCall().TotalSeconds * item.Tariff.CostOfCall);
+            var item = Contracts.Find(x => x.Number == call.Caller);
+            call.SetCostOfCall(item.Tariff.CostOfCall * call.GetDuretionOfCall().TotalSeconds); 
+            _finishedCalls.Add(call);
         }
 
         private List<string> _findHistory(string number)
         {
             List<string> resultList = new List<string>();
-            var finding = from item in FinishedCalls
+            var finding = from item in _finishedCalls
                           where item.Caller == number || item.Receiver == number
                           select item;
             foreach (var item in finding)
             {
-                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall );
+                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall );
             }
             return resultList;
         }
@@ -51,7 +52,7 @@ namespace Classes.BillingSystemObjects
         public BillingSystem()
         {
             Contracts = new List<IContract>();
-            FinishedCalls = new List<ICallInformation>();
+            _finishedCalls = new List<ICallInformation>();
         }
 
    
