@@ -55,14 +55,10 @@
     <Compile Include="Interfaces\IBillingSystem.cs" />
     <Compile Include="Interfaces\ICallInformation.cs" />
     <Compile Include="Interfaces\IContract.cs" />
-    <Compile Include="Interfaces\IHeadsWillRollTrariffPlan.cs" />
-    <Compile Include="Interfaces\ILoneDiggerTariffPlan.cs" />
     <Compile Include="Interfaces\IPort.cs" />
     <Compile Include="Interfaces\ITariffPlan.cs" />
     <Compile Include="Interfaces\ITerminal.cs" />
-    <Compile Include="Interfaces\IWeightOfTheWorldTarrifPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TariffPlans\TariffPlanOne.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

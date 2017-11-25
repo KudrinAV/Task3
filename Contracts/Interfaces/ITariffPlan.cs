@@ -9,9 +9,6 @@ namespace Contracts.Interfaces
     public interface ITariffPlan
     {
         string Name { get; }
-        DateTime TimeOfSubscribing { get; }
-        DateTime TimeOfChanging { get; }
-
-        double CostOfCall();    
+        double CostOfCall { get; }   
     }
 }
