@@ -9,13 +9,13 @@ namespace Contracts.CustomArgs
 {
     public class ChangeTariffEventArgs : EventArgs
     {
-        public IPort Port { get; private set; }
+        public int IdOfPort { get; private set; }
         public DateTime TimeOfChanging { get; private set; }
         public ITariffPlan NewTariffPlan { get; private set; }
 
-        public ChangeTariffEventArgs(IPort port, ITariffPlan tariffPlan)
+        public ChangeTariffEventArgs(int id, ITariffPlan tariffPlan)
         {
-            Port = port;
+            IdOfPort = id;
             NewTariffPlan = tariffPlan;
         }
 

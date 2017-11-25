@@ -34,7 +34,6 @@ namespace Classes.BillingSystemObjects
             TimeOfSigningContract = DateTime.Now;
             TimeOfChangingTariff = TimeOfSigningContract;
             Balance = 0.0;
-
         }
 
         public void HandleCostOfCall(object o, EndCallEventArgs e)
@@ -45,7 +44,6 @@ namespace Classes.BillingSystemObjects
 
         public void HandleMoney(object o, BalanceEventArgs e)
         {
-            Console.WriteLine("Money" + e.Money);
             Balance += e.Money;
         }
 

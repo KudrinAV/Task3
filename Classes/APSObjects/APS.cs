@@ -17,6 +17,8 @@ namespace Classes
         public BillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
 
+        //public event 
+
 
         public void AddPort()
         {
@@ -38,7 +40,6 @@ namespace Classes
                 item.GettingHistory += HandleGetHistoryEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 item.ChangeStatusOfContract();
-                Console.WriteLine("Контракт подписан");
                 return item;
             }
             else {
@@ -51,14 +52,14 @@ namespace Classes
                 Ports.Last().GettingHistory += HandleGetHistoryEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
-                Console.WriteLine("Контракт подписан");
                 return Ports.Last();
             }
         }
 
         public void HandleCantChangeEvent(object o , ChangeTariffEventArgs e)
         {
-            e.Port.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
+            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            item.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
         }
 
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)

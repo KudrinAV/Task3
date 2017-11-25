@@ -9,12 +9,12 @@ namespace Contracts.CustomArgs
 {
     public class BalanceEventArgs : EventArgs
     {
-        public IPort Port { get; private set; }
+        public int IdOfPort { get; private set; }
         public double Money { get; private set; }
 
-        public BalanceEventArgs(IPort port, double money)
+        public BalanceEventArgs(int id, double money)
         {
-            Port = port;
+            IdOfPort = id;
             Money = money;
         }
     }

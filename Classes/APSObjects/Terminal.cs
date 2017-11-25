@@ -73,12 +73,12 @@ namespace Classes
 
         public void ChangeTariff(ITariffPlan tariffPlan)
         {
-            OnChangeTariffEvent(new ChangeTariffEventArgs(Port, tariffPlan));
+            OnChangeTariffEvent(new ChangeTariffEventArgs(Port.Id, tariffPlan));
         }
 
         public void PutMoney(double money)
         {
-            OnPutOnBalanceEvent(new BalanceEventArgs(Port, money));
+            OnPutOnBalanceEvent(new BalanceEventArgs(Port.Id, money));
         }
 
         public void EndCall()

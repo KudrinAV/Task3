@@ -33,13 +33,13 @@ namespace Task3
             Console.WriteLine(id2.GetNumber());
             Console.WriteLine(id3.GetNumber());
             id1.PutMoney(123.1);
-
+            
 
 
             id1.GetHistory(id1.Id);
             id2.GetHistory(id2.Id);
             Thread.Sleep(3000);
-            //id1.ChangeTariff(tariffPlan);
+            id1.ChangeTariff(tariffPlan);
             id1.Call(id2.GetNumber());
             id2.EndCall();
 
