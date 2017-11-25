@@ -37,15 +37,15 @@ namespace Classes
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)
         {
-            var item = _onGoingCalls.Find(x => e.InitiatorOfEnd.Number == x.Caller || e.InitiatorOfEnd.Number== x.Receiver);
+            var item = _onGoingCalls.Find(x => e.InitiatorOfEnd.Number == x.Caller || e.InitiatorOfEnd.Number == x.Receiver);
             if (item != null)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
                 e.SetDurationOfCall(item.GetDuretionOfCall());
                 Abonents.AddToHistory(item);
                 _onGoingCalls.Remove(item);
-                Ports.Find(x=>x.Number==item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);
-                Ports.Find(x=>x.Number ==item.Receiver).ChangeCallStatus(StatusOfCall.Avaliable);
+                Ports.Find(x => x.Number == item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);
+                Ports.Find(x => x.Number == item.Receiver).ChangeCallStatus(StatusOfCall.Avaliable);
             }
         }
 
@@ -102,7 +102,8 @@ namespace Classes
                 item.ChangeStatusOfContract();
                 return item;
             }
-            else {
+            else
+            {
                 AddPort();
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
@@ -172,7 +173,7 @@ namespace Classes
 
             return number;
         }
-        
+
         private bool _isNumberExist(string number)
         {
             foreach (var item in Ports)
@@ -186,7 +187,7 @@ namespace Classes
         {
             port.GetAnswer(e);
         }
-        
+
 
         public APS()
         {
