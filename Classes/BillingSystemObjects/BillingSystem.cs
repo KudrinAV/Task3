@@ -11,8 +11,6 @@ namespace Classes.BillingSystemObjects
     public class BillingSystem : IBillingSystem
     {
         public List<IContract> Contracts { get; private set; }
-
-        private List<ICallInformation> _finishedCalls { get; set; }
         private List<IContract> _terminatedContracts { get; set; }
 
         public IContract FindContract(int id)
@@ -34,18 +32,20 @@ namespace Classes.BillingSystemObjects
 
         public void AddToHistory(ICallInformation call)
         {
-            var item = Contracts.Find(x => x.Number == call.Caller);
-            call.SetCostOfCall(item.Tariff.CostOfCall * call.GetDuretionOfCall().TotalSeconds); 
-            _finishedCalls.Add(call);
+            var caller = Contracts.Find(x => x.Number == call.Caller);
+            call.SetCostOfCall(caller.Tariff.CostOfCall * call.GetDuretionOfCall().TotalSeconds);
+            var finding = Contracts.Where(c=>c.Number == call.Caller || c.Number == call.Receiver).Select(x => x);
+            foreach(var item in finding)
+            {
+                item.AllCalls.Add(call);
+            }
         }
 
         private List<string> _findHistory(string number)
         {
             List<string> resultList = new List<string>();
-            var finding = from item in _finishedCalls
-                          where item.Caller == number || item.Receiver == number
-                          select item;
-            foreach (var item in finding)
+            var finding = Contracts.Find(x => x.Number == number);
+            foreach (var item in finding.AllCalls)
             {
                 resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall );
             }
@@ -55,7 +55,6 @@ namespace Classes.BillingSystemObjects
         public BillingSystem()
         {
             Contracts = new List<IContract>();
-            _finishedCalls = new List<ICallInformation>();
             _terminatedContracts = new List<IContract>();
         }
 

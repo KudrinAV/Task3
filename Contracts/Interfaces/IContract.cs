@@ -13,6 +13,10 @@ namespace Contracts.Interfaces
         string Number { get; }
         ITariffPlan Tariff { get; }
         double Balance { get; }
+        List<ICallInformation> AllCalls { get; }
+        DateTime TimeOfSigningContract { get;}
+        DateTime TimeOfChangingTariff { get; }
+    
 
         event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
         void HandleMoney(object o, BalanceEventArgs e);

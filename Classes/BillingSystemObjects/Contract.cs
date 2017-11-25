@@ -17,6 +17,7 @@ namespace Classes.BillingSystemObjects
         public double Balance { get; private set; }
         public DateTime TimeOfSigningContract { get; private set; }
         public DateTime TimeOfChangingTariff { get; private set; }
+        public List<ICallInformation> AllCalls { get; private set; }
 
         public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
 
@@ -62,6 +63,7 @@ namespace Classes.BillingSystemObjects
             Tariff = tariffPlan;
             TimeOfSigningContract = DateTime.Now;
             TimeOfChangingTariff = TimeOfSigningContract;
+            AllCalls = new List<ICallInformation>();
             Balance = 0.0;
         }
   
