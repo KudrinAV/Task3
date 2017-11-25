@@ -22,7 +22,7 @@ namespace Classes.BillingSystemObjects
                           select item;
             foreach(var item in finding)
             {
-                resultList.Add(item.Caller.Number + " " + item.Receiver.Number + " " + item.GetDuretionOfCall().Minutes);
+                resultList.Add(item.Caller.Number + " " + item.Receiver.Number + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TariffPlan.Name);
             }
             return resultList;
         }

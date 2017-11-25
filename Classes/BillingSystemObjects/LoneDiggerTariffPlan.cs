@@ -13,9 +13,9 @@ namespace Classes.BillingSystemObjects
 
         public string Name { get; private set; }
 
-        public DateTime TimeOfSubscribing { get; private set; }
+        public DateTime TimeOfSubscribing => throw new NotImplementedException();
 
-        public DateTime TimeOfChanging { get; private set; }
+        public DateTime TimeOfChanging => throw new NotImplementedException();
 
         public double CostOfCall()
         {
