@@ -20,6 +20,7 @@ namespace Contracts.Interfaces
         void HandleEndCallEvent(object o, EndCallEventArgs e);
         void HandleCallEvent(object o, CallEventArgs e);
         event EventHandler<ChangeTariffEventArgs> ChangingTariff;
+        event EventHandler<AnswerEventArgs> Connecting;
         event EventHandler<CallEventArgs> Calling;
         event EventHandler<CallEventArgs> AnswerEvent;
         event EventHandler<EndCallEventArgs> EndingCall;
@@ -27,6 +28,7 @@ namespace Contracts.Interfaces
         event EventHandler<BalanceEventArgs> PuttingOnBalance;
         event EventHandler<GetHistoryEventArgs> GettingHistory;
 
+        void HandleConnectEvent(object o, AnswerEventArgs e);
         void HandlePutOnBalanceEvent(object o, BalanceEventArgs e);
         void HandleGetHistoryEvent(object o, GetHistoryEventArgs e);
         void APSMessageShow(MessageFromAPSEventArgs e);

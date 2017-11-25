@@ -12,21 +12,11 @@ namespace Contracts.CustomArgs
     {
         public string ReceivingNumber { get; private set; }
         public IPort PortOfCaller { get; private set; }
-        public StatusOfAnswer AnswerStatus { get; private set; }
 
         public CallEventArgs(IPort port, string reciver)
         {
             PortOfCaller = port;
             ReceivingNumber = reciver;
-        }
-
-        public void SetAnswerStatus(string answer)
-        {
-            if (answer == "y")
-            {
-                AnswerStatus = StatusOfAnswer.Answer;
-            }
-            else AnswerStatus = StatusOfAnswer.Decline;
         }
     }
 }

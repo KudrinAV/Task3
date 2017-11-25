@@ -18,6 +18,7 @@ namespace Classes.Ports
         public StatusOfContract ContractStatus { get; private set; }
 
         public event EventHandler<CallEventArgs> AnswerEvent;
+        public event EventHandler<AnswerEventArgs> Connecting;
         public event EventHandler<CallEventArgs> Calling;
         public event EventHandler<EndCallEventArgs> EndingCall;
         public event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
@@ -40,6 +41,11 @@ namespace Classes.Ports
         public void GetAnswer(CallEventArgs e)
         {
             OnAnswerEvent(e);
+        }
+
+        protected virtual void OnConnecting(AnswerEventArgs e)
+        {
+            Connecting?.Invoke(this, e);
         }
 
         protected virtual void OnGettingHistory(GetHistoryEventArgs e)
@@ -70,6 +76,11 @@ namespace Classes.Ports
         protected virtual void OnAnswerEvent(CallEventArgs e)
         {
             AnswerEvent?.Invoke(this, e);
+        }
+
+        public void HandleConnectEvent(object o, AnswerEventArgs e)
+        {
+            OnConnecting(e);
         }
 
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)

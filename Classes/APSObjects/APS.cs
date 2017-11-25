@@ -17,7 +17,7 @@ namespace Classes
         public BillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
 
-        //public event 
+        
 
 
         public void AddPort()
@@ -39,6 +39,7 @@ namespace Classes
                 item.GettingHistory += Abonents.HandleGetHistoryEvent;
                 item.GettingHistory += HandleGetHistoryEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
+                item.Connecting += HandleConnectingEvent;
                 item.ChangeStatusOfContract();
                 return item;
             }
@@ -51,6 +52,7 @@ namespace Classes
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryEvent;
                 Ports.Last().GettingHistory += HandleGetHistoryEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
+                Ports.Last().Connecting += HandleConnectingEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 return Ports.Last();
             }
@@ -120,6 +122,20 @@ namespace Classes
             }
         }
 
+        public void HandleConnectingEvent(object o, AnswerEventArgs e)
+        {
+            var item = Ports.Find(x => x.Number == e.CallingNumber);
+            if (e.Answer == StatusOfAnswer.Answer)
+            {
+                Console.WriteLine("Hello");
+                e.Reciever.ChangeCallStatus(StatusOfCall.OnCall);
+                item.ChangeCallStatus(StatusOfCall.OnCall);
+                _onGoingCalls.Add(new CallInformation(e.Reciever, item));
+            }
+            else item.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
+        
+        }
+
         private bool _isNumberExist(string number)
         {
             foreach (var item in Ports)
@@ -129,6 +145,11 @@ namespace Classes
             return false;
         }
 
+        private void _getAnswerFromPort(IPort port, CallEventArgs e)
+        {
+            port.GetAnswer(e);
+        }
+
         public void HandleCallEvent(object o, CallEventArgs e)
         {
             if (_isNumberExist(e.ReceivingNumber))
@@ -136,15 +157,7 @@ namespace Classes
                 var item = Ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
                 if(item != null)
                 {
-                    item.GetAnswer(e);
-                    if (e.AnswerStatus == StatusOfAnswer.Answer)
-                    {
-                        Console.WriteLine("Hello");
-                        item.ChangeCallStatus(StatusOfCall.OnCall);
-                        e.PortOfCaller.ChangeCallStatus(StatusOfCall.OnCall);
-                        _onGoingCalls.Add(new CallInformation(e.PortOfCaller, item));
-                    }
-                    else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
+                    _getAnswerFromPort(item, e);
                 }
                 else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
             }

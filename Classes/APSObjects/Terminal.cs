@@ -16,10 +16,16 @@ namespace Classes
         public event EventHandler<BalanceEventArgs> PutOnBalanceEvent;
         public event EventHandler<ChangeTariffEventArgs> ChangeTariffEvent;
         public event EventHandler<GetHistoryEventArgs> GetHistoryEvent;
+        public event EventHandler<AnswerEventArgs> ConnectEvent;
 
         public int Id { get; private set; }
 
         public IPort Port { get; private set; }
+
+        protected virtual void OnConnectEvent(AnswerEventArgs e)
+        {
+            ConnectEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnGetHistoryEvent(GetHistoryEventArgs e)
         {
@@ -48,10 +54,20 @@ namespace Classes
 
         public void HandleAnswerEvent(object o, CallEventArgs e)
         {
-            Console.WriteLine("You getting call from" + e.PortOfCaller.Number);
+            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, Port, _getAbonentAnser(e.PortOfCaller.Number)));
+        }
+
+        private StatusOfAnswer _getAbonentAnser(string number)
+        {
+
+            Console.WriteLine("You getting call from" + number);
             Console.WriteLine("Y- accept || N- decline");
             string answer = Console.ReadLine();
-            e.SetAnswerStatus(answer);
+            if (answer == "Y")
+            {
+                return StatusOfAnswer.Answer;
+            }
+            else return StatusOfAnswer.Decline;
         }
 
         public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
@@ -108,6 +124,7 @@ namespace Classes
                 PutOnBalanceEvent += Port.HandlePutOnBalanceEvent;
                 ChangeTariffEvent += Port.HandleChangeTariffEvent;
                 GetHistoryEvent += Port.HandleGetHistoryEvent;
+                ConnectEvent += Port.HandleConnectEvent;
             }
             else Console.WriteLine("Terminal " + Id + " already has a port");
         }
@@ -125,6 +142,7 @@ namespace Classes
                 PutOnBalanceEvent -= Port.HandlePutOnBalanceEvent;
                 ChangeTariffEvent -= Port.HandleChangeTariffEvent;
                 GetHistoryEvent -= Port.HandleGetHistoryEvent;
+                ConnectEvent -= Port.HandleConnectEvent;
                 Port = null;
             }
             else Console.WriteLine("Terminal " + Id + " has nothing to disconect from");
