@@ -20,6 +20,12 @@ namespace Classes
         public event EventHandler<ChangeTariffEventArgs> ChangeTariffEvent;
         public event EventHandler<GetHistoryEventArgs> GetHistoryEvent;
         public event EventHandler<AnswerEventArgs> ConnectEvent;
+        public event EventHandler<BalanceEventArgs> GetBalanceEvent;
+
+        protected virtual void OnGetBalanceEvent(BalanceEventArgs e)
+        {
+            GetBalanceEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnConnectEvent(AnswerEventArgs e)
         {
@@ -71,7 +77,7 @@ namespace Classes
         private StatusOfAnswer _getAbonentAnser(string number)
         {
 
-            Console.WriteLine("You getting call from" + number);
+            Console.WriteLine("You getting call from " + number);
             Console.WriteLine("Y- accept || N- decline");
             string answer = Console.ReadLine();
             if (answer == "Y")
@@ -124,6 +130,7 @@ namespace Classes
                 ChangeTariffEvent += _port.HandleChangeTariffEvent;
                 GetHistoryEvent += _port.HandleGetHistoryEvent;
                 ConnectEvent += _port.HandleConnectEvent;
+                GetBalanceEvent += _port.HandleGetBalanceEvent;
             }
             else Console.WriteLine("Terminal " + Id + " already has a port");
         }
@@ -142,6 +149,7 @@ namespace Classes
                 ChangeTariffEvent -= _port.HandleChangeTariffEvent;
                 GetHistoryEvent -= _port.HandleGetHistoryEvent;
                 ConnectEvent -= _port.HandleConnectEvent;
+                GetBalanceEvent -= _port.HandleGetBalanceEvent;
                 _port = null;
             }
             else Console.WriteLine("Terminal " + Id + " has nothing to disconect from");

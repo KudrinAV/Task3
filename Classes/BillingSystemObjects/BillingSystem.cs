@@ -19,6 +19,11 @@ namespace Classes.BillingSystemObjects
             return item;
         }
 
+        public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
+        {
+            e.GetBalance(FindContract(e.IdOfPort).Balance);
+        }
+
         public void TerminateContract(IContract contract)
         {
             _terminatedContracts.Add(contract);

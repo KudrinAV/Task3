@@ -30,6 +30,16 @@ namespace Task3
             id2.ConnectToPort(test.SignAContract(tariffPlan));
             id3.ConnectToPort(test.SignAContract(tariffPlan));
             Console.WriteLine(id1.GetNumber());
+
+
+            id1.Call(id2.GetNumber());
+            Thread.Sleep(3000);
+            id2.EndCall();
+            id1.Call(id3.GetNumber());
+            Thread.Sleep(3000);
+            id1.EndCall();
+            Console.WriteLine();
+            id1.GetHistory();
             id1.DissconnectFromPort();
 
             test.TerminateContract(test.Ports.First());
@@ -43,11 +53,14 @@ namespace Task3
 
             //id1.ChangeTariff(tariffPlan);
             id4.Call(id2.GetNumber());
-            id3.Call(id1.GetNumber());
             Thread.Sleep(3000);
             id2.EndCall();
+
+            id3.Call(id4.GetNumber());
+            Thread.Sleep(3000);
             id4.EndCall();
             id4.GetHistory();
+            
             //foreach(var item in test.Ports)
             //{
             //    Console.WriteLine(item.Id + " " + item.PortStatus);

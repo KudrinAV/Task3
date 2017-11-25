@@ -27,7 +27,9 @@ namespace Contracts.Interfaces
         event EventHandler<MessageFromAPSEventArgs> MessageFromAPS;
         event EventHandler<BalanceEventArgs> PuttingOnBalance;
         event EventHandler<GetHistoryEventArgs> GettingHistory;
+        event EventHandler<BalanceEventArgs> GettingBalance;
 
+        void HandleGetBalanceEvent(object o, BalanceEventArgs e);
         void HandleConnectEvent(object o, AnswerEventArgs e);
         void HandlePutOnBalanceEvent(object o, BalanceEventArgs e);
         void HandleGetHistoryEvent(object o, GetHistoryEventArgs e);

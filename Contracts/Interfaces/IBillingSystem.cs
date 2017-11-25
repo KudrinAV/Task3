@@ -12,6 +12,7 @@ namespace Contracts.Interfaces
         List<IContract> Contracts { get; }
         IContract FindContract(int id);
 
+        void HandleGetBalanceEvent(object o, BalanceEventArgs e);
         void TerminateContract(IContract contract);
         void HandleGetHistoryEvent(object o, GetHistoryEventArgs e);
         void AddToHistory(ICallInformation call);

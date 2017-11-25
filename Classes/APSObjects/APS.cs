@@ -17,6 +17,12 @@ namespace Classes
         public IBillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
 
+        public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
+        {
+            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            item.APSMessageShow(new MessageFromAPSEventArgs(e.Money.ToString()));
+        }
+
         public void HandleCantChangeEvent(object o, ChangeTariffEventArgs e)
         {
             var item = Ports.Find(x => x.Id == e.IdOfPort);
@@ -67,7 +73,7 @@ namespace Classes
                 {
                     _getAnswerFromPort(item, e);
                 }
-                else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
+                else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Nomer is busy"));
             }
             else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
         }
@@ -91,6 +97,8 @@ namespace Classes
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
                 item.GettingHistory += Abonents.HandleGetHistoryEvent;
                 item.GettingHistory += HandleGetHistoryEvent;
+                item.GettingBalance += Abonents.HandleGetBalanceEvent;
+                item.GettingBalance += HandleGetBalanceEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 item.ChangeStatusOfContract();
                 return item;
@@ -103,6 +111,8 @@ namespace Classes
                 Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryEvent;
                 Ports.Last().GettingHistory += HandleGetHistoryEvent;
+                Ports.Last().GettingBalance += Abonents.HandleGetBalanceEvent;
+                Ports.Last().GettingBalance += HandleGetBalanceEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 return Ports.Last();

@@ -25,6 +25,12 @@ namespace Classes.Ports
         public event EventHandler<BalanceEventArgs> PuttingOnBalance;
         public event EventHandler<ChangeTariffEventArgs> ChangingTariff;
         public event EventHandler<GetHistoryEventArgs> GettingHistory;
+        public event EventHandler<BalanceEventArgs> GettingBalance;
+
+        protected virtual void OnGettingBalance(BalanceEventArgs e)
+        {
+            GettingBalance?.Invoke(this, e);
+        }
 
         protected virtual void OnCalling(CallEventArgs e)
         {
@@ -64,6 +70,11 @@ namespace Classes.Ports
         protected virtual void OnAnswerEvent(CallEventArgs e)
         {
             AnswerEvent?.Invoke(this, e);
+        }
+
+        public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
+        {
+            OnGettingBalance(e);
         }
 
         public void HandlePutOnBalanceEvent(object o, BalanceEventArgs e)
