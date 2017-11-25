@@ -10,7 +10,6 @@ namespace Contracts.Interfaces
     public interface ITerminal
     {
         int Id { get; }
-        IPort Port { get; }
         event EventHandler<CallEventArgs> CallEvent;
         event EventHandler<EndCallEventArgs> EndCallEvent;
 

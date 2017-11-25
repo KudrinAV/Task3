@@ -26,21 +26,9 @@ namespace Classes.Ports
         public event EventHandler<ChangeTariffEventArgs> ChangingTariff;
         public event EventHandler<GetHistoryEventArgs> GettingHistory;
 
-        
-
-        public void HandlePutOnBalanceEvent(object o, BalanceEventArgs e)
+        protected virtual void OnCalling(CallEventArgs e)
         {
-            OnPuttingOnBalance(e);
-        }
-
-        public void HandleEndCallEvent(object o, EndCallEventArgs e)
-        {
-            OnEndingCall(e);
-        }
-
-        public void GetAnswer(CallEventArgs e)
-        {
-            OnAnswerEvent(e);
+            Calling?.Invoke(this, e);
         }
 
         protected virtual void OnConnecting(AnswerEventArgs e)
@@ -78,6 +66,16 @@ namespace Classes.Ports
             AnswerEvent?.Invoke(this, e);
         }
 
+        public void HandlePutOnBalanceEvent(object o, BalanceEventArgs e)
+        {
+            OnPuttingOnBalance(e);
+        }
+
+        public void HandleEndCallEvent(object o, EndCallEventArgs e)
+        {
+            OnEndingCall(e);
+        }
+
         public void HandleConnectEvent(object o, AnswerEventArgs e)
         {
             OnConnecting(e);
@@ -103,9 +101,9 @@ namespace Classes.Ports
             OnMessageFromAPS(e);
         }
 
-        protected virtual void OnCalling(CallEventArgs e)
+        public void GetAnswer(CallEventArgs e)
         {
-            Calling?.Invoke(this, e);
+            OnAnswerEvent(e);
         }
 
         public void ChangeCallStatus(StatusOfCall status)

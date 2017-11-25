@@ -11,16 +11,16 @@ namespace Classes
 {
     public class Terminal : ITerminal
     {
+
+        public int Id { get; private set; }
+        private IPort _port { get; set; }
+
         public event EventHandler<CallEventArgs> CallEvent;
         public event EventHandler<EndCallEventArgs> EndCallEvent;
         public event EventHandler<BalanceEventArgs> PutOnBalanceEvent;
         public event EventHandler<ChangeTariffEventArgs> ChangeTariffEvent;
         public event EventHandler<GetHistoryEventArgs> GetHistoryEvent;
         public event EventHandler<AnswerEventArgs> ConnectEvent;
-
-        public int Id { get; private set; }
-
-        public IPort Port { get; private set; }
 
         protected virtual void OnConnectEvent(AnswerEventArgs e)
         {
@@ -52,9 +52,21 @@ namespace Classes
             CallEvent?.Invoke(this, e);
         }
 
+        public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
+        {
+            if (e.History != null)
+            {
+                foreach (var item in e.History)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            else Console.WriteLine(e.Message + " " + _port.Number);
+        }
+
         public void HandleAnswerEvent(object o, CallEventArgs e)
         {
-            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, Port, _getAbonentAnser(e.PortOfCaller.Number)));
+            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, _port, _getAbonentAnser(e.PortOfCaller.Number)));
         }
 
         private StatusOfAnswer _getAbonentAnser(string number)
@@ -70,18 +82,6 @@ namespace Classes
             else return StatusOfAnswer.Decline;
         }
 
-        public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
-        {
-            if (e.History != null)
-            {
-                foreach(var item in e.History)
-                {
-                    Console.WriteLine(item);
-                }
-            }
-            else Console.WriteLine(e.Message + " " + Port.Number);
-        }
-
         public void GetHistory(int id)
         {
             OnGetHistoryEvent(new GetHistoryEventArgs(id));
@@ -89,69 +89,69 @@ namespace Classes
 
         public void ChangeTariff(ITariffPlan tariffPlan)
         {
-            OnChangeTariffEvent(new ChangeTariffEventArgs(Port.Id, tariffPlan));
+            OnChangeTariffEvent(new ChangeTariffEventArgs(_port.Id, tariffPlan));
         }
 
         public void PutMoney(double money)
         {
-            OnPutOnBalanceEvent(new BalanceEventArgs(Port.Id, money));
+            OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
         }
 
         public void EndCall()
         {
-            if (Port.CallStatus == StatusOfCall.OnCall)
+            if (_port.CallStatus == StatusOfCall.OnCall)
             {
-                OnEndCall(new EndCallEventArgs(Port));
+                OnEndCall(new EndCallEventArgs(_port));
             }
         }
 
         public void Call(string number)
         {
-            if(Port != null) OnCall(new CallEventArgs(Port, number));
+            if(_port != null) OnCall(new CallEventArgs(_port, number));
         }
 
         public void ConnectToPort(IPort port)
         {
-            if (Port==null)
+            if (_port==null)
             {
-                Port = port;
-                Port.ChangeCallStatus(StatusOfCall.Avaliable);
-                Port.ChangeStatusOfPort();
-                CallEvent += Port.HandleCallEvent;
-                Port.AnswerEvent += HandleAnswerEvent;
-                EndCallEvent += Port.HandleEndCallEvent;
-                Port.MessageFromAPS += HandleMessageFromAPSEvent;
-                PutOnBalanceEvent += Port.HandlePutOnBalanceEvent;
-                ChangeTariffEvent += Port.HandleChangeTariffEvent;
-                GetHistoryEvent += Port.HandleGetHistoryEvent;
-                ConnectEvent += Port.HandleConnectEvent;
+                _port = port;
+                _port.ChangeCallStatus(StatusOfCall.Avaliable);
+                _port.ChangeStatusOfPort();
+                CallEvent += _port.HandleCallEvent;
+                _port.AnswerEvent += HandleAnswerEvent;
+                EndCallEvent += _port.HandleEndCallEvent;
+                _port.MessageFromAPS += HandleMessageFromAPSEvent;
+                PutOnBalanceEvent += _port.HandlePutOnBalanceEvent;
+                ChangeTariffEvent += _port.HandleChangeTariffEvent;
+                GetHistoryEvent += _port.HandleGetHistoryEvent;
+                ConnectEvent += _port.HandleConnectEvent;
             }
             else Console.WriteLine("Terminal " + Id + " already has a port");
         }
 
         public void DissconnectFromPort()
         {
-            if (Port!=null)
+            if (_port!=null)
             {
-                Port.ChangeCallStatus(StatusOfCall.NotAvalibale);
-                Port.ChangeStatusOfPort();
-                CallEvent -= Port.HandleCallEvent;
-                Port.AnswerEvent -= HandleAnswerEvent;
-                EndCallEvent -= Port.HandleEndCallEvent;
-                Port.MessageFromAPS -= HandleMessageFromAPSEvent;
-                PutOnBalanceEvent -= Port.HandlePutOnBalanceEvent;
-                ChangeTariffEvent -= Port.HandleChangeTariffEvent;
-                GetHistoryEvent -= Port.HandleGetHistoryEvent;
-                ConnectEvent -= Port.HandleConnectEvent;
-                Port = null;
+                _port.ChangeCallStatus(StatusOfCall.NotAvalibale);
+                _port.ChangeStatusOfPort();
+                CallEvent -= _port.HandleCallEvent;
+                _port.AnswerEvent -= HandleAnswerEvent;
+                EndCallEvent -= _port.HandleEndCallEvent;
+                _port.MessageFromAPS -= HandleMessageFromAPSEvent;
+                PutOnBalanceEvent -= _port.HandlePutOnBalanceEvent;
+                ChangeTariffEvent -= _port.HandleChangeTariffEvent;
+                GetHistoryEvent -= _port.HandleGetHistoryEvent;
+                ConnectEvent -= _port.HandleConnectEvent;
+                _port = null;
             }
             else Console.WriteLine("Terminal " + Id + " has nothing to disconect from");
         }
         
         public string GetNumber()
         {
-            if (Port == null) return null;
-            return Port.Number;
+            if (_port == null) return null;
+            return _port.Number;
         }
 
         public Terminal(int id)

@@ -64,7 +64,6 @@ namespace Task3
 
             //id1.EndCall();
             //Console.WriteLine("\n");
-            Console.WriteLine(id1.Port.CallStatus + " " + id1.Port.CallStatus + " " + id1.Port.CallStatus);
 
 
 

@@ -17,7 +17,60 @@ namespace Classes
         public BillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
 
-        
+        public void HandleCantChangeEvent(object o, ChangeTariffEventArgs e)
+        {
+            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            item.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
+        }
+
+        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
+        {
+            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            item.APSMessageShow(new MessageFromAPSEventArgs(e.History));
+        }
+
+        public void HandleEndCallEvent(object o, EndCallEventArgs e)
+        {
+            var item = _onGoingCalls.Find(x => e.InitiatorOfEnd == x.Caller || e.InitiatorOfEnd == x.Receiver);
+            if (item != null)
+            {
+                item.SetTimeOfEnding(e.TimeOfEndingOfCall);
+                e.SetDurationOfCall(item.GetDuretionOfCall());
+                Abonents.FinishedCalls.Add(item);
+                Abonents.AddContractDataToCallInformation();
+                _onGoingCalls.Remove(item);
+                item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
+                item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);
+            }
+        }
+
+        public void HandleConnectingEvent(object o, AnswerEventArgs e)
+        {
+            var item = Ports.Find(x => x.Number == e.CallingNumber);
+            if (e.Answer == StatusOfAnswer.Answer)
+            {
+                Console.WriteLine("Hello");
+                e.Reciever.ChangeCallStatus(StatusOfCall.OnCall);
+                item.ChangeCallStatus(StatusOfCall.OnCall);
+                _onGoingCalls.Add(new CallInformation(e.Reciever, item));
+            }
+            else item.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
+
+        }
+
+        public void HandleCallEvent(object o, CallEventArgs e)
+        {
+            if (_isNumberExist(e.ReceivingNumber))
+            {
+                var item = Ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
+                if (item != null)
+                {
+                    _getAnswerFromPort(item, e);
+                }
+                else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
+            }
+            else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
+        }
 
 
         public void AddPort()
@@ -58,17 +111,6 @@ namespace Classes
             }
         }
 
-        public void HandleCantChangeEvent(object o , ChangeTariffEventArgs e)
-        {
-            var item = Ports.Find(x => x.Id == e.IdOfPort);
-            item.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
-        }
-
-        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
-        {
-            var item = Ports.Find(x => x.Id == e.IdOfPort);
-            item.APSMessageShow(new MessageFromAPSEventArgs(e.History));
-        }
 
         private bool _checkNumber(string number)
         {
@@ -107,36 +149,7 @@ namespace Classes
 
             return number;
         }
-
-        public void HandleEndCallEvent(object o, EndCallEventArgs e)
-        {
-            var item = _onGoingCalls.Find(x => e.InitiatorOfEnd == x.Caller || e.InitiatorOfEnd == x.Receiver);
-            if (item != null)
-            {
-                item.SetTimeOfEnding(e.TimeOfEndingOfCall);
-                e.SetDurationOfCall(item.GetDuretionOfCall());
-                Abonents.FinishedCalls.Add(item);
-                Abonents.AddContractDataToCallInformation();
-                _onGoingCalls.Remove(item);
-                item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
-                item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);
-            }
-        }
-
-        public void HandleConnectingEvent(object o, AnswerEventArgs e)
-        {
-            var item = Ports.Find(x => x.Number == e.CallingNumber);
-            if (e.Answer == StatusOfAnswer.Answer)
-            {
-                Console.WriteLine("Hello");
-                e.Reciever.ChangeCallStatus(StatusOfCall.OnCall);
-                item.ChangeCallStatus(StatusOfCall.OnCall);
-                _onGoingCalls.Add(new CallInformation(e.Reciever, item));
-            }
-            else item.APSMessageShow(new MessageFromAPSEventArgs("Answer is NO"));
         
-        }
-
         private bool _isNumberExist(string number)
         {
             foreach (var item in Ports)
@@ -150,20 +163,7 @@ namespace Classes
         {
             port.GetAnswer(e);
         }
-
-        public void HandleCallEvent(object o, CallEventArgs e)
-        {
-            if (_isNumberExist(e.ReceivingNumber))
-            {
-                var item = Ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
-                if(item != null)
-                {
-                    _getAnswerFromPort(item, e);
-                }
-                else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("Номер занят"));
-            }
-            else e.PortOfCaller.APSMessageShow(new MessageFromAPSEventArgs("There is no such a number"));
-        }
+        
 
         public APS()
         {
