@@ -47,5 +47,12 @@ namespace Classes.BillingSystemObjects
             Contracts = new List<IContract>();
             FinishedCalls = new List<ICallInformation>();
         }
+
+        public void AddContractDataToCallInformation()
+        {
+            var item = Contracts.Find(x => x.IdOfPort == FinishedCalls.Last().Caller.Id);
+            FinishedCalls.Last().SetCostOfCall(FinishedCalls.Last().GetDuretionOfCall().TotalSeconds * item.Tariff.CostOfCall());
+            FinishedCalls.Last().SetTarrifPlan(item.Tariff);
+        }
     }
 }

@@ -13,6 +13,11 @@ namespace Contracts.Interfaces
         DateTime TimeOfBeginningOfCall { get; }
         DateTime TimeOfEndingOfCall { get; }
 
+         double CostOfCall { get;  }
+        ITariffPlan TariffPlan { get; }
+
+        void SetTarrifPlan(ITariffPlan plan);
+        void SetCostOfCall(double cost);
         void SetTimeOfEnding(DateTime time);
         TimeSpan GetDuretionOfCall();
 

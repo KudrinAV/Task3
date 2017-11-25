@@ -114,8 +114,9 @@ namespace Classes
             if (item != null)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
+                e.SetDurationOfCall(item.GetDuretionOfCall());
                 Abonents.FinishedCalls.Add(item);
-                e.SetEndedCall(item);
+                Abonents.AddContractDataToCallInformation();
                 _onGoingCalls.Remove(item);
                 item.Caller.ChangeCallStatus(StatusOfCall.Avaliable);
                 item.Receiver.ChangeCallStatus(StatusOfCall.Avaliable);

@@ -13,11 +13,23 @@ namespace Classes
         public IPort Receiver { get; private set; }
         public DateTime TimeOfBeginningOfCall { get; private set; }
         public DateTime TimeOfEndingOfCall { get; private set; }
+        public double CostOfCall { get; private set; }
+        public ITariffPlan TariffPlan { get; private set; }
 
         public TimeSpan GetDuretionOfCall()
         {
             TimeSpan res = TimeOfEndingOfCall.Subtract(TimeOfBeginningOfCall);
             return res;
+        }
+
+        public void SetCostOfCall(double cost)
+        {
+            CostOfCall = cost;
+        }
+
+        public void SetTarrifPlan(ITariffPlan plan)
+        {
+            TariffPlan = plan;
         }
 
         public void SetTimeOfEnding(DateTime time)

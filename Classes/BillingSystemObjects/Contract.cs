@@ -38,7 +38,7 @@ namespace Classes.BillingSystemObjects
 
         public void HandleCostOfCall(object o, EndCallEventArgs e)
         {
-            Balance -= e.EndedCall.GetDuretionOfCall().TotalSeconds * Tariff.CostOfCall();
+            Balance -= e.DurationOfCall.TotalSeconds * Tariff.CostOfCall();
             Console.WriteLine(Balance);
         }
 
