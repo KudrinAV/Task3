@@ -55,9 +55,11 @@
     <Compile Include="Interfaces\IBillingSystem.cs" />
     <Compile Include="Interfaces\ICallInformation.cs" />
     <Compile Include="Interfaces\IContract.cs" />
+    <Compile Include="Interfaces\IEmulationEnvironment.cs" />
     <Compile Include="Interfaces\IPort.cs" />
     <Compile Include="Interfaces\ITariffPlan.cs" />
     <Compile Include="Interfaces\ITerminal.cs" />
+    <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
