@@ -67,8 +67,13 @@ namespace Task3
             id3.Call(id4.GetNumber());
             Thread.Sleep(3000);
             id4.EndCall();
-            id4.GetHistory();
-            
+            //id4.GetHistory();
+
+
+            id1.GetBalance();
+            id2.GetBalance();
+            id3.GetBalance();
+            id4.GetBalance();
             //foreach(var item in test.Ports)
             //{
             //    Console.WriteLine(item.Id + " " + item.PortStatus);

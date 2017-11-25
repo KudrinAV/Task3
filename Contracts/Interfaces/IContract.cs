@@ -19,8 +19,8 @@ namespace Contracts.Interfaces
     
 
         event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
+        void SetBalnceAfterCall(double money);
         void HandleMoney(object o, BalanceEventArgs e);
-        void HandleCostOfCall(object o, EndCallEventArgs e);
         void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e);
     }
 }

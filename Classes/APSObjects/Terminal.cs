@@ -66,7 +66,7 @@ namespace Classes
                     Console.WriteLine(item);
                 }
             }
-            else Console.WriteLine(e.Message );
+            else Console.WriteLine(e.Message);
         }
 
         public void HandleAnswerEvent(object o, CallEventArgs e)
@@ -157,7 +157,7 @@ namespace Classes
 
         public void GetBalance()
         {
-            OnGetBalanceEvent(new BalanceEventArgs(_port.Id));
+            if(_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnGetBalanceEvent(new BalanceEventArgs(_port.Id));
         }
         
         public string GetNumber()

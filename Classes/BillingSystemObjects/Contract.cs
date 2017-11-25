@@ -50,9 +50,9 @@ namespace Classes.BillingSystemObjects
             OnCantChangeTariffEvent(e);
         }
 
-        public void HandleCostOfCall(object o, EndCallEventArgs e)
+        public void SetBalnceAfterCall(double money)
         {
-            Balance -= e.DurationOfCall.TotalSeconds * Tariff.CostOfCall;
+            Balance -= money;
         }
 
         public Contract(int id, int idOfPort , string number, ITariffPlan tariffPlan)

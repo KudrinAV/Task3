@@ -39,6 +39,7 @@ namespace Classes.BillingSystemObjects
         {
             var caller = Contracts.Find(x => x.Number == call.Caller);
             call.SetCostOfCall(caller.Tariff.CostOfCall * call.GetDuretionOfCall().TotalSeconds);
+            caller.SetBalnceAfterCall(call.CostOfCall);
             var finding = Contracts.Where(c=>c.Number == call.Caller || c.Number == call.Receiver).Select(x => x);
             foreach(var item in finding)
             {

@@ -93,7 +93,6 @@ namespace Classes
             {
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
-                item.EndingCall += Abonents.FindContract(item.Id).HandleCostOfCall;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
                 item.GettingHistory += Abonents.HandleGetHistoryEvent;
                 item.GettingHistory += HandleGetHistoryEvent;
@@ -108,7 +107,6 @@ namespace Classes
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
-                Ports.Last().EndingCall += Abonents.FindContract(Ports.Last().Id).HandleCostOfCall;
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryEvent;
                 Ports.Last().GettingHistory += HandleGetHistoryEvent;
                 Ports.Last().GettingBalance += Abonents.HandleGetBalanceEvent;
@@ -125,10 +123,11 @@ namespace Classes
             if (item != null && port.PortStatus == StatusOfPort.NotConnected)
             {
                 port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoney;
-                port.EndingCall -= Abonents.FindContract(port.Id).HandleCostOfCall;
                 port.ChangingTariff -= Abonents.FindContract(port.Id).HandleChangeTariffEvent;
                 port.GettingHistory -= Abonents.HandleGetHistoryEvent;
                 port.GettingHistory -= HandleGetHistoryEvent;
+                port.GettingBalance -= Abonents.HandleGetBalanceEvent;
+                port.GettingBalance -= HandleGetBalanceEvent;
                 Abonents.FindContract(port.Id).CantChangeTariffEvent -= HandleCantChangeEvent;
                 Abonents.TerminateContract(item);
                 port.ChangeStatusOfContract();
