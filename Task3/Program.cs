@@ -17,8 +17,6 @@ namespace Task3
     {
         static void Main(string[] args)
         {
-            ITariffPlan First = new First();
-
             IEmulationEnvironment emulationEnvironment = new EmulationEnvironment();
 
             emulationEnvironment.CreateTerminals(5);
@@ -28,36 +26,28 @@ namespace Task3
             emulationEnvironment.Aps.AddPort();
             emulationEnvironment.Aps.AddPort();
             emulationEnvironment.Aps.AddPort();
-            
-            
-            foreach(var item in emulationEnvironment.Users)
+
+            emulationEnvironment.Aps.DeletePort(0);
+            emulationEnvironment.Aps.DeletePort(1);
+            emulationEnvironment.Aps.DeletePort(1);
+
+
+            foreach (var item in emulationEnvironment.Users)
             {
-                item.Telephone.ConnectToPort(emulationEnvironment.Aps.SignAContract(First, item.Name));
+                item.SignAContract(emulationEnvironment.Aps, emulationEnvironment.First);
             }
 
             foreach(var item in emulationEnvironment.Users)
             {
-                Console.WriteLine(item.Telephone.GetNumber() + " " + item.Telephone.Id);
+                item.ConnectPortToTerminal();
             }
 
-            emulationEnvironment.Users.ElementAt(0).Telephone.Call(emulationEnvironment.Users.ElementAt(2).Telephone.GetNumber());
-            Thread.Sleep(3000);
-            emulationEnvironment.Users.ElementAt(0).Telephone.EndCall();
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetBalance();
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetHistory();
-            emulationEnvironment.Users.ElementAt(0).Telephone.ChangeTariff(First);
-            emulationEnvironment.Users.ElementAt(0).Telephone.PutMoney(30);
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetBalance();
-            emulationEnvironment.Users.ElementAt(0).Telephone.DissconnectFromPort();
-            //emulationEnvironment.Aps.TerminateContract(emulationEnvironment.Aps._ports.ElementAt(0));
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetNumber();
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetPort();
-            emulationEnvironment.Users.ElementAt(0).Telephone.ConnectToPort(emulationEnvironment.Aps.SignAContract(First, emulationEnvironment.Users.ElementAt(0).Name));
+            foreach(var item in emulationEnvironment.Users)
+            {
+                Console.WriteLine(item.GetNumber() + " " + item.GetPort().Id);
+            }
 
-            Console.WriteLine("kek");
-            Console.WriteLine(emulationEnvironment.Users.ElementAt(0).Telephone.GetNumber());
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetBalance();
-            emulationEnvironment.Users.ElementAt(0).Telephone.GetHistory();
+          
 
 
         }

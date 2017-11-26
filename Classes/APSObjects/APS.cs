@@ -95,18 +95,34 @@ namespace Classes
 
         public void AddPort()
         {
-            _ports.Add(new Port(_ports.Count + 1, _generateNumber()));
-            _ports.Last().Calling += _handleCallEvent;
-            _ports.Last().EndingCall += _handleEndCallEvent;
-            _ports.Last().Connecting += _handleConnectingEvent;
+            if (_ports.Count == 0)
+            {
+                _ports.Add(new Port(1, _generateNumber()));
+                _ports.Last().Calling += _handleCallEvent;
+                _ports.Last().EndingCall += _handleEndCallEvent;
+                _ports.Last().Connecting += _handleConnectingEvent;
+            }
+            else
+            {
+                _ports.Add(new Port(_ports.Last().Id + 1, _generateNumber()));
+                _ports.Last().Calling += _handleCallEvent;
+                _ports.Last().EndingCall += _handleEndCallEvent;
+                _ports.Last().Connecting += _handleConnectingEvent;
+            }
         }
 
         public void DeletePort(int indexOfPort)
         {
-            _ports.ElementAt(indexOfPort).Calling -= _handleCallEvent;
-            _ports.ElementAt(indexOfPort).EndingCall -= _handleEndCallEvent;
-            _ports.ElementAt(indexOfPort).Connecting -= _handleConnectingEvent;
-            _ports.Remove(_ports.ElementAt(indexOfPort));
+            if (indexOfPort != 0)
+            {
+                if (indexOfPort <= _ports.Count)
+                {
+                    _ports.ElementAt(indexOfPort - 1).Calling -= _handleCallEvent;
+                    _ports.ElementAt(indexOfPort - 1).EndingCall -= _handleEndCallEvent;
+                    _ports.ElementAt(indexOfPort - 1).Connecting -= _handleConnectingEvent;
+                    _ports.Remove(_ports.ElementAt(indexOfPort - 1));
+                }
+            } 
         }
 
         public IPort SignAContract(ITariffPlan tariffPlan , string name)

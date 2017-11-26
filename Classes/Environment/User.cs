@@ -19,6 +19,17 @@ namespace Classes.Environment
             Telephone = terminal;
         }
 
+        public IPort GetPort()
+        {
+            if (_port != null)
+                return _port;
+            else
+            {
+                Console.WriteLine("There is no port");
+                return null;
+            }
+        }
+
         public void ConnectPortToTerminal()
         {
             if(_port != null)

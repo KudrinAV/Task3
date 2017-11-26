@@ -1,4 +1,5 @@
-﻿using Contracts.Interfaces;
+﻿using Classes.TariffPlans;
+using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,16 @@ namespace Classes.Environment
         public IAPS Aps { get; private set; }
         public List<IUser> Users { get; private set; }
         public List<ITerminal> Telephones { get; private set; }
+        public ITariffPlan First { get; private set; }
+        public ITariffPlan Second { get; private set; }
 
         public EmulationEnvironment()
         {
             Aps = new APS();
             Users = new List<IUser>();
             Telephones = new List<ITerminal>();
+            First = new First();
+            Second = new Second();
         }
 
         public void CreateTerminals(int number)
