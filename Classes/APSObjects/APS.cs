@@ -14,8 +14,8 @@ namespace Classes
 {
     public class APS : IAPS
     {
-        public List<IPort> Ports { get; private set; }
-        public IBillingSystem Abonents { get; private set; }
+        private List<IPort> _ports { get; set; }
+        private IBillingSystem _abonents { get; set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
         private int _daysInMonth = 30;
 
@@ -23,7 +23,7 @@ namespace Classes
         {
             foreach(var item in e.ListOfDebters)
             {
-                var port = Ports.Find(x => x.Number == item);
+                var port = _ports.Find(x => x.Number == item);
                 port.APSMessageShow(new MessageFromAPSEventArgs("You need to pay " + item));
                 port.ChangeCallStatus(StatusOfCall.NegativeBalance);
             }
@@ -31,24 +31,24 @@ namespace Classes
 
         private void _handleDebtRepaidEvent(object o, BalanceEventArgs e)
         {
-            Ports.Find(x => x.Id == e.IdOfPort).ChangeCallStatus(StatusOfCall.Avaliable);
+            _ports.Find(x => x.Id == e.IdOfPort).ChangeCallStatus(StatusOfCall.Avaliable);
         }
 
         private void _handleSendBalanceEvent(object o, BalanceEventArgs e)
         {
-            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            var item = _ports.Find(x => x.Id == e.IdOfPort);
             item.APSMessageShow(new MessageFromAPSEventArgs(String.Format("Balance is {0:0.00} ", e.Money)));
         }
 
         private void _handleCantChangeEvent(object o, CantChangeTariffEventArgs e)
         {
-            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            var item = _ports.Find(x => x.Id == e.IdOfPort);
             item.APSMessageShow(new MessageFromAPSEventArgs(String.Format("U can't change tariff atleast {0:0.00} days", _daysInMonth - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
         }
 
         private void _handleSendHistoryEvent(object o, SendHistoryEventArgs e)
         {
-            var item = Ports.Find(x => x.Id == e.IdOfPort);
+            var item = _ports.Find(x => x.Id == e.IdOfPort);
             item.APSMessageShow(new MessageFromAPSEventArgs(e.CallList));
         }
 
@@ -58,17 +58,17 @@ namespace Classes
             if (item != null)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
-                Abonents.AddToHistory(item);
+                _abonents.AddToHistory(item);
                 _onGoingCalls.Remove(item);
-                Ports.Find(x => x.Number == item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);
-                Ports.Find(x => x.Number == item.Receiver).ChangeCallStatus(StatusOfCall.Avaliable);
+                _ports.Find(x => x.Number == item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);
+                _ports.Find(x => x.Number == item.Receiver).ChangeCallStatus(StatusOfCall.Avaliable);
             }
         }
 
         private void _handleConnectingEvent(object o, AnswerEventArgs e)
         {
-            var caller = Ports.Find(x => x.Number == e.CallingNumber);
-            var reciver = Ports.Find(x => x.Number == e.RecieverNumber);
+            var caller = _ports.Find(x => x.Number == e.CallingNumber);
+            var reciver = _ports.Find(x => x.Number == e.RecieverNumber);
             if (e.Answer == StatusOfAnswer.Answer)
             {
                 Console.WriteLine("Hello");
@@ -83,7 +83,7 @@ namespace Classes
         {
             if (_isNumberExist(e.ReceivingNumber))
             {
-                var item = Ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
+                var item = _ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
                 if (item != null)
                 {
                     _getAnswerFromPort(item, e);
@@ -95,75 +95,75 @@ namespace Classes
 
         public void AddPort()
         {
-            Ports.Add(new Port(Ports.Count + 1, _generateNumber()));
-            Ports.Last().Calling += _handleCallEvent;
-            Ports.Last().EndingCall += _handleEndCallEvent;
-            Ports.Last().Connecting += _handleConnectingEvent;
+            _ports.Add(new Port(_ports.Count + 1, _generateNumber()));
+            _ports.Last().Calling += _handleCallEvent;
+            _ports.Last().EndingCall += _handleEndCallEvent;
+            _ports.Last().Connecting += _handleConnectingEvent;
         }
 
         public void DeletePort(int indexOfPort)
         {
-            Ports.ElementAt(indexOfPort).Calling -= _handleCallEvent;
-            Ports.ElementAt(indexOfPort).EndingCall -= _handleEndCallEvent;
-            Ports.ElementAt(indexOfPort).Connecting -= _handleConnectingEvent;
-            Ports.Remove(Ports.ElementAt(indexOfPort));
+            _ports.ElementAt(indexOfPort).Calling -= _handleCallEvent;
+            _ports.ElementAt(indexOfPort).EndingCall -= _handleEndCallEvent;
+            _ports.ElementAt(indexOfPort).Connecting -= _handleConnectingEvent;
+            _ports.Remove(_ports.ElementAt(indexOfPort));
         }
 
         public IPort SignAContract(ITariffPlan tariffPlan , string name)
         {
-            var item = Ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
+            var item = _ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
             if (item != null)
             {
-                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, name, tariffPlan));
-                item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoneyEvent;
-                item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
-                item.GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
-                item.GettingBalance += Abonents.HandleGetBalanceEvent;
-                Abonents.FindContract(item.Id).CantChangeTariffEvent += _handleCantChangeEvent;
-                Abonents.FindContract(item.Id).DebtRepaidEvent += _handleDebtRepaidEvent;
-                Abonents.FindContract(item.Id).SendHistoryEvent += _handleSendHistoryEvent;
-                Abonents.FindContract(item.Id).SendBalanceEvent += _handleSendBalanceEvent;
+                _abonents.Contracts.Add(new Contract(_abonents.Contracts.Count, item.Id, item.Number, name, tariffPlan));
+                item.PuttingOnBalance += _abonents.FindContract(item.Id).HandleMoneyEvent;
+                item.ChangingTariff += _abonents.FindContract(item.Id).HandleChangeTariffEvent;
+                item.GettingHistory += _abonents.HandleGetHistoryForMonthEvent;
+                item.GettingBalance += _abonents.HandleGetBalanceEvent;
+                _abonents.FindContract(item.Id).CantChangeTariffEvent += _handleCantChangeEvent;
+                _abonents.FindContract(item.Id).DebtRepaidEvent += _handleDebtRepaidEvent;
+                _abonents.FindContract(item.Id).SendHistoryEvent += _handleSendHistoryEvent;
+                _abonents.FindContract(item.Id).SendBalanceEvent += _handleSendBalanceEvent;
                 item.ChangeStatusOfContract();
                 return item;
             }
             else
             {
                 AddPort();
-                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, name, tariffPlan));
-                Ports.Last().ChangeStatusOfContract();
-                Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoneyEvent;
-                Ports.Last().GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
-                Ports.Last().GettingBalance += Abonents.HandleGetBalanceEvent;
-                Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
-                Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += _handleCantChangeEvent;
-                Abonents.FindContract(Ports.Last().Id).DebtRepaidEvent += _handleDebtRepaidEvent;
-                Abonents.FindContract(Ports.Last().Id).SendHistoryEvent += _handleSendHistoryEvent;
-                Abonents.FindContract(Ports.Last().Id).SendBalanceEvent += _handleSendBalanceEvent;
-                return Ports.Last();
+                _abonents.Contracts.Add(new Contract(_abonents.Contracts.Count, _ports.Last().Id, _ports.Last().Number, name, tariffPlan));
+                _ports.Last().ChangeStatusOfContract();
+                _ports.Last().PuttingOnBalance += _abonents.FindContract(_ports.Last().Id).HandleMoneyEvent;
+                _ports.Last().GettingHistory += _abonents.HandleGetHistoryForMonthEvent;
+                _ports.Last().GettingBalance += _abonents.HandleGetBalanceEvent;
+                _ports.Last().ChangingTariff += _abonents.FindContract(_ports.Last().Id).HandleChangeTariffEvent;
+                _abonents.FindContract(_ports.Last().Id).CantChangeTariffEvent += _handleCantChangeEvent;
+                _abonents.FindContract(_ports.Last().Id).DebtRepaidEvent += _handleDebtRepaidEvent;
+                _abonents.FindContract(_ports.Last().Id).SendHistoryEvent += _handleSendHistoryEvent;
+                _abonents.FindContract(_ports.Last().Id).SendBalanceEvent += _handleSendBalanceEvent;
+                return _ports.Last();
             }
         }
 
         public void TerminateContract(IPort port)
         {
-            var item = Abonents.FindContract(port.Id);
+            var item = _abonents.FindContract(port.Id);
             if (item != null && port.PortStatus == StatusOfPort.NotConnected)
             {
-                port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoneyEvent;
-                port.ChangingTariff -= Abonents.FindContract(port.Id).HandleChangeTariffEvent;
-                port.GettingHistory -= Abonents.HandleGetHistoryForMonthEvent;
-                port.GettingBalance -= Abonents.HandleGetBalanceEvent;
-                Abonents.FindContract(port.Id).CantChangeTariffEvent -= _handleCantChangeEvent;
-                Abonents.FindContract(port.Id).DebtRepaidEvent -= _handleDebtRepaidEvent;
-                Abonents.FindContract(port.Id).SendHistoryEvent -= _handleSendHistoryEvent;
-                Abonents.FindContract(port.Id).SendBalanceEvent -= _handleSendBalanceEvent;
-                Abonents.TerminateContract(item);
+                port.PuttingOnBalance -= _abonents.FindContract(port.Id).HandleMoneyEvent;
+                port.ChangingTariff -= _abonents.FindContract(port.Id).HandleChangeTariffEvent;
+                port.GettingHistory -= _abonents.HandleGetHistoryForMonthEvent;
+                port.GettingBalance -= _abonents.HandleGetBalanceEvent;
+                _abonents.FindContract(port.Id).CantChangeTariffEvent -= _handleCantChangeEvent;
+                _abonents.FindContract(port.Id).DebtRepaidEvent -= _handleDebtRepaidEvent;
+                _abonents.FindContract(port.Id).SendHistoryEvent -= _handleSendHistoryEvent;
+                _abonents.FindContract(port.Id).SendBalanceEvent -= _handleSendBalanceEvent;
+                _abonents.TerminateContract(item);
                 port.ChangeStatusOfContract();
             }
         }
 
         private bool _checkNumber(string number)
         {
-            var finding = from port in Ports
+            var finding = from port in _ports
                           select port.Number;
             foreach (var item in finding)
             {
@@ -201,7 +201,7 @@ namespace Classes
 
         private bool _isNumberExist(string number)
         {
-            foreach (var item in Ports)
+            foreach (var item in _ports)
             {
                 if (item.Number == number) return true;
             }
@@ -214,9 +214,9 @@ namespace Classes
         }
         public APS()
         {
-            Ports = new List<IPort>();
-            Abonents = new BillingSystem();
-            Abonents.DailyCheckEvent += _handleDailyCheckEvent;
+            _ports = new List<IPort>();
+            _abonents = new BillingSystem();
+            _abonents.DailyCheckEvent += _handleDailyCheckEvent;
             _onGoingCalls = new List<ICallInformation>();
         }
     }

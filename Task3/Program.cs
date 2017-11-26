@@ -49,7 +49,7 @@ namespace Task3
             emulationEnvironment.Users.ElementAt(0).Telephone.PutMoney(30);
             emulationEnvironment.Users.ElementAt(0).Telephone.GetBalance();
             emulationEnvironment.Users.ElementAt(0).Telephone.DissconnectFromPort();
-            emulationEnvironment.Aps.TerminateContract(emulationEnvironment.Aps.Ports.ElementAt(0));
+            //emulationEnvironment.Aps.TerminateContract(emulationEnvironment.Aps._ports.ElementAt(0));
             emulationEnvironment.Users.ElementAt(0).Telephone.GetNumber();
             emulationEnvironment.Users.ElementAt(0).Telephone.GetPort();
             emulationEnvironment.Users.ElementAt(0).Telephone.ConnectToPort(emulationEnvironment.Aps.SignAContract(First, emulationEnvironment.Users.ElementAt(0).Name));

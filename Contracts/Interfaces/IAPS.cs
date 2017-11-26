@@ -9,8 +9,6 @@ namespace Contracts.Interfaces
 {
     public interface IAPS
     {
-        List<IPort> Ports { get; }
-
         void DeletePort(int indexOfPort);
         void TerminateContract(IPort port);
         void AddPort();
