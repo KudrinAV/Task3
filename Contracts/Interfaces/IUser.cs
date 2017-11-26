@@ -10,5 +10,11 @@ namespace Contracts.Interfaces
     {
         string Name { get; }
         ITerminal Telephone { get; }
+
+        void ConnectPortToTerminal();
+        void DisconnectFromPort();
+        void SignAContract(IAPS aps, ITariffPlan plan);
+        void TermintaeContract(IAPS aps);
+        void Call(string number);
     }
 }

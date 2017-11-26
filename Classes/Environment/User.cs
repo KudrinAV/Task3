@@ -11,11 +11,47 @@ namespace Classes.Environment
     {
         public string Name { get; private set; }
         public ITerminal Telephone { get; private set; }
+        public IPort Port { get; private set; }
 
         public User(string name, ITerminal terminal)
         {
             Name = name;
             Telephone = terminal;
+        }
+
+        public void ConnectPortToTerminal()
+        {
+            if(Port != null)
+            {
+                Telephone.ConnectToPort(Port);
+            }
+        }
+
+        public void DisconnectFromPort()
+        {
+            if (Port != null)
+            {
+                Telephone.DissconnectFromPort();
+            }
+        }
+
+        public void SignAContract(IAPS aps, ITariffPlan plan)
+        {
+            Port = aps.SignAContract(plan, Name);
+        }
+
+        public void TermintaeContract(IAPS aps)
+        {
+            if(Port != null)
+            {
+                aps.TerminateContract(Port);
+                Port = null;
+            }
+        }
+
+        public void Call(string number)
+        {
+            Telephone.Call(number);
         }
     }
 }
