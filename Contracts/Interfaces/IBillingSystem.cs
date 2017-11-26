@@ -11,7 +11,9 @@ namespace Contracts.Interfaces
     {
         List<IContract> Contracts { get; }
         IContract FindContract(int id);
-        
+
+        event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
+
         void HandleGetBalanceEvent(object o, BalanceEventArgs e);
         void TerminateContract(IContract contract);
         void HandleGetHistoryForMonthEvent(object o, GetHistoryEventArgs e);

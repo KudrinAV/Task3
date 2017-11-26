@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Classes
@@ -16,6 +17,14 @@ namespace Classes
         public List<IPort> Ports { get; private set; }
         public IBillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
+
+        public void HandleDailyCheckEvent(object o, MessageFromAPSEventArgs e)
+        {
+            foreach(var item in e.History)
+            {
+                Ports.Find(x => x.Number == item).APSMessageShow(new MessageFromAPSEventArgs("You need to pay " + item));
+            }
+        }
 
         public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
         {
@@ -94,7 +103,7 @@ namespace Classes
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
-                item.GettingHistory += Abonents.HandleGetHistoryEvent;
+                item.GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
                 item.GettingHistory += HandleGetHistoryEvent;
                 item.GettingBalance += Abonents.HandleGetBalanceEvent;
                 item.GettingBalance += HandleGetBalanceEvent;
@@ -108,7 +117,7 @@ namespace Classes
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
-                Ports.Last().GettingHistory += Abonents.HandleGetHistoryEvent;
+                Ports.Last().GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
                 Ports.Last().GettingHistory += HandleGetHistoryEvent;
                 Ports.Last().GettingBalance += Abonents.HandleGetBalanceEvent;
                 Ports.Last().GettingBalance += HandleGetBalanceEvent;
@@ -193,6 +202,7 @@ namespace Classes
         {
             Ports = new List<IPort>();
             Abonents = new BillingSystem();
+            Abonents.DailyCheckEvent += HandleDailyCheckEvent;
             _onGoingCalls = new List<ICallInformation>();
         }
     }

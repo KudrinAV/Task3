@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Classes.BillingSystemObjects
 {
@@ -13,6 +15,42 @@ namespace Classes.BillingSystemObjects
         public List<IContract> Contracts { get; private set; }
         private List<IContract> _terminatedContracts { get; set; }
         public object DataTime { get; private set; }
+        private System.Timers.Timer _timer { get; set; }
+
+        public event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
+
+        protected virtual void OnDailyCheckEvent(MessageFromAPSEventArgs e)
+        {
+            DailyCheckEvent?.Invoke(this, e);
+        }
+
+        private void _ElapsedDailyCheck()
+        {
+            _timer = new System.Timers.Timer(5000)
+            {
+                Enabled = true
+            };
+            _timer.Elapsed += new ElapsedEventHandler(_timerElapsed);
+            _timer.AutoReset = true;
+            _timer.Start();
+        }
+
+        private void _timerElapsed(object o, ElapsedEventArgs e)
+        {
+            OnDailyCheckEvent(new MessageFromAPSEventArgs(_getListOfPayment()));
+        }
+
+        private List<string> _getListOfPayment()
+        {
+            List<string> result = new List<string>();
+            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalDays % 30 < 30 && x.Balance< 0.0).Select(x => x.Number);
+            foreach (var item in finding)
+            {
+                result.Add(item);
+            }
+            return result;
+        }
+
 
         public IContract FindContract(int id)
         {
@@ -80,6 +118,7 @@ namespace Classes.BillingSystemObjects
         {
             Contracts = new List<IContract>();
             _terminatedContracts = new List<IContract>();
+            _ElapsedDailyCheck();
         }
 
 
