@@ -29,10 +29,9 @@ namespace Task3
             id1.ConnectToPort(test.SignAContract(tariffPlan));
             id2.ConnectToPort(test.SignAContract(tariffPlan));
             id3.ConnectToPort(test.SignAContract(tariffPlan));
-            id1.GetBalance();
-            id2.GetBalance();
-            id3.GetBalance();
             Console.WriteLine(id1.GetNumber());
+            Console.WriteLine(id2.GetNumber());
+            Console.WriteLine(id3.GetNumber());
 
 
             id1.Call(id2.GetNumber());
@@ -44,36 +43,36 @@ namespace Task3
             Console.WriteLine();
             id1.GetHistory();
 
-            id1.GetBalance();
-            id2.GetBalance();
-            id3.GetBalance();
+            //id1.GetBalance();
+            //id2.GetBalance();
+            //id3.GetBalance();
 
-            id1.DissconnectFromPort();
+            //id1.DissconnectFromPort();
 
-            test.TerminateContract(test.Ports.First());
+            //test.TerminateContract(test.Ports.First());
             
 
-            id4.ConnectToPort(test.SignAContract(tariffPlan));
-            Console.WriteLine(id1.GetNumber());
-            Console.WriteLine(id2.GetNumber());
-            Console.WriteLine(id3.GetNumber());
-            Console.WriteLine(id4.GetNumber());
+            //id4.ConnectToPort(test.SignAContract(tariffPlan));
+            //Console.WriteLine(id1.GetNumber());
+            //Console.WriteLine(id2.GetNumber());
+            //Console.WriteLine(id3.GetNumber());
+            //Console.WriteLine(id4.GetNumber());
 
             //id1.ChangeTariff(tariffPlan);
-            id4.Call(id2.GetNumber());
-            Thread.Sleep(3000);
-            id2.EndCall();
+            //id4.Call(id2.GetNumber());
+            //Thread.Sleep(3000);
+            //id2.EndCall();
 
-            id3.Call(id4.GetNumber());
-            Thread.Sleep(3000);
-            id4.EndCall();
-            //id4.GetHistory();
+            //id3.Call(id4.GetNumber());
+            //Thread.Sleep(3000);
+            //id4.EndCall();
+            ////id4.GetHistory();
 
 
-            id1.GetBalance();
-            id2.GetBalance();
-            id3.GetBalance();
-            id4.GetBalance();
+            //id1.GetBalance();
+            //id2.GetBalance();
+            //id3.GetBalance();
+            //id4.GetBalance();
             //foreach(var item in test.Ports)
             //{
             //    Console.WriteLine(item.Id + " " + item.PortStatus);

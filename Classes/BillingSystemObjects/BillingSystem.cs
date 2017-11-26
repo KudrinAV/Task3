@@ -26,7 +26,7 @@ namespace Classes.BillingSystemObjects
 
         private void _ElapsedDailyCheck()
         {
-            _timer = new System.Timers.Timer(1000)
+            _timer = new System.Timers.Timer(100000)
             {
                 Enabled = true
             };

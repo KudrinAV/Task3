@@ -3,6 +3,7 @@ using Contracts.Enums;
 using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,17 +62,40 @@ namespace Classes
         {
             if (e.ListOfCalls != null)
             {
-                int switcher = 1;
-                switch( switcher)
-                {
-                    case 1: _filterCalls(e.ListOfCalls, 1); break; 
-                    case 2: _filterCalls(e.ListOfCalls, 2); break; 
-                    case 3: _filterCalls(e.ListOfCalls, 3); break;
-                    case 4: _filterCalls(e.ListOfCalls, 4); break;
-                    default: break;     
-                }
+                Console.WriteLine("1 - все звонки ");
+                Console.WriteLine("2 - фильтрация по номеру ");
+                Console.WriteLine("3 - фильтрация по стоимости ");
+                Console.WriteLine("4 - фильтрация по дате ");
+                Console.WriteLine("Введите пункт меню: ");
+                int lever = int.Parse(Console.ReadLine());
+                _getFilterParametrs(e.ListOfCalls, lever);
             }
             else Console.WriteLine(e.Message);
+        }
+
+        private void _getFilterParametrs(List<ICallInformation> list, int switcher) 
+        {
+            switch(switcher)
+            {
+                case 1:
+                    Console.WriteLine("Весь список:");
+                    _filterCalls(list);
+                    break;
+                case 2:
+                    Console.WriteLine("Введите номер: ");
+                    _filterCalls(list, Console.ReadLine());
+                    break;
+                case 3:
+                    Console.WriteLine("Введите диапозон сумм ");
+                    _filterCalls(list, Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture), Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture));
+                    break;
+                case 4:
+                    Console.WriteLine("Введите дату: ");
+                    _filterCalls(list, DateTime.Parse(Console.ReadLine()));
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void _filterCalls(List<ICallInformation> list)
