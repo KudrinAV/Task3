@@ -21,7 +21,6 @@ namespace Classes.BillingSystemObjects
         private int _zero = 0;
 
         public event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
-        //public event EventHandler<>
 
         protected virtual void OnDailyCheckEvent(MessageFromAPSEventArgs e)
         {
@@ -73,14 +72,9 @@ namespace Classes.BillingSystemObjects
             Contracts.Remove(contract);
         }
 
-        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
-        {
-            e.SetHistory(_findHistory(e.Number));
-        }
-
         public void HandleGetHistoryForMonthEvent(object o, GetHistoryEventArgs e)
         {
-            e.SetHistory(_findMonthHistory(e.Number));
+            FindContract(e.IdOfPort).SendHistory(e);
         }
 
         public void AddToHistory(ICallInformation call)
@@ -99,18 +93,6 @@ namespace Classes.BillingSystemObjects
         {
             var item = Contracts.Find(x => x.Number == number);
             return item.AllCalls;
-        }
-
-        private List<ICallInformation> _findMonthHistory(string number)
-        {
-            List<ICallInformation> resultList = new List<ICallInformation>();
-            var contract = Contracts.Find(x => x.Number == number);
-            var finding = contract.AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= _daysInMonth).Select(i => i);
-            foreach (var item in finding)
-            {
-                resultList.Add(item);
-            }
-            return resultList;
         }
 
         public BillingSystem()

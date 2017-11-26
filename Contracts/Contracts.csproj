@@ -47,6 +47,7 @@
     <Compile Include="CustomArgs\EndCallEventArgs.cs" />
     <Compile Include="CustomArgs\GetHistoryEventArgs.cs" />
     <Compile Include="CustomArgs\MessageFromAPSEventArgs.cs" />
+    <Compile Include="CustomArgs\SendHistoryEventArgs.cs" />
     <Compile Include="Enums\StatusOfAnswer.cs" />
     <Compile Include="Enums\StatusOfCall.cs" />
     <Compile Include="Enums\StatusOfContract.cs" />

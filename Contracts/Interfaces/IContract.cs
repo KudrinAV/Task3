@@ -19,7 +19,9 @@ namespace Contracts.Interfaces
 
         event EventHandler<BalanceEventArgs> DebtRepaidEvent;
         event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
+        event EventHandler<SendHistoryEventArgs> SendHistoryEvent;
         void SetBalnceAfterCall(double money);
+        void SendHistory(GetHistoryEventArgs e);
         void HandleMoney(object o, BalanceEventArgs e);
         void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e);
     }

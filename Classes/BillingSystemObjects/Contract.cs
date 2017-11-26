@@ -23,6 +23,12 @@ namespace Classes.BillingSystemObjects
 
         public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
         public event EventHandler<BalanceEventArgs> DebtRepaidEvent;
+        public event EventHandler<SendHistoryEventArgs> SendHistoryEvent;
+
+        protected virtual void OnSendHistoryEvent(SendHistoryEventArgs e)
+        {
+            SendHistoryEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnDebtRepaidEvent(BalanceEventArgs e)
         {
@@ -32,6 +38,11 @@ namespace Classes.BillingSystemObjects
         protected virtual void OnCantChangeTariffEvent(ChangeTariffEventArgs e)
         {
             CantChangeTariffEvent?.Invoke(this, e);
+        }
+
+        public void SendHistory(GetHistoryEventArgs e)
+        {
+            OnSendHistoryEvent(new SendHistoryEventArgs(e.IdOfPort, e.Number, _findMonthHistory()));
         }
 
         public void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e)
@@ -65,6 +76,17 @@ namespace Classes.BillingSystemObjects
         public void SetBalnceAfterCall(double money)
         {
             Balance -= money;
+        }
+
+        private List<ICallInformation> _findMonthHistory()
+        {
+            List<ICallInformation> resultList = new List<ICallInformation>();
+            var finding = AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= _daysInMonth).Select(i => i);
+            foreach (var item in finding)
+            {
+                resultList.Add(item);
+            }
+            return resultList;
         }
 
         public Contract(int id, int idOfPort, string number, string name, ITariffPlan tariffPlan)

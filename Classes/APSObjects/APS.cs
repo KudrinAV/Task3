@@ -46,7 +46,7 @@ namespace Classes
             item.APSMessageShow(new MessageFromAPSEventArgs(String.Format("U can't change tariff atleast {0:0.00} days", _daysInMonth - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
         }
 
-        public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
+        public void HandleSendHistoryEvent(object o, SendHistoryEventArgs e)
         {
             var item = Ports.Find(x => x.Id == e.IdOfPort);
             item.APSMessageShow(new MessageFromAPSEventArgs(e.CallList));
@@ -111,11 +111,12 @@ namespace Classes
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
                 item.GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
-                item.GettingHistory += HandleGetHistoryEvent;
+                //item.GettingHistory += HandleSendHistoryEvent;
                 item.GettingBalance += Abonents.HandleGetBalanceEvent;
                 item.GettingBalance += HandleGetBalanceEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 Abonents.FindContract(item.Id).DebtRepaidEvent += HandleDebtRepaidEvent;
+                Abonents.FindContract(item.Id).SendHistoryEvent += HandleSendHistoryEvent;
                 item.ChangeStatusOfContract();
                 return item;
             }
@@ -126,12 +127,13 @@ namespace Classes
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
-                Ports.Last().GettingHistory += HandleGetHistoryEvent;
+                //Ports.Last().GettingHistory += HandleSendHistoryEvent;
                 Ports.Last().GettingBalance += Abonents.HandleGetBalanceEvent;
                 Ports.Last().GettingBalance += HandleGetBalanceEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
                 Abonents.FindContract(Ports.Last().Id).DebtRepaidEvent += HandleDebtRepaidEvent;
+                Abonents.FindContract(Ports.Last().Id).SendHistoryEvent += HandleSendHistoryEvent;
                 return Ports.Last();
             }
         }
@@ -143,12 +145,13 @@ namespace Classes
             {
                 port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoney;
                 port.ChangingTariff -= Abonents.FindContract(port.Id).HandleChangeTariffEvent;
-                port.GettingHistory -= Abonents.HandleGetHistoryEvent;
-                port.GettingHistory -= HandleGetHistoryEvent;
+                port.GettingHistory -= Abonents.HandleGetHistoryForMonthEvent;
+                //port.GettingHistory -= HandleSendHistoryEvent;
                 port.GettingBalance -= Abonents.HandleGetBalanceEvent;
                 port.GettingBalance -= HandleGetBalanceEvent;
                 Abonents.FindContract(port.Id).CantChangeTariffEvent -= HandleCantChangeEvent;
                 Abonents.FindContract(port.Id).DebtRepaidEvent -= HandleDebtRepaidEvent;
+                Abonents.FindContract(port.Id).SendHistoryEvent -= HandleSendHistoryEvent;
                 Abonents.TerminateContract(item);
                 port.ChangeStatusOfContract();
             }
@@ -205,8 +208,6 @@ namespace Classes
         {
             port.GetAnswer(e);
         }
-
-
         public APS()
         {
             Ports = new List<IPort>();

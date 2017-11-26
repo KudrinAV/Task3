@@ -46,6 +46,10 @@ namespace Task3
             emulationEnvironment.Users.ElementAt(0).Telephone.GetBalance();
             emulationEnvironment.Users.ElementAt(0).Telephone.GetHistory();
             emulationEnvironment.Users.ElementAt(0).Telephone.ChangeTariff(First);
+            emulationEnvironment.Users.ElementAt(2).Telephone.GetHistory();
+            emulationEnvironment.Users.ElementAt(3).Telephone.GetHistory();
+            emulationEnvironment.Users.ElementAt(4).Telephone.GetHistory();
+            emulationEnvironment.Users.ElementAt(1).Telephone.GetHistory();
 
 
 
