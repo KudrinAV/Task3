@@ -10,12 +10,8 @@ namespace Contracts.Interfaces
     public interface ITerminal
     {
         int Id { get; }
-        event EventHandler<CallEventArgs> CallEvent;
-        event EventHandler<EndCallEventArgs> EndCallEvent;
 
         void GetHistory();
-        void HandleAnswerEvent(object o, CallEventArgs e);
-        void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e);
         void ChangeTariff(ITariffPlan tariffPlan);
         void EndCall();
         string GetNumber();

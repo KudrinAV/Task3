@@ -21,6 +21,7 @@ namespace Classes.BillingSystemObjects
         private int _zero = 0;
 
         public event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
+        //public event EventHandler<>
 
         protected virtual void OnDailyCheckEvent(MessageFromAPSEventArgs e)
         {

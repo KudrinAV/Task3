@@ -40,6 +40,12 @@ namespace Task3
                 Console.WriteLine(item.Telephone.GetNumber() + " " + item.Telephone.Id);
             }
 
+            emulationEnvironment.Users.ElementAt(0).Telephone.Call(emulationEnvironment.Users.ElementAt(2).Telephone.GetNumber());
+            Thread.Sleep(3000);
+            emulationEnvironment.Users.ElementAt(0).Telephone.EndCall();
+            emulationEnvironment.Users.ElementAt(0).Telephone.GetBalance();
+            emulationEnvironment.Users.ElementAt(0).Telephone.GetHistory();
+            emulationEnvironment.Users.ElementAt(0).Telephone.ChangeTariff(First);
 
 
 

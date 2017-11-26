@@ -10,9 +10,7 @@ namespace Contracts.CustomArgs
     public class MessageFromAPSEventArgs : EventArgs
     {
         public string Message { get; private set; }
-
         public List<string> ListOfDebters { get; private set; }
-
         public List<ICallInformation> ListOfCalls { get; private set; }
 
         public MessageFromAPSEventArgs(string message)

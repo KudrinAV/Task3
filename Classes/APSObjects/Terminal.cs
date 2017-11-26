@@ -162,17 +162,17 @@ namespace Classes
 
         public void GetHistory()
         {
-            OnGetHistoryEvent(new GetHistoryEventArgs(_port.Id, _port.Number));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable)  OnGetHistoryEvent(new GetHistoryEventArgs(_port.Id, _port.Number));
         }
 
         public void ChangeTariff(ITariffPlan tariffPlan)
         {
-            OnChangeTariffEvent(new ChangeTariffEventArgs(_port.Id, tariffPlan));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnChangeTariffEvent(new ChangeTariffEventArgs(_port.Id, tariffPlan));
         }
 
         public void PutMoney(double money)
         {
-            OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable)  OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
         }
 
         public void EndCall()
