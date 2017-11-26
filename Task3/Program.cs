@@ -33,6 +33,8 @@ namespace Task3
             Console.WriteLine(id2.GetNumber());
             Console.WriteLine(id3.GetNumber());
 
+            id1.ChangeTariff(tariffPlan);
+
 
             id1.Call(id2.GetNumber());
             Thread.Sleep(3000);
@@ -43,7 +45,7 @@ namespace Task3
             Console.WriteLine();
             id1.GetHistory();
 
-            //id1.GetBalance();
+            id1.GetBalance();
             //id2.GetBalance();
             //id3.GetBalance();
 

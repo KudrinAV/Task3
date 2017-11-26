@@ -17,6 +17,7 @@ namespace Classes
         public List<IPort> Ports { get; private set; }
         public IBillingSystem Abonents { get; private set; }
         private List<ICallInformation> _onGoingCalls { get; set; }
+        private int _daysInMonth = 30;
 
         public void HandleDailyCheckEvent(object o, MessageFromAPSEventArgs e)
         {
@@ -29,13 +30,13 @@ namespace Classes
         public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
         {
             var item = Ports.Find(x => x.Id == e.IdOfPort);
-            item.APSMessageShow(new MessageFromAPSEventArgs("Balance is " + e.Money.ToString()));
+            item.APSMessageShow(new MessageFromAPSEventArgs(String.Format("Balance is {0:0.00} ", e.Money)));
         }
 
         public void HandleCantChangeEvent(object o, ChangeTariffEventArgs e)
         {
             var item = Ports.Find(x => x.Id == e.IdOfPort);
-            item.APSMessageShow(new MessageFromAPSEventArgs("U can't change tariff atleast" + (30 - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
+            item.APSMessageShow(new MessageFromAPSEventArgs(String.Format("U can't change tariff atleast {0:0.00} days", _daysInMonth - DateTime.Now.Subtract(e.TimeOfChanging).TotalDays)));
         }
 
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
