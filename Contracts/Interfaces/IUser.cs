@@ -16,5 +16,8 @@ namespace Contracts.Interfaces
         void SignAContract(IAPS aps, ITariffPlan plan);
         void TermintaeContract(IAPS aps);
         void Call(string number);
+        void GetBalance();
+        void PunOnBalance(double money);
+        void EndCall();
     }
 }

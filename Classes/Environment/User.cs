@@ -53,5 +53,25 @@ namespace Classes.Environment
         {
             Telephone.Call(number);
         }
+
+        public void GetHistory()
+        {
+            Telephone.GetHistory();
+        }
+
+        public void GetBalance()
+        {
+            Telephone.GetBalance();
+        }
+
+        public void PunOnBalance(double money)
+        {
+            Telephone.PutMoney(money);
+        }
+
+        public void EndCall()
+        {
+            Telephone.EndCall();
+        }
     }
 }
