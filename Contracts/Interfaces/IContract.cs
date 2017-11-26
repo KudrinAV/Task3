@@ -16,7 +16,6 @@ namespace Contracts.Interfaces
         List<ICallInformation> AllCalls { get; }
         DateTime TimeOfSigningContract { get;}
         DateTime TimeOfChangingTariff { get; }
-    
 
         event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
         void SetBalnceAfterCall(double money);

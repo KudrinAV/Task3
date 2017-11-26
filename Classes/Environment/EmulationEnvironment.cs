@@ -12,6 +12,5 @@ namespace Classes.Environment
         public IAPS Aps { get; private set; }
         public List<IUser> Users { get; private set; }
         public List<ITerminal> Telephones { get; private set; }
-
     }
 }

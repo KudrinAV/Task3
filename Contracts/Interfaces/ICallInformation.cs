@@ -17,6 +17,5 @@ namespace Contracts.Interfaces
         void SetCostOfCall(double cost);
         void SetTimeOfEnding(DateTime time);
         TimeSpan GetDuretionOfCall();
-
     }
 }

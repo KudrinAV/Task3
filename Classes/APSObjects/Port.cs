@@ -139,6 +139,5 @@ namespace Classes.Ports
             PortStatus = StatusOfPort.NotConnected;
             ContractStatus = StatusOfContract.NotContracted;
         }
-
     }
 }

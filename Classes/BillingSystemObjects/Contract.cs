@@ -66,6 +66,5 @@ namespace Classes.BillingSystemObjects
             AllCalls = new List<ICallInformation>();
             Balance = 0.0;
         }
-
     }
 }
