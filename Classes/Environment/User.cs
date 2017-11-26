@@ -37,7 +37,10 @@ namespace Classes.Environment
 
         public void SignAContract(IAPS aps, ITariffPlan plan)
         {
-            Port = aps.SignAContract(plan, Name);
+            if (Port == null)
+            {
+                Port = aps.SignAContract(plan, Name);
+            }
         }
 
         public void TermintaeContract(IAPS aps)
