@@ -8,7 +8,6 @@ namespace Contracts.Interfaces
 {
     public interface IEmulationEnvironment
     {
-
         IAPS Aps { get; }
         List<IUser> Users { get; }
         List<ITerminal> Telephones { get; }

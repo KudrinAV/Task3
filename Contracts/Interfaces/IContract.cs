@@ -18,7 +18,7 @@ namespace Contracts.Interfaces
         DateTime TimeOfChangingTariff { get; }
 
         event EventHandler<BalanceEventArgs> DebtRepaidEvent;
-        event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
+        event EventHandler<CantChangeTariffEventArgs> CantChangeTariffEvent;
         event EventHandler<SendHistoryEventArgs> SendHistoryEvent;
         event EventHandler<BalanceEventArgs> SendBalanceEvent;
 

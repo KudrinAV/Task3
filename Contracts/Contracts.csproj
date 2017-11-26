@@ -43,6 +43,7 @@
     <Compile Include="CustomArgs\AnswerEventArgs.cs" />
     <Compile Include="CustomArgs\BalanceEventArgs.cs" />
     <Compile Include="CustomArgs\CallEventArgs.cs" />
+    <Compile Include="CustomArgs\CantChangeTariffEventArgs.cs" />
     <Compile Include="CustomArgs\ChangeTariffEventArgs.cs" />
     <Compile Include="CustomArgs\EndCallEventArgs.cs" />
     <Compile Include="CustomArgs\GetHistoryEventArgs.cs" />

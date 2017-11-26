@@ -21,7 +21,7 @@ namespace Classes.BillingSystemObjects
         public List<ICallInformation> AllCalls { get; private set; }
         private int _daysInMonth = 30;
 
-        public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
+        public event EventHandler<CantChangeTariffEventArgs> CantChangeTariffEvent;
         public event EventHandler<BalanceEventArgs> DebtRepaidEvent;
         public event EventHandler<SendHistoryEventArgs> SendHistoryEvent;
         public event EventHandler<BalanceEventArgs> SendBalanceEvent;
@@ -41,7 +41,7 @@ namespace Classes.BillingSystemObjects
             DebtRepaidEvent?.Invoke(this, e);
         }
 
-        protected virtual void OnCantChangeTariffEvent(ChangeTariffEventArgs e)
+        protected virtual void OnCantChangeTariffEvent(CantChangeTariffEventArgs e)
         {
             CantChangeTariffEvent?.Invoke(this, e);
         }
@@ -60,7 +60,7 @@ namespace Classes.BillingSystemObjects
         {
             if (e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalDays <= _daysInMonth)
             {
-                CantChangeTariffPlan(e);
+                CantChangeTariffPlan(new CantChangeTariffEventArgs(e.IdOfPort, TimeOfChangingTariff));
             }
             else
             {
@@ -79,7 +79,7 @@ namespace Classes.BillingSystemObjects
             else Balance += e.Money;
         }
 
-        public void CantChangeTariffPlan(ChangeTariffEventArgs e)
+        public void CantChangeTariffPlan(CantChangeTariffEventArgs e)
         {
             OnCantChangeTariffEvent(e);
         }
