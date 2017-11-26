@@ -101,6 +101,14 @@ namespace Classes
             Ports.Last().Connecting += _handleConnectingEvent;
         }
 
+        public void DeletePort(int indexOfPort)
+        {
+            Ports.ElementAt(indexOfPort).Calling -= _handleCallEvent;
+            Ports.ElementAt(indexOfPort).EndingCall -= _handleEndCallEvent;
+            Ports.ElementAt(indexOfPort).Connecting -= _handleConnectingEvent;
+            Ports.Remove(Ports.ElementAt(indexOfPort));
+        }
+
         public IPort SignAContract(ITariffPlan tariffPlan , string name)
         {
             var item = Ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
