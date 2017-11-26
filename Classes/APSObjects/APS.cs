@@ -6,9 +6,6 @@ using Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Classes
 {
@@ -21,7 +18,7 @@ namespace Classes
 
         private void _handleDailyCheckEvent(object o, MessageFromAPSEventArgs e)
         {
-            foreach(var item in e.ListOfDebters)
+            foreach (var item in e.ListOfDebters)
             {
                 var port = _ports.Find(x => x.Number == item);
                 port.APSMessageShow(new MessageFromAPSEventArgs("You need to pay " + item));
@@ -122,10 +119,10 @@ namespace Classes
                     _ports.ElementAt(indexOfPort - 1).Connecting -= _handleConnectingEvent;
                     _ports.Remove(_ports.ElementAt(indexOfPort - 1));
                 }
-            } 
+            }
         }
 
-        public IPort SignAContract(ITariffPlan tariffPlan , string name)
+        public IPort SignAContract(ITariffPlan tariffPlan, string name)
         {
             var item = _ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
             if (item != null)

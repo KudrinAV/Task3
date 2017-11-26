@@ -42,12 +42,11 @@ namespace Task3
                 item.ConnectPortToTerminal();
             }
 
-            foreach(var item in emulationEnvironment.Users)
-            {
-                Console.WriteLine(item.GetNumber() + " " + item.GetPort().Id);
-            }
+            emulationEnvironment.Users.ElementAt(0).Call("1231231");
 
-          
+            emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
+
+
 
 
         }

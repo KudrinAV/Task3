@@ -32,7 +32,7 @@ namespace Classes.Environment
 
         public void ConnectPortToTerminal()
         {
-            if(_port != null)
+            if (_port != null)
             {
                 Telephone.ConnectToPort(_port);
             }
@@ -56,7 +56,7 @@ namespace Classes.Environment
 
         public void TermintaeContract(IAPS aps)
         {
-            if(_port != null)
+            if (_port != null)
             {
                 aps.TerminateContract(_port);
                 _port = null;

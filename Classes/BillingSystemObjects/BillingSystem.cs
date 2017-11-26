@@ -46,14 +46,13 @@ namespace Classes.BillingSystemObjects
         private List<string> _getListOfPayment()
         {
             List<string> result = new List<string>();
-            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalDays % _daysInMonth <= _oneDay && x.Balance< _zero).Select(x => x.Number);
+            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalDays % _daysInMonth <= _oneDay && x.Balance < _zero).Select(x => x.Number);
             foreach (var item in finding)
             {
                 result.Add(item);
             }
             return result;
         }
-
 
         public IContract FindContract(int id)
         {
@@ -101,7 +100,5 @@ namespace Classes.BillingSystemObjects
             _terminatedContracts = new List<IContract>();
             _ElapsedDailyCheck();
         }
-
-
     }
 }

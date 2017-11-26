@@ -75,9 +75,9 @@ namespace Classes
             else Console.WriteLine(e.Message);
         }
 
-        private void _getFilterParametrs(List<ICallInformation> list, int switcher) 
+        private void _getFilterParametrs(List<ICallInformation> list, int switcher)
         {
-            switch(switcher)
+            switch (switcher)
             {
                 case 1:
                     Console.WriteLine("All list :");
@@ -123,9 +123,9 @@ namespace Classes
 
         private void _filterCalls(List<ICallInformation> list, double minCostOfCall, double maxCostOfCall)
         {
-            if (maxCostOfCall >=minCostOfCall)
+            if (maxCostOfCall >= minCostOfCall)
             {
-                var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall<= maxCostOfCall);
+                var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall <= maxCostOfCall);
                 foreach (var item in finding)
                 {
                     Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
@@ -163,7 +163,7 @@ namespace Classes
 
         public void GetHistory()
         {
-            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable)  OnGetHistoryEvent(new GetHistoryEventArgs(_port.Id, _port.Number));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnGetHistoryEvent(new GetHistoryEventArgs(_port.Id, _port.Number));
         }
 
         public void ChangeTariff(ITariffPlan tariffPlan)
@@ -173,7 +173,7 @@ namespace Classes
 
         public void PutMoney(double money)
         {
-            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable)  OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
         }
 
         public void EndCall()

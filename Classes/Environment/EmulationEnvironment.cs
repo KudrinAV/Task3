@@ -40,7 +40,7 @@ namespace Classes.Environment
                 Users.Add(new User(_randomString(5), Telephones.ElementAt(i)));
             }
         }
-        
+
         private string _randomString(int length)
         {
             Random random = new Random();
@@ -50,4 +50,4 @@ namespace Classes.Environment
         }
     }
 }
-        
+
