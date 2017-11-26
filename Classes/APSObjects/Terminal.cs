@@ -62,11 +62,12 @@ namespace Classes
         {
             if (e.ListOfCalls != null)
             {
-                Console.WriteLine("1 - все звонки ");
-                Console.WriteLine("2 - фильтрация по номеру ");
-                Console.WriteLine("3 - фильтрация по стоимости ");
-                Console.WriteLine("4 - фильтрация по дате ");
-                Console.WriteLine("Введите пункт меню: ");
+                Console.WriteLine("Filter calls by: ");
+                Console.WriteLine("1 - Show all Calls ");
+                Console.WriteLine("2 - Number ");
+                Console.WriteLine("3 - Diaposon of cost");
+                Console.WriteLine("4 - Date");
+                Console.WriteLine("Insert menu");
                 bool result = int.TryParse(Console.ReadLine(), out int lever);
                 if (result) _getFilterParametrs(e.ListOfCalls, lever);
                 else Console.WriteLine("Wrong input");
@@ -79,19 +80,19 @@ namespace Classes
             switch(switcher)
             {
                 case 1:
-                    Console.WriteLine("Весь список:");
+                    Console.WriteLine("All list :");
                     _filterCalls(list);
                     break;
                 case 2:
-                    Console.WriteLine("Введите номер: ");
+                    Console.WriteLine("Input number : ");
                     _filterCalls(list, Console.ReadLine());
                     break;
                 case 3:
-                    Console.WriteLine("Введите диапозон сумм ");
+                    Console.WriteLine("Input diaposon of cost : ");
                     _filterCalls(list, Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture), Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture));
                     break;
                 case 4:
-                    Console.WriteLine("Введите дату: ");
+                    Console.WriteLine("Input date : ");
                     _filterCalls(list, DateTime.Parse(Console.ReadLine()));
                     break;
                 default:
