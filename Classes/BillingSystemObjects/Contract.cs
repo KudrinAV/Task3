@@ -37,7 +37,6 @@ namespace Classes.BillingSystemObjects
         {
             if (e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalDays <= _daysInMonth)
             {
-                e.SetNewTime(TimeOfChangingTariff);
                 CantChangeTariffPlan(e);
             }
             else

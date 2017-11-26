@@ -11,5 +11,11 @@ namespace Classes.Environment
     {
         public string Name { get; private set; }
         public ITerminal Telephone { get; private set; }
+
+        public User(string name, ITerminal terminal)
+        {
+            Name = name;
+            Telephone = terminal;
+        }
     }
 }

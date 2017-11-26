@@ -16,12 +16,8 @@ namespace Contracts.CustomArgs
         public ChangeTariffEventArgs(int id, ITariffPlan tariffPlan)
         {
             IdOfPort = id;
+            TimeOfChanging = DateTime.Now;
             NewTariffPlan = tariffPlan;
-        }
-
-        public void SetNewTime(DateTime time)
-        {
-            TimeOfChanging = time;
         }
     }
 }

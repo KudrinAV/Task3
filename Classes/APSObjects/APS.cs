@@ -58,7 +58,6 @@ namespace Classes
             if (item != null)
             {
                 item.SetTimeOfEnding(e.TimeOfEndingOfCall);
-                e.SetDurationOfCall(item.GetDuretionOfCall());
                 Abonents.AddToHistory(item);
                 _onGoingCalls.Remove(item);
                 Ports.Find(x => x.Number == item.Caller).ChangeCallStatus(StatusOfCall.Avaliable);

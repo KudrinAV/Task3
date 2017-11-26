@@ -12,5 +12,8 @@ namespace Contracts.Interfaces
         IAPS Aps { get; }
         List<IUser> Users { get; }
         List<ITerminal> Telephones { get; }
+
+        void CreateTerminals(int number);
+        void CreateUsers();
     }
 }
