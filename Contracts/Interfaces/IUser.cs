@@ -19,5 +19,6 @@ namespace Contracts.Interfaces
         void GetBalance();
         void PunOnBalance(double money);
         void EndCall();
+        string GetNumber();
     }
 }

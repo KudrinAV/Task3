@@ -11,7 +11,7 @@ namespace Classes.Environment
     {
         public string Name { get; private set; }
         public ITerminal Telephone { get; private set; }
-        public IPort Port { get; private set; }
+        private IPort _port { get; set; }
 
         public User(string name, ITerminal terminal)
         {
@@ -21,15 +21,15 @@ namespace Classes.Environment
 
         public void ConnectPortToTerminal()
         {
-            if(Port != null)
+            if(_port != null)
             {
-                Telephone.ConnectToPort(Port);
+                Telephone.ConnectToPort(_port);
             }
         }
 
         public void DisconnectFromPort()
         {
-            if (Port != null)
+            if (_port != null)
             {
                 Telephone.DissconnectFromPort();
             }
@@ -37,18 +37,18 @@ namespace Classes.Environment
 
         public void SignAContract(IAPS aps, ITariffPlan plan)
         {
-            if (Port == null)
+            if (_port == null)
             {
-                Port = aps.SignAContract(plan, Name);
+                _port = aps.SignAContract(plan, Name);
             }
         }
 
         public void TermintaeContract(IAPS aps)
         {
-            if(Port != null)
+            if(_port != null)
             {
-                aps.TerminateContract(Port);
-                Port = null;
+                aps.TerminateContract(_port);
+                _port = null;
             }
         }
 
@@ -75,6 +75,11 @@ namespace Classes.Environment
         public void EndCall()
         {
             Telephone.EndCall();
+        }
+
+        public string GetNumber()
+        {
+            return Telephone.GetNumber();
         }
     }
 }
