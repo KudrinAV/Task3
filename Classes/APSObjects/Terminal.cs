@@ -59,14 +59,62 @@ namespace Classes
 
         public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
         {
-            if (e.History != null)
+            if (e.ListOfCalls != null)
             {
-                foreach (var item in e.History)
+                int switcher = 1;
+                switch( switcher)
                 {
-                    Console.WriteLine(item);
+                    case 1: _filterCalls(e.ListOfCalls, 1); break; 
+                    case 2: _filterCalls(e.ListOfCalls, 2); break; 
+                    case 3: _filterCalls(e.ListOfCalls, 3); break;
+                    case 4: _filterCalls(e.ListOfCalls, 4); break;
+                    default: break;     
                 }
             }
             else Console.WriteLine(e.Message);
+        }
+
+        private void _filterCalls(List<ICallInformation> list)
+        {
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+            }
+        }
+
+        private void _filterCalls(List<ICallInformation> list, string number)
+        {
+            if (number.Length == 7)
+            {
+                var finding = list.Where(x => x.Caller == number || x.Receiver == number);
+                foreach (var item in finding)
+                {
+                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+                }
+            }
+            else Console.WriteLine("There is no such number");
+        }
+
+        private void _filterCalls(List<ICallInformation> list, double minCostOfCall, double maxCostOfCall)
+        {
+            if (maxCostOfCall >=minCostOfCall)
+            {
+                var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall<= maxCostOfCall);
+                foreach (var item in finding)
+                {
+                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+                }
+            }
+            else Console.WriteLine("There is problems with user's input");
+        }
+
+        private void _filterCalls(List<ICallInformation> list, DateTime time)
+        {
+            var finding = list.Where(x => x.TimeOfBeginningOfCall.Day == time.Day);
+            foreach (var item in finding)
+            {
+                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+            }
         }
 
         public void HandleAnswerEvent(object o, CallEventArgs e)
@@ -78,9 +126,9 @@ namespace Classes
         {
 
             Console.WriteLine("You getting call from " + number);
-            Console.WriteLine("Y- accept || N- decline");
+            Console.WriteLine("Y or y- accept || Anything else - decline ");
             string answer = Console.ReadLine();
-            if (answer == "Y")
+            if (answer == "Y" || answer == "y")
             {
                 return StatusOfAnswer.Answer;
             }

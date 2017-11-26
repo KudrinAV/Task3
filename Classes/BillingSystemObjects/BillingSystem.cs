@@ -91,25 +91,20 @@ namespace Classes.BillingSystemObjects
             }
         }
 
-        private List<string> _findHistory(string number)
+        private List<ICallInformation> _findHistory(string number)
         {
-            List<string> resultList = new List<string>();
-            var finding = Contracts.Find(x => x.Number == number);
-            foreach (var item in finding.AllCalls)
-            {
-                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall);
-            }
-            return resultList;
+            var item = Contracts.Find(x => x.Number == number);
+            return item.AllCalls;
         }
 
-        private List<string> _findMonthHistory(string number)
+        private List<ICallInformation> _findMonthHistory(string number)
         {
-            List<string> resultList = new List<string>();
+            List<ICallInformation> resultList = new List<ICallInformation>();
             var contract = Contracts.Find(x => x.Number == number);
             var finding = contract.AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= 30).Select(i => i);
             foreach (var item in finding)
             {
-                resultList.Add(item.Caller + " " + item.Receiver + " " + item.GetDuretionOfCall().TotalSeconds + " " + item.CostOfCall + " " + item.TimeOfBeginningOfCall);
+                resultList.Add(item);
             }
             return resultList;
         }

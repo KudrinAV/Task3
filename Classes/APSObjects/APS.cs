@@ -20,7 +20,7 @@ namespace Classes
 
         public void HandleDailyCheckEvent(object o, MessageFromAPSEventArgs e)
         {
-            foreach(var item in e.History)
+            foreach(var item in e.ListOfDebters)
             {
                 Ports.Find(x => x.Number == item).APSMessageShow(new MessageFromAPSEventArgs("You need to pay " + item));
             }
@@ -41,7 +41,7 @@ namespace Classes
         public void HandleGetHistoryEvent(object o, GetHistoryEventArgs e)
         {
             var item = Ports.Find(x => x.Id == e.IdOfPort);
-            item.APSMessageShow(new MessageFromAPSEventArgs(e.History));
+            item.APSMessageShow(new MessageFromAPSEventArgs(e.CallList));
         }
 
         public void HandleEndCallEvent(object o, EndCallEventArgs e)

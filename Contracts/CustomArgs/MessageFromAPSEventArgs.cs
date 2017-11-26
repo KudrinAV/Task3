@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +11,23 @@ namespace Contracts.CustomArgs
     {
         public string Message { get; private set; }
 
-        public List<String> History { get; private set; }
+        public List<string> ListOfDebters { get; private set; }
+
+        public List<ICallInformation> ListOfCalls { get; private set; }
 
         public MessageFromAPSEventArgs(string message)
         {
             Message = message;
         }
 
-        public MessageFromAPSEventArgs(List<string> history)
+        public MessageFromAPSEventArgs(List<string> debters)
         {
-            History = history;
+            ListOfDebters = debters;
+        }
+
+        public MessageFromAPSEventArgs(List<ICallInformation> list)
+        {
+            ListOfCalls = list;
         }
     }
 }

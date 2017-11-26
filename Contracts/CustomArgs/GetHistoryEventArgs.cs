@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Contracts.CustomArgs
         public int IdOfPort { get; private set; }
         public string Number { get; private set; }
         public DateTime Time { get; private set; }
-        public List<string> History { get; private set; }
+        public List<ICallInformation> CallList { get; private set; }
 
         public GetHistoryEventArgs(int id, string number)
         {
@@ -20,9 +21,9 @@ namespace Contracts.CustomArgs
             Time = DateTime.Now;
         }
 
-        public void SetHistory(List<string> list)
+        public void SetHistory(List<ICallInformation> list)
         {
-            History = list;
+             CallList = list;
         }
     }
 }
