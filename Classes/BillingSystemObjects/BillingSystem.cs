@@ -63,7 +63,7 @@ namespace Classes.BillingSystemObjects
 
         public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
         {
-            e.GetBalance(FindContract(e.IdOfPort).Balance);
+            FindContract(e.IdOfPort).SendBalance(e);
         }
 
         public void TerminateContract(IContract contract)

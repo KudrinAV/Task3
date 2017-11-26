@@ -24,6 +24,12 @@ namespace Classes.BillingSystemObjects
         public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
         public event EventHandler<BalanceEventArgs> DebtRepaidEvent;
         public event EventHandler<SendHistoryEventArgs> SendHistoryEvent;
+        public event EventHandler<BalanceEventArgs> SendBalanceEvent;
+
+        protected virtual void OnSendBalanceEvent(BalanceEventArgs e)
+        {
+            SendBalanceEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnSendHistoryEvent(SendHistoryEventArgs e)
         {
@@ -38,6 +44,11 @@ namespace Classes.BillingSystemObjects
         protected virtual void OnCantChangeTariffEvent(ChangeTariffEventArgs e)
         {
             CantChangeTariffEvent?.Invoke(this, e);
+        }
+
+        public void SendBalance(BalanceEventArgs e)
+        {
+            OnSendBalanceEvent(new BalanceEventArgs(e.IdOfPort, Balance));
         }
 
         public void SendHistory(GetHistoryEventArgs e)
