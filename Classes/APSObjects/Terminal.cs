@@ -67,8 +67,9 @@ namespace Classes
                 Console.WriteLine("3 - фильтрация по стоимости ");
                 Console.WriteLine("4 - фильтрация по дате ");
                 Console.WriteLine("Введите пункт меню: ");
-                int lever = int.Parse(Console.ReadLine());
-                _getFilterParametrs(e.ListOfCalls, lever);
+                bool result = int.TryParse(Console.ReadLine(), out int lever);
+                if (result) _getFilterParametrs(e.ListOfCalls, lever);
+                else Console.WriteLine("Wrong input");
             }
             else Console.WriteLine(e.Message);
         }
@@ -102,7 +103,7 @@ namespace Classes
         {
             foreach (var item in list)
             {
-                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
             }
         }
 
@@ -113,7 +114,7 @@ namespace Classes
                 var finding = list.Where(x => x.Caller == number || x.Receiver == number);
                 foreach (var item in finding)
                 {
-                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
                 }
             }
             else Console.WriteLine("There is no such number");
@@ -126,7 +127,7 @@ namespace Classes
                 var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall<= maxCostOfCall);
                 foreach (var item in finding)
                 {
-                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
                 }
             }
             else Console.WriteLine("There is problems with user's input");
@@ -137,7 +138,7 @@ namespace Classes
             var finding = list.Where(x => x.TimeOfBeginningOfCall.Day == time.Day);
             foreach (var item in finding)
             {
-                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString() + " " + item.CostOfCall);
+                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
             }
         }
 
