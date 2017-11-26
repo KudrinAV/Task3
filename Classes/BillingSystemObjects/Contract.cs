@@ -69,7 +69,7 @@ namespace Classes.BillingSystemObjects
             }
         }
 
-        public void HandleMoney(object o, BalanceEventArgs e)
+        public void HandleMoneyEvent(object o, BalanceEventArgs e)
         {
             if (Balance < 0)
             {

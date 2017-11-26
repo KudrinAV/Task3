@@ -25,7 +25,7 @@ namespace Contracts.Interfaces
         void SendBalance(BalanceEventArgs e);
         void SetBalnceAfterCall(double money);
         void SendHistory(GetHistoryEventArgs e);
-        void HandleMoney(object o, BalanceEventArgs e);
+        void HandleMoneyEvent(object o, BalanceEventArgs e);
         void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e);
     }
 }

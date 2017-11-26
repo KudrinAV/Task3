@@ -108,7 +108,7 @@ namespace Classes
             if (item != null)
             {
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, name, tariffPlan));
-                item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
+                item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoneyEvent;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
                 item.GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
                 item.GettingBalance += Abonents.HandleGetBalanceEvent;
@@ -124,7 +124,7 @@ namespace Classes
                 AddPort();
                 Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, name, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
-                Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
+                Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoneyEvent;
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
                 Ports.Last().GettingBalance += Abonents.HandleGetBalanceEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
@@ -141,11 +141,10 @@ namespace Classes
             var item = Abonents.FindContract(port.Id);
             if (item != null && port.PortStatus == StatusOfPort.NotConnected)
             {
-                port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoney;
+                port.PuttingOnBalance -= Abonents.FindContract(port.Id).HandleMoneyEvent;
                 port.ChangingTariff -= Abonents.FindContract(port.Id).HandleChangeTariffEvent;
                 port.GettingHistory -= Abonents.HandleGetHistoryForMonthEvent;
                 port.GettingBalance -= Abonents.HandleGetBalanceEvent;
-                port.GettingBalance -= HandleSendBalanceEvent;
                 Abonents.FindContract(port.Id).CantChangeTariffEvent -= HandleCantChangeEvent;
                 Abonents.FindContract(port.Id).DebtRepaidEvent -= HandleDebtRepaidEvent;
                 Abonents.FindContract(port.Id).SendHistoryEvent -= HandleSendHistoryEvent;
