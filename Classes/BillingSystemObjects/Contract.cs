@@ -18,6 +18,7 @@ namespace Classes.BillingSystemObjects
         public DateTime TimeOfSigningContract { get; private set; }
         public DateTime TimeOfChangingTariff { get; private set; }
         public List<ICallInformation> AllCalls { get; private set; }
+        private int _daysInMonth = 30;
 
         public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
 
@@ -28,7 +29,7 @@ namespace Classes.BillingSystemObjects
 
         public void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e)
         {
-            if (e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalDays <= 30)
+            if (e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalDays <= _daysInMonth)
             {
                 e.SetNewTime(TimeOfChangingTariff);
                 CantChangeTariffPlan(e);

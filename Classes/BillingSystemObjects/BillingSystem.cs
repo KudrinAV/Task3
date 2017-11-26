@@ -16,6 +16,9 @@ namespace Classes.BillingSystemObjects
         private List<IContract> _terminatedContracts { get; set; }
         public object DataTime { get; private set; }
         private System.Timers.Timer _timer { get; set; }
+        private int _daysInMonth = 30;
+        private double _oneDay = 0.34;
+        private int _zero = 0;
 
         public event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
 
@@ -43,7 +46,7 @@ namespace Classes.BillingSystemObjects
         private List<string> _getListOfPayment()
         {
             List<string> result = new List<string>();
-            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalDays % 30 < 30 && x.Balance< 0.0).Select(x => x.Number);
+            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalDays % _daysInMonth <= _oneDay && x.Balance< _zero).Select(x => x.Number);
             foreach (var item in finding)
             {
                 result.Add(item);
@@ -101,7 +104,7 @@ namespace Classes.BillingSystemObjects
         {
             List<ICallInformation> resultList = new List<ICallInformation>();
             var contract = Contracts.Find(x => x.Number == number);
-            var finding = contract.AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= 30).Select(i => i);
+            var finding = contract.AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= _daysInMonth).Select(i => i);
             foreach (var item in finding)
             {
                 resultList.Add(item);
