@@ -21,6 +21,12 @@ namespace Classes.BillingSystemObjects
         private int _daysInMonth = 30;
 
         public event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
+        public event EventHandler<BalanceEventArgs> DebtRepaidEvent;
+
+        protected virtual void OnDebtRepaidEvent(BalanceEventArgs e)
+        {
+            DebtRepaidEvent?.Invoke(this, e);
+        }
 
         protected virtual void OnCantChangeTariffEvent(ChangeTariffEventArgs e)
         {
@@ -43,7 +49,12 @@ namespace Classes.BillingSystemObjects
 
         public void HandleMoney(object o, BalanceEventArgs e)
         {
-            Balance += e.Money;
+            if (Balance < 0)
+            {
+                Balance += e.Money;
+                if (Balance >= 0) OnDebtRepaidEvent(new BalanceEventArgs(e.IdOfPort));
+            }
+            else Balance += e.Money;
         }
 
         public void CantChangeTariffPlan(ChangeTariffEventArgs e)

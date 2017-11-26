@@ -23,8 +23,15 @@ namespace Classes
         {
             foreach(var item in e.ListOfDebters)
             {
-                Ports.Find(x => x.Number == item).APSMessageShow(new MessageFromAPSEventArgs("You need to pay " + item));
+                var port = Ports.Find(x => x.Number == item);
+                port.APSMessageShow(new MessageFromAPSEventArgs("You need to pay " + item));
+                port.ChangeCallStatus(StatusOfCall.NegativeBalance);
             }
+        }
+
+        public void HandleDebtRepaidEvent(object o, BalanceEventArgs e)
+        {
+            Ports.Find(x => x.Id == e.IdOfPort).ChangeCallStatus(StatusOfCall.Avaliable);
         }
 
         public void HandleGetBalanceEvent(object o, BalanceEventArgs e)
@@ -109,6 +116,7 @@ namespace Classes
                 item.GettingBalance += Abonents.HandleGetBalanceEvent;
                 item.GettingBalance += HandleGetBalanceEvent;
                 Abonents.FindContract(item.Id).CantChangeTariffEvent += HandleCantChangeEvent;
+                Abonents.FindContract(item.Id).DebtRepaidEvent += HandleDebtRepaidEvent;
                 item.ChangeStatusOfContract();
                 return item;
             }
@@ -124,6 +132,7 @@ namespace Classes
                 Ports.Last().GettingBalance += HandleGetBalanceEvent;
                 Ports.Last().ChangingTariff += Abonents.FindContract(Ports.Last().Id).HandleChangeTariffEvent;
                 Abonents.FindContract(Ports.Last().Id).CantChangeTariffEvent += HandleCantChangeEvent;
+                Abonents.FindContract(Ports.Last().Id).DebtRepaidEvent += HandleDebtRepaidEvent;
                 return Ports.Last();
             }
         }
@@ -140,11 +149,11 @@ namespace Classes
                 port.GettingBalance -= Abonents.HandleGetBalanceEvent;
                 port.GettingBalance -= HandleGetBalanceEvent;
                 Abonents.FindContract(port.Id).CantChangeTariffEvent -= HandleCantChangeEvent;
+                Abonents.FindContract(port.Id).DebtRepaidEvent -= HandleDebtRepaidEvent;
                 Abonents.TerminateContract(item);
                 port.ChangeStatusOfContract();
             }
         }
-
 
         private bool _checkNumber(string number)
         {

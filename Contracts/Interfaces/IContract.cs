@@ -17,6 +17,7 @@ namespace Contracts.Interfaces
         DateTime TimeOfSigningContract { get;}
         DateTime TimeOfChangingTariff { get; }
 
+        event EventHandler<BalanceEventArgs> DebtRepaidEvent;
         event EventHandler<ChangeTariffEventArgs> CantChangeTariffEvent;
         void SetBalnceAfterCall(double money);
         void HandleMoney(object o, BalanceEventArgs e);
