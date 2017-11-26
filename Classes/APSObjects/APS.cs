@@ -78,7 +78,7 @@ namespace Classes
 
         private void _handleCallEvent(object o, CallEventArgs e)
         {
-            if (_isNumberExist(e.ReceivingNumber))
+            if (_isNumberExist(e.ReceivingNumber) && e.ReceivingNumber!= e.PortOfCaller.Number)
             {
                 var item = _ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
                 if (item != null)

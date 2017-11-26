@@ -20,6 +20,7 @@ namespace Contracts.Interfaces
         void PunOnBalance(double money);
         void EndCall();
         string GetNumber();
+        void GetHistory();
         IPort GetPort();
     }
 }
