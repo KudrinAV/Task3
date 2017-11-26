@@ -13,6 +13,7 @@ namespace Classes.BillingSystemObjects
         public int IdOfContract { get; private set; }
         public int IdOfPort { get; private set; }
         public string Number { get; private set; }
+        public string Name { get; private set; }
         public ITariffPlan Tariff { get; private set; }
         public double Balance { get; private set; }
         public DateTime TimeOfSigningContract { get; private set; }
@@ -66,12 +67,13 @@ namespace Classes.BillingSystemObjects
             Balance -= money;
         }
 
-        public Contract(int id, int idOfPort, string number, ITariffPlan tariffPlan)
+        public Contract(int id, int idOfPort, string number, string name, ITariffPlan tariffPlan)
         {
             IdOfContract = id;
             IdOfPort = idOfPort;
             Number = number;
             Tariff = tariffPlan;
+            Name = name;
             TimeOfSigningContract = DateTime.Now;
             TimeOfChangingTariff = TimeOfSigningContract;
             AllCalls = new List<ICallInformation>();

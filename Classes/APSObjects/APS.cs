@@ -102,12 +102,12 @@ namespace Classes
             Ports.Last().Connecting += HandleConnectingEvent;
         }
 
-        public IPort SignAContract(ITariffPlan tariffPlan)
+        public IPort SignAContract(ITariffPlan tariffPlan , string name)
         {
             var item = Ports.Find(x => x.ContractStatus == StatusOfContract.NotContracted);
             if (item != null)
             {
-                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, tariffPlan));
+                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, item.Id, item.Number, name, tariffPlan));
                 item.PuttingOnBalance += Abonents.FindContract(item.Id).HandleMoney;
                 item.ChangingTariff += Abonents.FindContract(item.Id).HandleChangeTariffEvent;
                 item.GettingHistory += Abonents.HandleGetHistoryForMonthEvent;
@@ -122,7 +122,7 @@ namespace Classes
             else
             {
                 AddPort();
-                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, tariffPlan));
+                Abonents.Contracts.Add(new Contract(Abonents.Contracts.Count, Ports.Last().Id, Ports.Last().Number, name, tariffPlan));
                 Ports.Last().ChangeStatusOfContract();
                 Ports.Last().PuttingOnBalance += Abonents.FindContract(Ports.Last().Id).HandleMoney;
                 Ports.Last().GettingHistory += Abonents.HandleGetHistoryForMonthEvent;

@@ -13,6 +13,6 @@ namespace Contracts.Interfaces
 
         void TerminateContract(IPort port);
         void AddPort();
-        IPort SignAContract(ITariffPlan tariffPlan);
+        IPort SignAContract(ITariffPlan tariffPlan, string name);
     }
 }

@@ -17,15 +17,27 @@ namespace Task3
     {
         static void Main(string[] args)
         {
+            ITariffPlan First = new First();
 
             IEmulationEnvironment emulationEnvironment = new EmulationEnvironment();
 
             emulationEnvironment.CreateTerminals(5);
             emulationEnvironment.CreateUsers();
 
+            emulationEnvironment.Aps.AddPort();
+            emulationEnvironment.Aps.AddPort();
+            emulationEnvironment.Aps.AddPort();
+            emulationEnvironment.Aps.AddPort();
+            
+            
             foreach(var item in emulationEnvironment.Users)
             {
-                Console.WriteLine(item.Name + " " + item.Telephone.Id);
+                item.Telephone.ConnectToPort(emulationEnvironment.Aps.SignAContract(First, item.Name));
+            }
+
+            foreach(var item in emulationEnvironment.Users)
+            {
+                Console.WriteLine(item.Telephone.GetNumber() + " " + item.Telephone.Id);
             }
 
 
