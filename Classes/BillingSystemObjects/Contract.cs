@@ -58,7 +58,7 @@ namespace Classes.BillingSystemObjects
 
         public void HandleChangeTariffEvent(object o, ChangeTariffEventArgs e)
         {
-            if (e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalDays <= _daysInMonth)
+            if (e.TimeOfChanging.Subtract(TimeOfChangingTariff).TotalSeconds <= _daysInMonth)
             {
                 CantChangeTariffPlan(new CantChangeTariffEventArgs(e.IdOfPort, TimeOfChangingTariff));
             }

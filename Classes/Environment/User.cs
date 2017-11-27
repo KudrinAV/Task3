@@ -88,6 +88,11 @@ namespace Classes.Environment
             Telephone.EndCall();
         }
 
+        public void ChangeTariff(ITariffPlan tariffPlan)
+        {
+            Telephone.ChangeTariff(tariffPlan);
+        }
+
         public string GetNumber()
         {
             return Telephone.GetNumber();

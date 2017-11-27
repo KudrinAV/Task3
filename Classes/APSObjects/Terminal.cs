@@ -173,7 +173,7 @@ namespace Classes
 
         public void PutMoney(double money)
         {
-            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus == StatusOfCall.Avaliable) OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
+            if (_port != null && _port.PortStatus == StatusOfPort.Connected && _port.CallStatus != StatusOfCall.OnCall) OnPutOnBalanceEvent(new BalanceEventArgs(_port.Id, money));
         }
 
         public void EndCall()

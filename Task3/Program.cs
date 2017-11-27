@@ -36,7 +36,7 @@ namespace Task3
                 item.SignAContract(emulationEnvironment.Aps, emulationEnvironment.Cheap);
             }
 
-            foreach(var item in emulationEnvironment.Users)
+            foreach (var item in emulationEnvironment.Users)
             {
                 item.ConnectPortToTerminal();
             }
@@ -49,10 +49,9 @@ namespace Task3
             emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
             Thread.Sleep(3000);
             emulationEnvironment.Users.ElementAt(0).EndCall();
-            Console.WriteLine("--------------------------------------------------------------------------");
-            Console.WriteLine("\n");
-            Console.WriteLine("Call somebody and caller reciever finishes call");
+            Console.WriteLine("Call somebody and caller reciever finishes call and somebody tries to call one of them");
             emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
+            emulationEnvironment.Users.ElementAt(2).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
             Thread.Sleep(3000);
             emulationEnvironment.Users.ElementAt(1).EndCall();
             Console.WriteLine("--------------------------------------------------------------------------");
@@ -71,6 +70,28 @@ namespace Task3
             emulationEnvironment.Users.ElementAt(0).GetHistory();
             Console.WriteLine("\n");
             emulationEnvironment.Users.ElementAt(1).GetHistory();
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Thread.Sleep(30000);
+            Console.WriteLine("Сall with negative balance");
+            emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Put money on balance, check balance, call somebody");
+            emulationEnvironment.Users.ElementAt(0).PunOnBalance(5);
+            emulationEnvironment.Users.ElementAt(0).GetBalance();
+            emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
+            Thread.Sleep(3000);
+            emulationEnvironment.Users.ElementAt(0).EndCall();
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Changes tariff, call somebody, get history");
+            emulationEnvironment.Users.ElementAt(0).ChangeTariff(emulationEnvironment.Expensive);
+            emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
+            Thread.Sleep(3000);
+            emulationEnvironment.Users.ElementAt(0).EndCall();
+            Console.WriteLine("\n");
+            emulationEnvironment.Users.ElementAt(0).GetHistory();
             Console.WriteLine("--------------------------------------------------------------------------");
             Console.WriteLine("\n");
         }

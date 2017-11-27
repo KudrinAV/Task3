@@ -21,6 +21,7 @@ namespace Contracts.Interfaces
         void EndCall();
         string GetNumber();
         void GetHistory();
+        void ChangeTariff(ITariffPlan newTariffPlan);
         IPort GetPort();
     }
 }

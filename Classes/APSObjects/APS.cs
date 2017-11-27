@@ -68,7 +68,6 @@ namespace Classes
             var reciver = _ports.Find(x => x.Number == e.RecieverNumber);
             if (e.Answer == StatusOfAnswer.Answer)
             {
-                Console.WriteLine("Hello");
                 reciver.ChangeCallStatus(StatusOfCall.OnCall);
                 caller.ChangeCallStatus(StatusOfCall.OnCall);
                 _onGoingCalls.Add(new CallInformation(caller.Number, e.RecieverNumber));
@@ -78,7 +77,7 @@ namespace Classes
 
         private void _handleCallEvent(object o, CallEventArgs e)
         {
-            if (_isNumberExist(e.ReceivingNumber) && e.ReceivingNumber!= e.PortOfCaller.Number)
+            if (_isNumberExist(e.ReceivingNumber) && e.ReceivingNumber != e.PortOfCaller.Number)
             {
                 var item = _ports.Find(x => x.PortStatus == StatusOfPort.Connected && x.CallStatus == StatusOfCall.Avaliable && e.ReceivingNumber == x.Number);
                 if (item != null)

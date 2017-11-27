@@ -17,7 +17,7 @@ namespace Classes.BillingSystemObjects
         public object DataTime { get; private set; }
         private System.Timers.Timer _timer { get; set; }
         private int _daysInMonth = 30;
-        private double _oneDay = 0.34;
+        private double _oneDay = 1;
         private int _zero = 0;
 
         public event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
@@ -29,7 +29,7 @@ namespace Classes.BillingSystemObjects
 
         private void _ElapsedDailyCheck()
         {
-            _timer = new System.Timers.Timer(100000)
+            _timer = new System.Timers.Timer(1000)
             {
                 Enabled = true
             };
@@ -46,7 +46,7 @@ namespace Classes.BillingSystemObjects
         private List<string> _getListOfPayment()
         {
             List<string> result = new List<string>();
-            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalDays % _daysInMonth <= _oneDay && x.Balance < _zero).Select(x => x.Number);
+            var finding = Contracts.Where(x => DateTime.Now.Subtract(x.TimeOfSigningContract).TotalSeconds % _daysInMonth <= _oneDay && x.Balance < _zero).Select(x => x.Number);
             foreach (var item in finding)
             {
                 result.Add(item);
