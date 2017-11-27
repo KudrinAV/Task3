@@ -40,7 +40,11 @@ namespace Classes.BillingSystemObjects
 
         private void _timerElapsed(object o, ElapsedEventArgs e)
         {
-            OnDailyCheckEvent(new MessageFromAPSEventArgs(_getListOfPayment()));
+            List<string> debters = _getListOfPayment();
+            if (debters.Count != 0)
+            {
+                OnDailyCheckEvent(new MessageFromAPSEventArgs(debters));
+            }
         }
 
         private List<string> _getListOfPayment()
