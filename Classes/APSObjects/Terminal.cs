@@ -136,7 +136,7 @@ namespace Classes
 
         private void _filterCalls(List<ICallInformation> list, DateTime time)
         {
-            var finding = list.Where(x => x.BeginningOfCall.Day == time.Day);
+            var finding = list.Where(x => x.BeginningOfCall.Day == time.Day && x.BeginningOfCall.Month == time.Month && x.BeginningOfCall.Year == time.Year);
             foreach (var item in finding)
             {
                 Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
