@@ -14,7 +14,6 @@ namespace Classes.BillingSystemObjects
     {
         public List<IContract> Contracts { get; private set; }
         private List<IContract> _terminatedContracts { get; set; }
-        public object DataTime { get; private set; }
         private System.Timers.Timer _timer { get; set; }
         private const int _daysInMonth = 30;
         private const double _oneDay = 1;
