@@ -15,50 +15,50 @@ namespace Classes
         public int Id { get; private set; }
         private IPort _port { get; set; }
 
-        public event EventHandler<CallEventArgs> CallEvent;
-        public event EventHandler<EndCallEventArgs> EndCallEvent;
-        public event EventHandler<BalanceEventArgs> PutOnBalanceEvent;
-        public event EventHandler<ChangeTariffEventArgs> ChangeTariffEvent;
-        public event EventHandler<GetHistoryEventArgs> GetHistoryEvent;
-        public event EventHandler<AnswerEventArgs> ConnectEvent;
-        public event EventHandler<BalanceEventArgs> GetBalanceEvent;
+        private event EventHandler<CallEventArgs> _callEvent;
+        private event EventHandler<EndCallEventArgs> _endCallEvent;
+        private event EventHandler<BalanceEventArgs> _putOnBalanceEvent;
+        private event EventHandler<ChangeTariffEventArgs> _changeTariffEvent;
+        private event EventHandler<GetHistoryEventArgs> _getHistoryEvent;
+        private event EventHandler<AnswerEventArgs> _connectEvent;
+        private event EventHandler<BalanceEventArgs> _getBalanceEvent;
 
         protected virtual void OnGetBalanceEvent(BalanceEventArgs e)
         {
-            GetBalanceEvent?.Invoke(this, e);
+            _getBalanceEvent?.Invoke(this, e);
         }
 
         protected virtual void OnConnectEvent(AnswerEventArgs e)
         {
-            ConnectEvent?.Invoke(this, e);
+            _connectEvent?.Invoke(this, e);
         }
 
         protected virtual void OnGetHistoryEvent(GetHistoryEventArgs e)
         {
-            GetHistoryEvent?.Invoke(this, e);
+            _getHistoryEvent?.Invoke(this, e);
         }
 
         protected virtual void OnChangeTariffEvent(ChangeTariffEventArgs e)
         {
-            ChangeTariffEvent?.Invoke(this, e);
+            _changeTariffEvent?.Invoke(this, e);
         }
 
         protected virtual void OnPutOnBalanceEvent(BalanceEventArgs e)
         {
-            PutOnBalanceEvent?.Invoke(this, e);
+            _putOnBalanceEvent?.Invoke(this, e);
         }
 
         protected virtual void OnEndCall(EndCallEventArgs e)
         {
-            EndCallEvent?.Invoke(this, e);
+            _endCallEvent?.Invoke(this, e);
         }
 
         protected virtual void OnCall(CallEventArgs e)
         {
-            CallEvent?.Invoke(this, e);
+            _callEvent?.Invoke(this, e);
         }
 
-        public void HandleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
+        private void _handleMessageFromAPSEvent(object o, MessageFromAPSEventArgs e)
         {
             if (e.ListOfCalls != null)
             {
@@ -143,7 +143,7 @@ namespace Classes
             }
         }
 
-        public void HandleAnswerEvent(object o, CallEventArgs e)
+        private void _handleAnswerEvent(object o, CallEventArgs e)
         {
             OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, _port.Number, _getAbonentAnser(e.PortOfCaller.Number)));
         }
@@ -196,15 +196,15 @@ namespace Classes
                 _port = port;
                 _port.ChangeCallStatus(StatusOfCall.Avaliable);
                 _port.ChangeStatusOfPort();
-                CallEvent += _port.HandleCallEvent;
-                _port.AnswerEvent += HandleAnswerEvent;
-                EndCallEvent += _port.HandleEndCallEvent;
-                _port.MessageFromAPS += HandleMessageFromAPSEvent;
-                PutOnBalanceEvent += _port.HandlePutOnBalanceEvent;
-                ChangeTariffEvent += _port.HandleChangeTariffEvent;
-                GetHistoryEvent += _port.HandleGetHistoryEvent;
-                ConnectEvent += _port.HandleConnectEvent;
-                GetBalanceEvent += _port.HandleGetBalanceEvent;
+                _callEvent += _port.HandleCallEvent;
+                _port.AnswerEvent += _handleAnswerEvent;
+                _endCallEvent += _port.HandleEndCallEvent;
+                _port.MessageFromAPS += _handleMessageFromAPSEvent;
+                _putOnBalanceEvent += _port.HandlePutOnBalanceEvent;
+                _changeTariffEvent += _port.HandleChangeTariffEvent;
+                _getHistoryEvent += _port.HandleGetHistoryEvent;
+                _connectEvent += _port.HandleConnectEvent;
+                _getBalanceEvent += _port.HandleGetBalanceEvent;
             }
             else Console.WriteLine("Terminal " + Id + " already has a port");
         }
@@ -215,15 +215,15 @@ namespace Classes
             {
                 _port.ChangeCallStatus(StatusOfCall.NotAvalibale);
                 _port.ChangeStatusOfPort();
-                CallEvent -= _port.HandleCallEvent;
-                _port.AnswerEvent -= HandleAnswerEvent;
-                EndCallEvent -= _port.HandleEndCallEvent;
-                _port.MessageFromAPS -= HandleMessageFromAPSEvent;
-                PutOnBalanceEvent -= _port.HandlePutOnBalanceEvent;
-                ChangeTariffEvent -= _port.HandleChangeTariffEvent;
-                GetHistoryEvent -= _port.HandleGetHistoryEvent;
-                ConnectEvent -= _port.HandleConnectEvent;
-                GetBalanceEvent -= _port.HandleGetBalanceEvent;
+                _callEvent -= _port.HandleCallEvent;
+                _port.AnswerEvent -= _handleAnswerEvent;
+                _endCallEvent -= _port.HandleEndCallEvent;
+                _port.MessageFromAPS -= _handleMessageFromAPSEvent;
+                _putOnBalanceEvent -= _port.HandlePutOnBalanceEvent;
+                _changeTariffEvent -= _port.HandleChangeTariffEvent;
+                _getHistoryEvent -= _port.HandleGetHistoryEvent;
+                _connectEvent -= _port.HandleConnectEvent;
+                _getBalanceEvent -= _port.HandleGetBalanceEvent;
                 _port = null;
             }
             else Console.WriteLine("Terminal " + Id + " has nothing to disconect from");
