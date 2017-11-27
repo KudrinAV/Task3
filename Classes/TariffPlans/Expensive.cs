@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Classes.TariffPlans
 {
-    public class First : ITariffPlan
+    public class Expensive : ITariffPlan
     {
         public string Name { get; private set; }
         public double CostOfCall { get; private set; }
 
-        public First()
+        public Expensive()
         {
-            Name = "First";
-            CostOfCall = 0.3;
+            Name = "Second";
+            CostOfCall = 0.5;
         }
     }
 }

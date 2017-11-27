@@ -33,7 +33,7 @@ namespace Task3
 
             foreach (var item in emulationEnvironment.Users)
             {
-                item.SignAContract(emulationEnvironment.Aps, emulationEnvironment.First);
+                item.SignAContract(emulationEnvironment.Aps, emulationEnvironment.Cheap);
             }
 
             foreach(var item in emulationEnvironment.Users)
@@ -41,22 +41,38 @@ namespace Task3
                 item.ConnectPortToTerminal();
             }
 
+            Console.WriteLine("Call on unexisting number");
             emulationEnvironment.Users.ElementAt(0).Call("1231231");
-
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Call somebody and caller finishes call");
             emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
             Thread.Sleep(3000);
             emulationEnvironment.Users.ElementAt(0).EndCall();
-
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Call somebody and caller reciever finishes call");
+            emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
+            Thread.Sleep(3000);
+            emulationEnvironment.Users.ElementAt(1).EndCall();
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Calling himself");
             emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(0).GetNumber());
-
-            emulationEnvironment.Users.ElementAt(0).Call(emulationEnvironment.Users.ElementAt(1).GetNumber());
-            Thread.Sleep(3000);
-            emulationEnvironment.Users.ElementAt(0).EndCall();
-
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Getting balance");
             emulationEnvironment.Users.ElementAt(0).GetBalance();
+            Console.WriteLine("\n");
             emulationEnvironment.Users.ElementAt(1).GetBalance();
-
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
+            Console.WriteLine("Getting history");
             emulationEnvironment.Users.ElementAt(0).GetHistory();
+            Console.WriteLine("\n");
+            emulationEnvironment.Users.ElementAt(1).GetHistory();
+            Console.WriteLine("--------------------------------------------------------------------------");
+            Console.WriteLine("\n");
         }
     }
 }

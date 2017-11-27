@@ -92,7 +92,7 @@ namespace Classes.BillingSystemObjects
         private List<ICallInformation> _findMonthHistory()
         {
             List<ICallInformation> resultList = new List<ICallInformation>();
-            var finding = AllCalls.Where(x => DateTime.Now.Subtract(x.TimeOfBeginningOfCall).TotalDays <= _daysInMonth).Select(i => i);
+            var finding = AllCalls.Where(x => DateTime.Now.Subtract(x.BeginningOfCall).TotalDays <= _daysInMonth).Select(i => i);
             foreach (var item in finding)
             {
                 resultList.Add(item);

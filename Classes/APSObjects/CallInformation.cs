@@ -11,13 +11,13 @@ namespace Classes
     {
         public string Caller { get; private set; }
         public string Receiver { get; private set; }
-        public DateTime TimeOfBeginningOfCall { get; private set; }
-        public DateTime TimeOfEndingOfCall { get; private set; }
+        public DateTime BeginningOfCall { get; private set; }
+        public DateTime EndingOfCall { get; private set; }
         public double CostOfCall { get; private set; }
 
         public TimeSpan GetDuretionOfCall()
         {
-            TimeSpan res = TimeOfEndingOfCall.Subtract(TimeOfBeginningOfCall);
+            TimeSpan res = EndingOfCall.Subtract(BeginningOfCall);
             return res;
         }
 
@@ -28,14 +28,14 @@ namespace Classes
 
         public void SetTimeOfEnding(DateTime time)
         {
-            TimeOfEndingOfCall = time;
+            EndingOfCall = time;
         }
 
         public CallInformation(string caller, string receiver)
         {
             Caller = caller;
             Receiver = receiver;
-            TimeOfBeginningOfCall = DateTime.Now;
+            BeginningOfCall = DateTime.Now;
         }
     }
 }

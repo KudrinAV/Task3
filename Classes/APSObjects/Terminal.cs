@@ -104,7 +104,7 @@ namespace Classes
         {
             foreach (var item in list)
             {
-                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
+                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
             }
         }
 
@@ -115,7 +115,7 @@ namespace Classes
                 var finding = list.Where(x => x.Caller == number || x.Receiver == number);
                 foreach (var item in finding)
                 {
-                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
+                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
                 }
             }
             else Console.WriteLine("There is no such number");
@@ -128,7 +128,7 @@ namespace Classes
                 var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall <= maxCostOfCall);
                 foreach (var item in finding)
                 {
-                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
+                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
                 }
             }
             else Console.WriteLine("There is problems with user's input");
@@ -136,10 +136,10 @@ namespace Classes
 
         private void _filterCalls(List<ICallInformation> list, DateTime time)
         {
-            var finding = list.Where(x => x.TimeOfBeginningOfCall.Day == time.Day);
+            var finding = list.Where(x => x.BeginningOfCall.Day == time.Day);
             foreach (var item in finding)
             {
-                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.TimeOfBeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
+                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
             }
         }
 

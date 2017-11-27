@@ -10,8 +10,8 @@ namespace Contracts.Interfaces
     {
         string Caller { get; }
         string Receiver { get; }
-        DateTime TimeOfBeginningOfCall { get; }
-        DateTime TimeOfEndingOfCall { get; }
+        DateTime BeginningOfCall { get; }
+        DateTime EndingOfCall { get; }
         double CostOfCall { get;  }
         
         void SetCostOfCall(double cost);

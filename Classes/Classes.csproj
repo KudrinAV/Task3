@@ -49,8 +49,8 @@
     <Compile Include="Environment\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="APSObjects\Terminal.cs" />
-    <Compile Include="TariffPlans\First.cs" />
-    <Compile Include="TariffPlans\Second.cs" />
+    <Compile Include="TariffPlans\Cheap.cs" />
+    <Compile Include="TariffPlans\Expensive.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj">
