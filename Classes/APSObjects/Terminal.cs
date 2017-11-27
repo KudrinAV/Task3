@@ -69,38 +69,37 @@ namespace Classes
                 Console.WriteLine("4 - Date");
                 Console.WriteLine("Insert menu");
                 bool result = int.TryParse(Console.ReadLine(), out int lever);
-                if (result) _getFilterParametrs(e.ListOfCalls, lever);
-                else Console.WriteLine("Wrong input");
+                if (result) getFilterParametrs(e.ListOfCalls, lever);
             }
             else Console.WriteLine(e.Message);
         }
 
-        private void _getFilterParametrs(List<ICallInformation> list, int switcher)
+        private void getFilterParametrs(List<ICallInformation> list, int switcher)
         {
             switch (switcher)
             {
                 case 1:
                     Console.WriteLine("All list :");
-                    _filterCalls(list);
+                    filterCalls(list);
                     break;
                 case 2:
                     Console.WriteLine("Input number : ");
-                    _filterCalls(list, Console.ReadLine());
+                    filterCalls(list, Console.ReadLine());
                     break;
                 case 3:
                     Console.WriteLine("Input diaposon of cost : ");
-                    _filterCalls(list, Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture), Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture));
+                    filterCalls(list, Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture), Double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture));
                     break;
                 case 4:
                     Console.WriteLine("Input date : ");
-                    _filterCalls(list, DateTime.Parse(Console.ReadLine()));
+                    filterCalls(list, DateTime.Parse(Console.ReadLine()));
                     break;
                 default:
                     break;
             }
         }
 
-        private void _filterCalls(List<ICallInformation> list)
+        private void filterCalls(List<ICallInformation> list)
         {
             foreach (var item in list)
             {
@@ -108,47 +107,36 @@ namespace Classes
             }
         }
 
-        private void _filterCalls(List<ICallInformation> list, string number)
+        private void filterCalls(List<ICallInformation> list, string number)
         {
             if (number.Length == 7)
             {
-                var finding = list.Where(x => x.Caller == number || x.Receiver == number);
-                foreach (var item in finding)
-                {
-                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
-                }
+                var finding = list.Where(x => x.Caller == number || x.Receiver == number).ToList();
+                filterCalls(finding);
             }
-            else Console.WriteLine("There is no such number");
         }
 
-        private void _filterCalls(List<ICallInformation> list, double minCostOfCall, double maxCostOfCall)
+        private void filterCalls(List<ICallInformation> list, double minCostOfCall, double maxCostOfCall)
         {
             if (maxCostOfCall >= minCostOfCall)
             {
-                var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall <= maxCostOfCall);
-                foreach (var item in finding)
-                {
-                    Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
-                }
-            }
-            else Console.WriteLine("There is problems with user's input");
-        }
-
-        private void _filterCalls(List<ICallInformation> list, DateTime time)
-        {
-            var finding = list.Where(x => x.BeginningOfCall.Day == time.Day && x.BeginningOfCall.Month == time.Month && x.BeginningOfCall.Year == time.Year);
-            foreach (var item in finding)
-            {
-                Console.WriteLine(item.Caller + " " + item.Receiver + " " + item.BeginningOfCall.ToString("dd-MM-yyyy") + " " + item.CostOfCall.ToString("F"));
+                var finding = list.Where(x => x.CostOfCall >= minCostOfCall && x.CostOfCall <= maxCostOfCall).ToList();
+                filterCalls(finding);
             }
         }
 
-        private void _handleAnswerEvent(object o, CallEventArgs e)
+        private void filterCalls(List<ICallInformation> list, DateTime time)
         {
-            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, _port.Number, _getAbonentAnser(e.PortOfCaller.Number)));
+            var finding = list.Where(x => x.BeginningOfCall.Day == time.Day && x.BeginningOfCall.Month == time.Month && x.BeginningOfCall.Year == time.Year).ToList();
+            filterCalls(finding);
         }
 
-        private StatusOfAnswer _getAbonentAnser(string number)
+        private void handleAnswerEvent(object o, CallEventArgs e)
+        {
+            OnConnectEvent(new AnswerEventArgs(e.PortOfCaller.Number, _port.Number, getAbonentAnser(e.PortOfCaller.Number)));
+        }
+
+        private StatusOfAnswer getAbonentAnser(string number)
         {
 
             Console.WriteLine("You getting call from " + number);
@@ -197,7 +185,7 @@ namespace Classes
                 _port.ChangeCallStatus(StatusOfCall.Avaliable);
                 _port.ChangeStatusOfPort();
                 _callEvent += _port.HandleCallEvent;
-                _port.AnswerEvent += _handleAnswerEvent;
+                _port.AnswerEvent += handleAnswerEvent;
                 _endCallEvent += _port.HandleEndCallEvent;
                 _port.MessageFromAPS += _handleMessageFromAPSEvent;
                 _putOnBalanceEvent += _port.HandlePutOnBalanceEvent;
@@ -216,7 +204,7 @@ namespace Classes
                 _port.ChangeCallStatus(StatusOfCall.NotAvalibale);
                 _port.ChangeStatusOfPort();
                 _callEvent -= _port.HandleCallEvent;
-                _port.AnswerEvent -= _handleAnswerEvent;
+                _port.AnswerEvent -= handleAnswerEvent;
                 _endCallEvent -= _port.HandleEndCallEvent;
                 _port.MessageFromAPS -= _handleMessageFromAPSEvent;
                 _putOnBalanceEvent -= _port.HandlePutOnBalanceEvent;

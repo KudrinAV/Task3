@@ -16,9 +16,9 @@ namespace Classes.BillingSystemObjects
         private List<IContract> _terminatedContracts { get; set; }
         public object DataTime { get; private set; }
         private System.Timers.Timer _timer { get; set; }
-        private int _daysInMonth = 30;
-        private double _oneDay = 1;
-        private int _zero = 0;
+        private const int _daysInMonth = 30;
+        private const double _oneDay = 1;
+        private const int _zero = 0;
 
         public event EventHandler<MessageFromAPSEventArgs> DailyCheckEvent;
 
